@@ -10,7 +10,7 @@ First time only: enter your name/email when asked (sets up git)
 ## 2. Get the project code - do NOT run yarn create vite, that only applies to starting a brand new project. You're joining an existing one:
 
 - git clone <https://github.com/EricMoreland/Chrema_Phase_2>
-- cd <Chrema_Phase_2>
+- cd Chrema_Phase_2
 
 ## 3. Open VS Code and install dependencies
 
@@ -29,10 +29,10 @@ Then in the VS Code terminal:
 Click the localhost link it gives you.
 
 ## Every session after that (no re-cloning needed)
-cd <Chrema_Phase_2>
-git pull
-yarn
-yarn dev
+- cd Chrema_Phase_2
+- git pull
+- yarn
+- yarn dev
 
 git pull gets everyone else's latest changes. Running yarn again is a safety habit in case someone added a new package.
 
