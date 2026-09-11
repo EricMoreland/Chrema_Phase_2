@@ -2,6 +2,7 @@ import { useState } from 'react'
 import BalanceCard from './components/BalanceCard'
 import SavingsPanel from './components/SavingsPanel'
 import BudgetsPanel from './components/BudgetsPanel'
+import AccountBar from './components/AccountBar'
 import './App.css'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
     <>
       <h1>Chrema</h1>
 
+      <AccountBar />
       <div className='dashboard'>
       <SavingsPanel />
       <BalanceCard balance={amount}/>
