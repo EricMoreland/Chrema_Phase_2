@@ -10,11 +10,12 @@ function App() {
   return (
     <>
       <h1>Chrema</h1>
+
+      <div className='dashboard'>
       <SavingsPanel />
-      
       <BalanceCard balance={amount}/>
-      
       <BudgetsPanel />
+      </div>
 
       <button onClick={() => {setAmount(amount - 50)}}>
         Spend R50
