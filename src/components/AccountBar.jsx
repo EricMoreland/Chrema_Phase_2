@@ -9,11 +9,17 @@ function AccountBar() {
                 <option>FNB Account</option>
             </select>
 
-            <button>
+            <button 
+                className={selectedType === 'credit' ? 'active' : ''} 
+                onClick={() => setSelectedType('credit')}
+            > {/*If this button matches current state, give it class name "active" */}
                 Credit
             </button>
 
-            <button>
+            <button
+                className={selectedType === 'cash' ? 'active' : ''}
+                onClick={() => setSelectedType('cash')}
+            >
                 Cash
             </button>
         </div>
