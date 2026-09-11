@@ -2,3 +2,16 @@
   display: flex;
   gap: 1rem;
 }
+
+.progress_track {
+  background: #ddd;
+  border-radius: 10px;
+  height: 10px;
+  width: 100%; /*Makes the progress bar the length of the Div*/
+  overflow: hidden;
+}
+
+.progress_fill {
+  background: steelblue;
+  height: 100%; /*Makes the progress in the bar the height of the Progress Bar Div*/
+}
