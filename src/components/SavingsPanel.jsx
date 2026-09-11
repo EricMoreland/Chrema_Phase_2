@@ -7,11 +7,15 @@ function SavingsPanel() {
         <div>
             <h3>Saving Goals</h3>
             {/* .map runs once PER ITEM in the array*/}
-            {savingsArray.map((goal) => (
-                <div key={goal.id}>
-                    {goal.name} - Spent R{goal.spent} / Max R{goal.max}
-                </div>
-            ))}  
+            {savingsArray.map((goal) => {
+                const percentSpent = (goal.spent / goal.max) * 100
+                
+                return (
+                    <div key={goal.id}>
+                        {goal.name} - Spent R{goal.spent} / Max R{goal.max}
+                    </div>
+                )
+            })}  
         </div>
     )
 }
