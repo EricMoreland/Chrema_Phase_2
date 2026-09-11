@@ -7,12 +7,13 @@ import './App.css'
 
 function App() {
   const [amount, setAmount] = useState(1298)
+  const [selectedType, setSelectedType] = useState('cash')
 
   return (
     <>
       <h1>Chrema</h1>
 
-      <AccountBar />
+      <AccountBar selectedType={selectedType} setSelectedType={setSelectedType}/>
       <div className='dashboard'>
       <SavingsPanel />
       <BalanceCard balance={amount}/>

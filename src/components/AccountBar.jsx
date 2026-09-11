@@ -1,8 +1,7 @@
 import { useState } from "react";
 
-function AccountBar() {
-    const [selectedType, setSelectedType] = useState('cash')
-
+function AccountBar({ selectedType, setSelectedType }) {
+   
     return (
         <div className="account_bar">
             <select>
