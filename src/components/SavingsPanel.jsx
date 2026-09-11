@@ -1,6 +1,6 @@
 function SavingsPanel() {
     const savingsArray = [
-        {id: 1, name: 'Emergency fund'}
+        {id: 1, name: 'Emergency fund', spent: 350, max: 700}
     ]
 
     return (
@@ -8,7 +8,9 @@ function SavingsPanel() {
             <h3>Saving Goals</h3>
             {/* .map runs once PER ITEM in the array*/}
             {savingsArray.map((goal) => (
-                <div key={goal.id}>{goal.name}</div>
+                <div key={goal.id}>
+                    {goal.name} - Spent R{goal.spent} / Max R{goal.max}
+                </div>
             ))}  
         </div>
     )
