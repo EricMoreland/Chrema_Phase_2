@@ -28,9 +28,9 @@ function App() {
     setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */}
 
     if (selectedType === 'cash') {
-      setCashBalance(cashBalance - amountNumber)
+      setCashBalance(cashBalance + amountNumber)
     } else {
-      setCreditBalance(creditBalance - amountNumber)
+      setCreditBalance(creditBalance + amountNumber)
     }
 
     setNewAmount('')
@@ -48,15 +48,21 @@ function App() {
         <BudgetsPanel />
       </div>
 
-      <button 
-        onClick={() => 
-          selectedType === 'cash'
-          ? setCashBalance(cashBalance - 50) 
-          : setCreditBalance(creditBalance - 50) 
-          }
-        >
-        Spend R50
-      </button>
+      <input
+        type='text'
+        placeholder='Description'
+        value={newDescription}
+        onChange={(e) => setNewDescription(e.target.value)}
+      /> {/*type a letter, onChange execute -> setNewDescription updates state -> react makes value={newDescription} */}
+
+      <input
+        type='number'
+        placeholder='Amount'
+        value={newAmount}
+        onChange={(e) => setNewAmount(e.target.value)}
+      />
+
+      <button onClick={handleAddTransaction}>Add Transaction</button>
     </>
   )
 }
