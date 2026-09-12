@@ -22,7 +22,13 @@ function App() {
         <BudgetsPanel />
       </div>
 
-      <button onClick={() => { setAmount(amount - 50) }}>
+      <button 
+        onClick={() => 
+          selectedType === 'cash'
+          ? setCashBalance(cashBalance - 50) 
+          : setCreditBalance(creditBalance - 50) 
+          }
+        >
         Spend R50
       </button>
     </>
