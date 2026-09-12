@@ -52,14 +52,15 @@ function App() {
         type='text'
         placeholder='Description'
         value={newDescription}
-        onChange={(e) => setNewDescription(e.target.value)}
+        //event = info about what just happend in the input box (here: the new text typed)
+        onChange={(event) => setNewDescription(event.target.value)} //event.target = the input box, .value = its current text
       /> {/*type a letter, onChange execute -> setNewDescription updates state -> react makes value={newDescription} */}
 
       <input
         type='number'
         placeholder='Amount'
         value={newAmount}
-        onChange={(e) => setNewAmount(e.target.value)}
+        onChange={(event) => setNewAmount(event.target.value)}
       />
 
       <button onClick={handleAddTransaction}>Add Transaction</button>
