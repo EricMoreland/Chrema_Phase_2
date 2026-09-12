@@ -6,21 +6,22 @@ import AccountBar from './components/AccountBar'
 import './App.css'
 
 function App() {
-  const [amount, setAmount] = useState(1298)
+  const [cashBalance, setCashBalance] = useState(1298)
+  const [creditBalance, setCreditBalance] = useState(-450)
   const [selectedType, setSelectedType] = useState('cash')
 
   return (
     <>
       <h1>Chrema</h1>
 
-      <AccountBar selectedType={selectedType} setSelectedType={setSelectedType}/>
+      <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} />
       <div className='dashboard'>
-      <SavingsPanel />
-      <BalanceCard balance={amount}/>
-      <BudgetsPanel />
+        <SavingsPanel />
+        <BalanceCard balance={amount} />
+        <BudgetsPanel />
       </div>
 
-      <button onClick={() => {setAmount(amount - 50)}}>
+      <button onClick={() => { setAmount(amount - 50) }}>
         Spend R50
       </button>
     </>

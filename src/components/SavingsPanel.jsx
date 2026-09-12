@@ -1,6 +1,6 @@
 function SavingsPanel() {
     const savingsArray = [
-        {id: 1, name: 'Emergency fund', spent: 350, max: 700}
+        { id: 1, name: 'Emergency fund', spent: 350, max: 700 }
     ]
 
     return (
@@ -14,7 +14,7 @@ function SavingsPanel() {
                     <div key={goal.id}>
                         <div>{goal.name} - Spent R{goal.spent} / Max R{goal.max}</div>
                         <div className="progress_track">
-                            <div className="progress_fill" style={{ width: `${percentSpent}%` }}></div> 
+                            <div className="progress_fill" style={{ width: `${percentSpent}%` }}></div>
                             {/*
                             -{} to run javascript inside style={} and get the variable declared at start.
                             -Style has to be inline css because it uses the calculated variable.
@@ -22,7 +22,7 @@ function SavingsPanel() {
                         </div>
                     </div>
                 )
-            })}  
+            })}
         </div>
     )
 }
