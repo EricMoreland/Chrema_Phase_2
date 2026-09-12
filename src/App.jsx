@@ -11,12 +11,12 @@ function App() {
   const [selectedType, setSelectedType] = useState('cash')
   const displayBalance = selectedType === 'cash' ? cashBalance : creditBalance
 {/*Deciding between which of 2 different states to show, use if () {}/ternary, to set the correct state to variable */}
-
+  const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
 
   function handleAddTransaction() {
-    const amountNumber = Number(newAmount)
+    const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */}
 
     const newTransaction = {
       id: Date.now(),
@@ -24,6 +24,8 @@ function App() {
       amount: amountNumber,
       type: selectedType
     }
+
+    setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */}
   }
 
   return (
