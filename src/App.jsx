@@ -32,6 +32,9 @@ function App() {
     } else {
       setCreditBalance(creditBalance - amountNumber)
     }
+
+    setNewAmount('')
+    setNewDescription('')
   }
 
   return (
