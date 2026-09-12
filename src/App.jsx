@@ -10,6 +10,21 @@ function App() {
   const [creditBalance, setCreditBalance] = useState(-450)
   const [selectedType, setSelectedType] = useState('cash')
   const displayBalance = selectedType === 'cash' ? cashBalance : creditBalance
+{/*Deciding between which of 2 different states to show, use if () {}/ternary, to set the correct state to variable */}
+
+  const [newAmount, setNewAmount] = useState('')
+  const [newDescription, setNewDescription] = useState('')
+
+  function handleAddTransaction() {
+    const amountNumber = Number(newAmount)
+
+    const newTransaction = {
+      id: Date.now(),
+      description: newDescription,
+      amount: amountNumber,
+      type: selectedType
+    }
+  }
 
   return (
     <>
