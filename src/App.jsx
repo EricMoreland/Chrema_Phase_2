@@ -9,6 +9,7 @@ function App() {
   const [cashBalance, setCashBalance] = useState(1298)
   const [creditBalance, setCreditBalance] = useState(-450)
   const [selectedType, setSelectedType] = useState('cash')
+  const displayBalance = selectedType === 'cash' ? cashBalance : creditBalance
 
   return (
     <>
@@ -17,7 +18,7 @@ function App() {
       <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} />
       <div className='dashboard'>
         <SavingsPanel />
-        <BalanceCard balance={amount} />
+        <BalanceCard balance={displayBalance} />
         <BudgetsPanel />
       </div>
 
