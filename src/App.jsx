@@ -26,6 +26,12 @@ function App() {
     }
 
     setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */}
+
+    if (selectedType === 'cash') {
+      setCashBalance(cashBalance - amountNumber)
+    } else {
+      setCreditBalance(creditBalance - amountNumber)
+    }
   }
 
   return (
