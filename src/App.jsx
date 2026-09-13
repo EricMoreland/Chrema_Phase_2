@@ -3,7 +3,6 @@ import BalanceCard from './components/BalanceCard'
 import SavingsPanel from './components/SavingsPanel'
 import BudgetsPanel from './components/BudgetsPanel'
 import AccountBar from './components/AccountBar'
-import TransactionForm from './components/TransactionForm'
 import './App.css'
 
 function App() {
@@ -41,29 +40,22 @@ function App() {
   return (
     <>
       <div className='app_container'>
-      <h1>Chrema</h1>
+        <h1>Chrema</h1>
 
-      <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} />
-      <div className='dashboard'>
-        <SavingsPanel />
-        <BalanceCard balance={displayBalance} />
-        <BudgetsPanel />
-      </div>
-
-      <TransactionForm
-        newDescription={newDescription}
-        setNewDescription={setNewDescription}
-        newAmount={newAmount}
-        setNewAmount={setNewAmount}
-        handleAddTransactionProp={handleAddTransaction}
-      />
-
-      {transactions.length > 0 && (
-        <p>
-          Recent: {transactions[transactions.length - 1].description} - R
-          {transactions[transactions.length - 1].amount} ({transactions[transactions.length - 1].type})
-        </p>
-      )}
+        <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} />
+        <div className='dashboard'>
+          <SavingsPanel />
+          <BalanceCard
+            balance={displayBalance}
+            newDescription={newDescription}
+            setNewDescription={setNewDescription}
+            newAmount={newAmount}
+            setNewAmount={setNewAmount}
+            handleAddTransactionProp={handleAddTransaction}
+            transactions={transactions}
+          />
+          <BudgetsPanel />
+        </div>
       </div>
     </>
   )
