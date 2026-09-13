@@ -3,6 +3,7 @@ import BalanceCard from './components/BalanceCard'
 import SavingsPanel from './components/SavingsPanel'
 import BudgetsPanel from './components/BudgetsPanel'
 import AccountBar from './components/AccountBar'
+import TransactionForm from './components/TransactionForm'
 import './App.css'
 
 function App() {
@@ -10,13 +11,13 @@ function App() {
   const [creditBalance, setCreditBalance] = useState(-450)
   const [selectedType, setSelectedType] = useState('cash')
   const displayBalance = selectedType === 'cash' ? cashBalance : creditBalance
-{/*Deciding between which of 2 different states to show, use if () {}/ternary, to set the correct state to variable */}
+  {/*Deciding between which of 2 different states to show, use if () {}/ternary, to set the correct state to variable */ }
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
 
   function handleAddTransaction() {
-    const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */}
+    const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */ }
 
     const newTransaction = {
       id: Date.now(),
@@ -25,7 +26,7 @@ function App() {
       type: selectedType
     }
 
-    setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */}
+    setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */ }
 
     if (selectedType === 'cash') {
       setCashBalance(cashBalance + amountNumber)
@@ -48,26 +49,17 @@ function App() {
         <BudgetsPanel />
       </div>
 
-      <input
-        type='text'
-        placeholder='Description'
-        value={newDescription}
-        //event = info about what just happend in the input box (here: the new text typed)
-        onChange={(event) => setNewDescription(event.target.value)} //event.target = the input box, .value = its current text
-      /> {/*type a letter, onChange execute -> setNewDescription updates state -> react makes value={newDescription} */}
-
-      <input
-        type='number'
-        placeholder='Amount'
-        value={newAmount}
-        onChange={(event) => setNewAmount(event.target.value)}
+      <TransactionForm
+        newDescription={newDescription}
+        setNewDescription={setNewDescription}
+        newAmount={newAmount}
+        setNewAmount={setNewAmount}
+        handleAddTransactionProp={handleAddTransaction}
       />
 
-      <button onClick={handleAddTransaction}>Add Transaction</button>
-      
       {transactions.length > 0 && (
         <p>
-          Recent: {transactions[transactions.length - 1].description} - R 
+          Recent: {transactions[transactions.length - 1].description} - R
           {transactions[transactions.length - 1].amount} ({transactions[transactions.length - 1].type})
         </p>
       )}
