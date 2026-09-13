@@ -1,7 +1,8 @@
 function BalanceCard({ balance }) {
     return (
         <div className="card">
-            <div>Balance Card: R {balance}</div>
+            <p className="balance_label">Available Balance</p>
+            <p className="balance_amount">R {balance}</p>
         </div>
     )
 }

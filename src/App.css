@@ -24,6 +24,20 @@ body {
   padding: 1.5rem;
 }
 
+.balance_label {
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.balance_amount {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0;
+}
+
 .progress_track {
   background: #ddd;
   border-radius: 10px;
