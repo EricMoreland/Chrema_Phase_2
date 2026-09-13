@@ -3,27 +3,46 @@ function TransactionForm({
     setNewDescription,
     newAmount,
     setNewAmount,
-    handleAddTransactionProp
+    handleAddTransactionProp,
+    newCategory,
+    setNewCategory,
+    categories
 }) {
     return (
-        <div>
-            <input
-                type='text'
-                placeholder='Description'
-                value={newDescription}
-                //event = info about what just happend in the input box (here: the new text typed)
-                onChange={(event) => setNewDescription(event.target.value)} //event.target = the input box, .value = its current text
-            /> {/*type a letter, onChange execute -> setNewDescription updates state -> react makes value={newDescription} */}
+        <>
+            <div className="category_buttons">
+                {categories.map((category) => {
+                    return (
+                        <button
+                            key={category}
+                            className={newCategory === category ? 'active' : ''}
+                            onClick={() => setNewCategory(category)}
+                        >
+                            {category}
+                        </button>
+                    )
+                })}
+            </div>
+            <div>
+                <input
+                    type='text'
+                    placeholder='Description'
+                    value={newDescription}
+                    //event = info about what just happend in the input box (here: the new text typed)
+                    onChange={(event) => setNewDescription(event.target.value)} //event.target = the input box, .value = its current text
+                /> {/*type a letter, onChange execute -> setNewDescription updates state -> react makes value={newDescription} */}
 
-            <input
-                type='number'
-                placeholder='Amount'
-                value={newAmount}
-                onChange={(event) => setNewAmount(event.target.value)}
-            />
-
-            <button onClick={handleAddTransactionProp}>Add Transaction</button>
-        </div>
+                <input
+                    type='number'
+                    placeholder='Amount'
+                    value={newAmount}
+                    onChange={(event) => setNewAmount(event.target.value)}
+                />
+            </div>
+            <div>
+                <button onClick={handleAddTransactionProp}>Add Transaction</button>
+            </div>
+        </>
     )
 }
 

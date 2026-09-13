@@ -15,6 +15,9 @@ function App() {
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
 
+  const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
+  const [newCategory, setNewCategory] = useState(categories[0])
+
   function handleAddTransaction() {
     const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */ }
 
@@ -22,7 +25,8 @@ function App() {
       id: Date.now(),
       description: newDescription,
       amount: amountNumber,
-      type: selectedType
+      type: selectedType,
+      category: newCategory
     }
 
     setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */ }
@@ -35,6 +39,7 @@ function App() {
 
     setNewAmount('')
     setNewDescription('')
+    setNewCategory(categories[0])
   }
 
   return (
@@ -53,6 +58,9 @@ function App() {
             setNewAmount={setNewAmount}
             handleAddTransactionProp={handleAddTransaction}
             transactions={transactions}
+            newCategory={newCategory}
+            setNewCategory={setNewCategory}
+            categories={categories}
           />
           <BudgetsPanel />
         </div>

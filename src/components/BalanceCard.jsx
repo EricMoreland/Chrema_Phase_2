@@ -8,7 +8,9 @@ function BalanceCard({
     setNewAmount,
     handleAddTransactionProp,
     transactions,
-
+    newCategory,
+    setNewCategory,
+    categories
 }) {
 
     return (
@@ -22,13 +24,18 @@ function BalanceCard({
                 newAmount={newAmount}
                 setNewAmount={setNewAmount}
                 handleAddTransactionProp={handleAddTransactionProp}
+                newCategory={newCategory}
+                setNewCategory={setNewCategory}
+                categories={categories}
             />
 
 
             {transactions.length > 0 && (
                 <p>
                     Recent: {transactions[transactions.length - 1].description} - R
-                    {transactions[transactions.length - 1].amount} ({transactions[transactions.length - 1].type})
+                    {transactions[transactions.length - 1].amount}
+                    ({transactions[transactions.length - 1].type})
+                    ({transactions[transactions.length - 1].category})
                 </p>
             )}
         </div>
