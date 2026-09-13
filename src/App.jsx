@@ -40,6 +40,7 @@ function App() {
 
   return (
     <>
+      <div className='app_container'>
       <h1>Chrema</h1>
 
       <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} />
@@ -63,6 +64,7 @@ function App() {
           {transactions[transactions.length - 1].amount} ({transactions[transactions.length - 1].type})
         </p>
       )}
+      </div>
     </>
   )
 }
