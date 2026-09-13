@@ -64,14 +64,13 @@ function App() {
       />
 
       <button onClick={handleAddTransaction}>Add Transaction</button>
-
-      <ul>
-        {transactions.map((transaction) => (
-          <li key={transaction.id}>
-            {transaction.description} - R{transaction.amount} ({transaction.type})
-          </li>
-        ))}
-      </ul>
+      
+      {transactions.length > 0 && (
+        <p>
+          Recent: {transactions[transactions.length - 1].description} - R 
+          {transactions[transactions.length - 1].amount} ({transactions[transactions.length - 1].type})
+        </p>
+      )}
     </>
   )
 }
