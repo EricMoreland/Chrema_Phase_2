@@ -4,7 +4,7 @@ function BudgetsPanel() {
     ]
 
     return (
-        <div>
+        <div className="card">
             <h3>Budgets</h3>
             {/* .map runs once PER ITEM in the array*/}
             {budgetsArray.map((budget) => {

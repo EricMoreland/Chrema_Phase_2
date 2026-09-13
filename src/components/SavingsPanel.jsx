@@ -4,7 +4,7 @@ function SavingsPanel() {
     ]
 
     return (
-        <div>
+        <div className="card">
             <h3>Saving Goals</h3>
             {/* .map runs once PER ITEM in the array*/}
             {savingsArray.map((goal) => {

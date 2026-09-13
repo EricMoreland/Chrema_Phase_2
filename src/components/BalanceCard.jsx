@@ -1,6 +1,8 @@
 function BalanceCard({ balance }) {
     return (
-        <div>Balance Card: R {balance}</div>
+        <div className="card">
+            <div>Balance Card: R {balance}</div>
+        </div>
     )
 }
 
