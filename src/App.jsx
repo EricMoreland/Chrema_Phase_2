@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import BalanceCard from './components/BalanceCard'
 import SavingsPanel from './components/SavingsPanel'
 import BudgetsPanel from './components/BudgetsPanel'
@@ -14,25 +14,49 @@ function App() {
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
-  const [budgets, setBudgets] = useState([
-    {
-      id: 1,
-      name: 'Food',
-      spent: 400,
-      max: 850
-    }
-  ])
-  const [savingGoals, setSavingGoals] = useState([
-    {
-      id: 1,
-      name: 'Emergency fund',
-      currentAmount: 350,
-      goalAmount: 700
-    }
-  ])
+  const [budgets, setBudgets] = useState([])
+  const [savingGoals, setSavingGoals] = useState([])
 
   const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
   const [newCategory, setNewCategory] = useState(categories[0])
+
+  useEffect(() => {
+    async function loadBudgets() {
+      try {
+        const response = await fetch('/api/budgets')
+
+        if (!response.ok) {
+          throw new Error('Could not load budgets')
+        }
+
+        const budgetData = await response.json() //converts jsaon response to js array of objects
+        setBudgets(budgetData)
+      } catch (error) {
+        console.error(error) //logging if response.ok is false
+      }
+    }
+
+    loadBudgets()
+  }, [])
+
+  useEffect(() => {
+    async function loadSavingGoals() {
+      try {
+        const response = await fetch('/api/saving-goals')
+
+        if (!response.ok) {
+          throw new Error('Could not load saving goals')
+        }
+
+        const savingGoalData = await response.json()
+        setSavingGoals(savingGoalData)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    loadSavingGoals()
+  }, [])
 
   function handleAddTransaction() {
     const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */ }
