@@ -1,0 +1,18 @@
+# AI_LOG.md
+**Project:** Chrema - Org Group 1I (Kraken)
+
+Log every use of an AI tool in this project. Add a new row per use - do not edit or delete past entries.
+
+## Template
+
+| Date | Group Member | Tool (name & version) | Used For | Outcome |
+|---|---|---|---|---|
+| YYYY-MM-DD | Name | Tool vX | Short description of task | One-line result |
+
+---
+
+## Log
+
+| Date | Group Member | Tool (name & version) | Used For | Outcome |
+|---|---|---|---|---|
+| 2026-06-10 | Eric | Claude Sonnet 4.5 | Help understand React code implementation for panels | Guidance on where to implement specific jsx to create panels and what the panels require |

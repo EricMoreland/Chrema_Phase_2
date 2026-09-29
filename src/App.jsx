@@ -14,6 +14,22 @@ function App() {
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
+  const [budgets, setBudgets] = useState([
+    {
+      id: 1,
+      name: 'Food',
+      spent: 400,
+      max: 850
+    }
+  ])
+  const [savingGoals, setSavingGoals] = useState([
+    {
+      id: 1,
+      name: 'Emergency fund',
+      currentAmount: 350,
+      goalAmount: 700
+    }
+  ])
 
   const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
   const [newCategory, setNewCategory] = useState(categories[0])
@@ -49,7 +65,7 @@ function App() {
 
         <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} />
         <div className='dashboard'>
-          <SavingsPanel />
+          <SavingsPanel savingGoals={savingGoals} />
           <BalanceCard
             balance={displayBalance}
             newDescription={newDescription}
@@ -62,7 +78,7 @@ function App() {
             setNewCategory={setNewCategory}
             categories={categories}
           />
-          <BudgetsPanel />
+          <BudgetsPanel budgets={budgets} />
         </div>
       </div>
     </>
