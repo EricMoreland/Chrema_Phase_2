@@ -11,5 +11,5 @@ const schema = fs.readFileSync(
 )
 
 database.exec(schema)
-
+//
 export default database

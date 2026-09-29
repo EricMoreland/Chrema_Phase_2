@@ -13,4 +13,4 @@ export default defineConfig({
     }
   }
 })
-//server:... lets vite forwards react requests to 3001 port since vite usualy runs on weird 5127 or something
+//server:... lets vite forwards react requests to 3001 port since vite usualy runs on weird 5127 or something.

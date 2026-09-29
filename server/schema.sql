@@ -146,4 +146,4 @@ WHERE AccountType = 'cash'
   AND NOT EXISTS (
     SELECT 1
     FROM "Saving Goal"
-  );
+  );;
