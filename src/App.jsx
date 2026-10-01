@@ -8,24 +8,28 @@ import './App.css'
 function App() {
   const [cashBalance, setCashBalance] = useState(1298)
   const [creditBalance, setCreditBalance] = useState(-450)
+
   const [selectedType, setSelectedType] = useState('cash')
   const displayBalance = selectedType === 'cash' ? cashBalance : creditBalance
   {/*Deciding between which of 2 different states to show, use if () {}/ternary, to set the correct state to variable */ }
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
+
   const [budgets, setBudgets] = useState([])
   const [savingGoals, setSavingGoals] = useState([])
 
   const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
   const [newCategory, setNewCategory] = useState(categories[0])
 
+  const [transactionKind, setTransactionKind] = useState('expense') //expense or income
+
   useEffect(() => {
     async function loadBudgets() {
       try {
-        const response = await fetch('/api/budgets')
+        const response = await fetch('/api/budgets') //receives response object
 
-        if (!response.ok) {
+        if (!response.ok) { //response object has a property called ok, which = true if successful
           throw new Error('Could not load budgets')
         }
 
@@ -101,6 +105,8 @@ function App() {
             newCategory={newCategory}
             setNewCategory={setNewCategory}
             categories={categories}
+            transactionKind={transactionKind}
+            setTransactionKind={setTransactionKind}
           />
           <BudgetsPanel budgets={budgets} />
         </div>
