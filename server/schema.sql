@@ -59,16 +59,10 @@ CREATE TABLE IF NOT EXISTS "Saving Goal" (
 
   -- insert if does not exist (IGNORE if already exists)
 INSERT OR IGNORE INTO Account (Name, Balance, AccountType) -- table and columns to insert into
-VALUES ('FNB Cash', 1298, 'cash');
+VALUES ('FNB Account', 1298, 'test');
 
 INSERT OR IGNORE INTO Account (Name, Balance, AccountType) 
-VALUES ('FNB Credit', -450, 'credit');
-
-INSERT OR IGNORE INTO Account (Name, Balance, AccountType) -- for later when using in account selector
-VALUES ('Capitec Cash', 500, 'cash');
-
-INSERT OR IGNORE INTO Account (Name, Balance, AccountType) 
-VALUES ('Capitec Credit', 0, 'credit');
+VALUES ('Capitec Account', 500, 'test');
 
 INSERT INTO Category (CategoryName)
 SELECT 'Home'
@@ -126,7 +120,7 @@ SELECT
 FROM Category
 CROSS JOIN Account
 WHERE Category.CategoryName = 'Food'
-  AND Account.Name = 'FNB Cash' AND Account.AccountType = 'cash'
+  AND Account.Name = 'FNB Account'
   AND NOT EXISTS (
     SELECT 1
     FROM Budget
@@ -148,7 +142,7 @@ SELECT
   '2026-12-31',
   AccountId
 FROM Account
-WHERE Name = 'FNB Cash' AND AccountType = 'cash'
+WHERE Name = 'FNB Account'
   AND NOT EXISTS (
     SELECT 1
     FROM "Saving Goal"

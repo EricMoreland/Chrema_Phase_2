@@ -23,6 +23,27 @@ function App() {
   const [newCategory, setNewCategory] = useState(categories[0])
 
   const [transactionKind, setTransactionKind] = useState('expense') //expense or income
+  const [accounts, setAccounts] = useState([])
+
+//useing async function to use "await". it does that same as using .then().
+
+  useEffect(() => {
+    async function loadAccounts() {
+      try {
+        const response = await fetch('api/accounts')
+
+        if (!response.ok) {
+          throw new Error('Could not load the accounts') //new Error creates Error object, throw stops code and sends error to nearest catch
+        }
+
+        const accountData = await response.json() //without await JS wont stop and wait for promise to resolve it will setAccounts to a Promise object
+        setAccounts(accountData)
+      } catch (error) {
+        console.error(error) //or use console.log or use console.error(error.message)
+      }
+    }
+    loadAccounts()
+  }, [])
 
   useEffect(() => {
     async function loadBudgets() {
@@ -62,6 +83,7 @@ function App() {
     loadSavingGoals()
   }, [])
 
+
   function handleAddTransaction() {
     const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */ }
 
@@ -95,7 +117,7 @@ function App() {
       <div className='app_container'>
         <h1>Chrema</h1>
 
-        <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} />
+        <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} accounts={accounts} />
         <div className='dashboard'>
           <SavingsPanel savingGoals={savingGoals} />
           <BalanceCard
