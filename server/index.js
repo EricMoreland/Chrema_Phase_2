@@ -1,19 +1,19 @@
-import express from 'express'
+import express from 'express' //type = module in package.json allows us to use import instead of require
 import database from './db.js'
 
 const server = express()
 const port = 3001
 
-server.use(express.json())
+server.use(express.json()) //Attaches a incoming JSON,  parses it,  and makes the data available in request.body. NB for Post Requests
 
 server.get('/api/health', (request, response) => {
   response.json({
     status: 'ok'
-  })
+  }) //makes the object json and sends to client (therefore: the response)
 })
 
-server.get('/api/accounts', (request, response) => {
-  const accounts = database
+server.get('/api/accounts', (request, response) => { //register GET request on the path api/acounts
+  const accounts = database                          //callback runs when client hits URL
     .prepare(`
       SELECT
         AccountId AS id,
@@ -23,9 +23,9 @@ server.get('/api/accounts', (request, response) => {
       FROM Account
       ORDER BY AccountId
     `)
-    .all()
+    .all() // (runs SQL on databse) execute prepared statement and return rows as an array of objects
 
-  response.json(accounts)
+  response.json(accounts) //object -> json -> send to client
 })
 
 server.get('/api/categories', (request, response) => {
@@ -85,7 +85,7 @@ server.get('/api/saving-goals', (request, response) => {
   response.json(savingGoals)
 })
 
-server.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`)
+server.listen(port, () => { //bind express app to network port and start listening for incoming requests (fetch() calls)
+  console.log(`Server running at http://localhost:${port}`) //callback runs after server bound to port
 })
 //
