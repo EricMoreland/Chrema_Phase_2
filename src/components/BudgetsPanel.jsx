@@ -4,11 +4,11 @@ function BudgetsPanel({ budgets }) {
             <h3>Budgets</h3>
             {/* .map runs once PER ITEM in the array*/}
             {budgets.map((budget) => {
-                const percentbudget = (budget.spent / budget.max) * 100
+                const percentbudget = (budget.currentAmount / budget.max) * 100
 
                 return (
                     <div key={budget.id}>
-                        <div>{budget.name} - Spent R{budget.spent} / Max R{budget.max}</div>
+                        <div>{budget.name} - Spent R{budget.currentAmount} / Max R{budget.max}</div>
                         <div className="progress_track">
                             <div className="progress_fill" style={{ width: `${percentbudget}%` }}></div>
                         </div>
