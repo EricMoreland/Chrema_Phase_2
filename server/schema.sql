@@ -1,8 +1,8 @@
 PRAGMA foreign_keys = ON;
 
-CREATE TABLE IF NOT EXISTS Account (
+CREATE TABLE IF NOT EXISTS Account ( --prevent creation of duplicate tables when running the schema.sql file multiple times(i.e start & stop the server multiple times)
   AccountId INTEGER PRIMARY KEY AUTOINCREMENT,
-  Name TEXT NOT NULL,
+  Name TEXT NOT NULL UNIQUE, --no dublicate accounts (i.e only 1 FNB account)
   Balance REAL NOT NULL,
   AccountType TEXT NOT NULL
 );
@@ -12,15 +12,15 @@ CREATE TABLE IF NOT EXISTS Category (
   CategoryName TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS "Transaction" (
+CREATE TABLE IF NOT EXISTS "Transaction" ( --use "" because SQL uses Transaction as a reserved keyword
   TransactionId INTEGER PRIMARY KEY AUTOINCREMENT,
   Description TEXT NOT NULL,
   Amount REAL NOT NULL,
-  AccountAccountId INTEGER NOT NULL,
-  CategoryCategoryId INTEGER NOT NULL,
+  AccountAccountId INTEGER NOT NULL, --Links transaction to the account it belongs to
+  CategoryCategoryId INTEGER NOT NULL, --Links transaction to the category it belong to
 
   FOREIGN KEY (AccountAccountId)
-    REFERENCES Account(AccountId),
+    REFERENCES Account(AccountId), -- AccountAccountId in transaction table must match an exisintg AcountId in the Account table
 
   FOREIGN KEY (CategoryCategoryId)
     REFERENCES Category(CategoryId)
@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS "Transaction" (
 CREATE TABLE IF NOT EXISTS Budget (
   BudgetId INTEGER PRIMARY KEY AUTOINCREMENT,
   AmountSet REAL NOT NULL,
-  Period TEXT NOT NULL,
+  CurrentAmount REAL NOT NULL,
+  Period TEXT NOT NULL, --NB remeber to use dropdown menu to select period when creating a budget (limit to daily, weekly, monthly, yearly)
   CategoryCategoryId INTEGER NOT NULL,
   AccountAccountId INTEGER NOT NULL,
 
@@ -52,21 +53,22 @@ CREATE TABLE IF NOT EXISTS "Saving Goal" (
     REFERENCES Account(AccountId)
 );
 
-INSERT INTO Account (Name, Balance, AccountType)
-SELECT 'FNB Cash', 1298, 'cash'
-WHERE NOT EXISTS (
-  SELECT 1
-  FROM Account
-  WHERE AccountType = 'cash'
-);
 
-INSERT INTO Account (Name, Balance, AccountType)
-SELECT 'FNB Credit', -450, 'credit'
-WHERE NOT EXISTS (
-  SELECT 1
-  FROM Account
-  WHERE AccountType = 'credit'
-);
+-- test data for side panels
+
+
+  -- insert if does not exist (IGNORE if already exists)
+INSERT OR IGNORE INTO Account (Name, Balance, AccountType) -- table and columns to insert into
+VALUES ('FNB Cash', 1298, 'cash');
+
+INSERT OR IGNORE INTO Account (Name, Balance, AccountType) 
+VALUES ('FNB Credit', -450, 'credit');
+
+INSERT OR IGNORE INTO Account (Name, Balance, AccountType) -- for later when using in account selector
+VALUES ('Capitec Cash', 500, 'cash');
+
+INSERT OR IGNORE INTO Account (Name, Balance, AccountType) 
+VALUES ('Capitec Credit', 0, 'credit');
 
 INSERT INTO Category (CategoryName)
 SELECT 'Home'
@@ -110,22 +112,26 @@ WHERE NOT EXISTS (
 
 INSERT INTO Budget (
   AmountSet,
+  CurrentAmount,
   Period,
   CategoryCategoryId,
   AccountAccountId
 )
 SELECT
   850,
+  200,
   'monthly',
   Category.CategoryId,
   Account.AccountId
 FROM Category
 CROSS JOIN Account
 WHERE Category.CategoryName = 'Food'
-  AND Account.AccountType = 'cash'
+  AND Account.Name = 'FNB Cash' AND Account.AccountType = 'cash'
   AND NOT EXISTS (
     SELECT 1
     FROM Budget
+    WHERE CategoryCategoryId = Category.CategoryId
+      AND AccountAccountId = Account.AccountId
   );
 
   INSERT INTO "Saving Goal" (
@@ -142,8 +148,9 @@ SELECT
   '2026-12-31',
   AccountId
 FROM Account
-WHERE AccountType = 'cash'
+WHERE Name = 'FNB Cash' AND AccountType = 'cash'
   AND NOT EXISTS (
     SELECT 1
     FROM "Saving Goal"
+    WHERE AccountAccountId = Account.AccountId
   );;

@@ -49,17 +49,10 @@ server.get('/api/budgets', (request, response) => {
         Budget.BudgetId AS id,
         Category.CategoryName AS name,
         Budget.AmountSet AS max,
-        COALESCE(SUM("Transaction".Amount), 0) AS spent
+        Budget.CurrentAmount AS currentAmount
       FROM Budget
       INNER JOIN Category
         ON Budget.CategoryCategoryId = Category.CategoryId
-      LEFT JOIN "Transaction"
-        ON "Transaction".CategoryCategoryId = Budget.CategoryCategoryId
-        AND "Transaction".AccountAccountId = Budget.AccountAccountId
-      GROUP BY
-        Budget.BudgetId,
-        Category.CategoryName,
-        Budget.AmountSet
       ORDER BY Budget.BudgetId
     `)
     .all()
@@ -67,12 +60,12 @@ server.get('/api/budgets', (request, response) => {
   response.json(budgets)
 })
 
-server.get('/api/saving-goals', (request, response) => {
+server.get('/api/saving-goals', (request, response) => { //GoalName AS name, therefore have to use name in components, not GoalAmount.
   const savingGoals = database
     .prepare(`
       SELECT
         SavingGoalId AS id,
-        GoalName AS name,
+        GoalName AS name, 
         GoalAmount AS max,
         CurrentAmount AS currentAmount,
         GoalDate AS goalDate,
