@@ -70,20 +70,24 @@ function App() {
       description: newDescription,
       amount: amountNumber,
       type: selectedType,
-      category: newCategory
+      category: newCategory,
+      kind: transactionKind
     }
 
     setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */ }
 
+    const plusOrMinusAmount = transactionKind === 'income' ? amountNumber : -amountNumber
+
     if (selectedType === 'cash') {
-      setCashBalance(cashBalance + amountNumber)
+      setCashBalance(cashBalance + plusOrMinusAmount)
     } else {
-      setCreditBalance(creditBalance + amountNumber)
+      setCreditBalance(creditBalance + plusOrMinusAmount)
     }
 
     setNewAmount('')
     setNewDescription('')
     setNewCategory(categories[0])
+    setTransactionKind('expense')
   }
 
   return (
