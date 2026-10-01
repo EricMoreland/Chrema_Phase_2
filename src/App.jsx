@@ -8,24 +8,49 @@ import './App.css'
 function App() {
   const [cashBalance, setCashBalance] = useState(1298)
   const [creditBalance, setCreditBalance] = useState(-450)
+
   const [selectedType, setSelectedType] = useState('cash')
   const displayBalance = selectedType === 'cash' ? cashBalance : creditBalance
   {/*Deciding between which of 2 different states to show, use if () {}/ternary, to set the correct state to variable */ }
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
+
   const [budgets, setBudgets] = useState([])
   const [savingGoals, setSavingGoals] = useState([])
 
   const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
   const [newCategory, setNewCategory] = useState(categories[0])
 
+  const [transactionKind, setTransactionKind] = useState('expense') //expense or income
+  const [accounts, setAccounts] = useState([])
+
+//useing async function to use "await". it does that same as using .then().
+
+  useEffect(() => {
+    async function loadAccounts() {
+      try {
+        const response = await fetch('api/accounts')
+
+        if (!response.ok) {
+          throw new Error('Could not load the accounts') //new Error creates Error object, throw stops code and sends error to nearest catch
+        }
+
+        const accountData = await response.json() //without await JS wont stop and wait for promise to resolve it will setAccounts to a Promise object
+        setAccounts(accountData)
+      } catch (error) {
+        console.error(error) //or use console.log or use console.error(error.message)
+      }
+    }
+    loadAccounts()
+  }, [])
+
   useEffect(() => {
     async function loadBudgets() {
       try {
-        const response = await fetch('/api/budgets')
+        const response = await fetch('/api/budgets') //receives response object
 
-        if (!response.ok) {
+        if (!response.ok) { //response object has a property called ok, which = true if successful
           throw new Error('Could not load budgets')
         }
 
@@ -58,6 +83,7 @@ function App() {
     loadSavingGoals()
   }, [])
 
+
   function handleAddTransaction() {
     const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */ }
 
@@ -66,20 +92,24 @@ function App() {
       description: newDescription,
       amount: amountNumber,
       type: selectedType,
-      category: newCategory
+      category: newCategory,
+      kind: transactionKind
     }
 
     setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */ }
 
+    const plusOrMinusAmount = transactionKind === 'income' ? amountNumber : -amountNumber
+
     if (selectedType === 'cash') {
-      setCashBalance(cashBalance + amountNumber)
+      setCashBalance(cashBalance + plusOrMinusAmount)
     } else {
-      setCreditBalance(creditBalance + amountNumber)
+      setCreditBalance(creditBalance + plusOrMinusAmount)
     }
 
     setNewAmount('')
     setNewDescription('')
     setNewCategory(categories[0])
+    setTransactionKind('expense')
   }
 
   return (
@@ -87,7 +117,7 @@ function App() {
       <div className='app_container'>
         <h1>Chrema</h1>
 
-        <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} />
+        <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} accounts={accounts} />
         <div className='dashboard'>
           <SavingsPanel savingGoals={savingGoals} />
           <BalanceCard
@@ -101,6 +131,8 @@ function App() {
             newCategory={newCategory}
             setNewCategory={setNewCategory}
             categories={categories}
+            transactionKind={transactionKind}
+            setTransactionKind={setTransactionKind}
           />
           <BudgetsPanel budgets={budgets} />
         </div>

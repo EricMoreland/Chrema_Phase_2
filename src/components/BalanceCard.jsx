@@ -10,7 +10,9 @@ function BalanceCard({
     transactions,
     newCategory,
     setNewCategory,
-    categories
+    categories,
+    transactionKind,
+    setTransactionKind
 }) {
 
     return (
@@ -27,6 +29,8 @@ function BalanceCard({
                 newCategory={newCategory}
                 setNewCategory={setNewCategory}
                 categories={categories}
+                transactionKind={transactionKind}
+                setTransactionKind={setTransactionKind}
             />
 
 

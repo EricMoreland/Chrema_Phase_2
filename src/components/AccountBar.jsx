@@ -1,11 +1,13 @@
 import { useState } from "react";
 
-function AccountBar({ selectedType, setSelectedType }) {
+function AccountBar({ selectedType, setSelectedType, accounts }) {
    
     return (
         <div className="account_bar">
             <select>
-                <option>FNB Account</option>
+                {accounts.map((account) => (
+                <option key={account.id} value={account.id}>{account.name}</option>
+                ))}
             </select>
 
             <button 
