@@ -2,6 +2,8 @@ import TransactionForm from "./TransactionForm"
 
 function BalanceCard({
     balance,
+    showTransactionForm,
+    setShowTransactionForm,
     newDescription,
     setNewDescription,
     newAmount,
@@ -20,6 +22,11 @@ function BalanceCard({
             <p className="balance_label">Available Balance</p>
             <p className="balance_amount">R {balance}</p>
 
+            <button onClick={() => setShowTransactionForm(true)}>
+                + Add Transaction
+            </button>
+
+            {showTransactionForm && (
             <TransactionForm
                 newDescription={newDescription}
                 setNewDescription={setNewDescription}
@@ -31,7 +38,9 @@ function BalanceCard({
                 categories={categories}
                 transactionKind={transactionKind}
                 setTransactionKind={setTransactionKind}
+                onClose={() => setShowTransactionForm(false)} //form closes when 
             />
+            )}
 
 
             {transactions.length > 0 && (

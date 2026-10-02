@@ -23,10 +23,12 @@ function App() {
   const [transactionKind, setTransactionKind] = useState('expense') //expense or income
   const [accounts, setAccounts] = useState([])
 
-  const [selectedAccountId, setSelectedAccountId] = useState(null)
+  const [showTransactionForm, setShowTransactionForm] = useState(false)
+
 
   //finds and returns the first single item matching the condition
-
+  
+  const [selectedAccountId, setSelectedAccountId] = useState(null)
   const selectedAccount = accounts.find((account) => account.id === selectedAccountId)
 
   const displayBalance = selectedAccount
@@ -140,6 +142,8 @@ function App() {
           <SavingsPanel savingGoals={savingGoals} />
           <BalanceCard
             balance={displayBalance}
+            showTransactionForm={showTransactionForm}
+            setShowTransactionForm={setShowTransactionForm}
             newDescription={newDescription}
             setNewDescription={setNewDescription}
             newAmount={newAmount}
