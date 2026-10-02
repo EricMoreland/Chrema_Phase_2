@@ -18,7 +18,8 @@ server.get('/api/accounts', (request, response) => { //register GET request on t
       SELECT
         AccountId AS id,
         Name AS name,
-        Balance AS balance,
+        CashBalance AS cashBalance,
+        CreditBalance AS creditBalance,
         AccountType AS type
       FROM Account
       ORDER BY AccountId

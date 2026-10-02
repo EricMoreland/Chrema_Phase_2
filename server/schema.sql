@@ -3,7 +3,8 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS Account ( --prevent creation of duplicate tables when running the schema.sql file multiple times(i.e start & stop the server multiple times)
   AccountId INTEGER PRIMARY KEY AUTOINCREMENT,
   Name TEXT NOT NULL UNIQUE, --no dublicate accounts (i.e only 1 FNB account)
-  Balance REAL NOT NULL,
+  CashBalance REAL NOT NULL,
+  CreditBalance REAL NOT NULL,
   AccountType TEXT NOT NULL
 );
 
@@ -58,11 +59,11 @@ CREATE TABLE IF NOT EXISTS "Saving Goal" (
 
 
   -- insert if does not exist (IGNORE if already exists)
-INSERT OR IGNORE INTO Account (Name, Balance, AccountType) -- table and columns to insert into
-VALUES ('FNB Account', 1298, 'test');
+INSERT OR IGNORE INTO Account (Name, CashBalance, CreditBalance, AccountType) -- table and columns to insert into
+VALUES ('FNB Account', 1298, 0, 'bank');
 
-INSERT OR IGNORE INTO Account (Name, Balance, AccountType) 
-VALUES ('Capitec Account', 500, 'test');
+INSERT OR IGNORE INTO Account (Name, CashBalance, CreditBalance, AccountType) 
+VALUES ('Capitec Account', 500, 0, 'bank');
 
 INSERT INTO Category (CategoryName)
 SELECT 'Home'

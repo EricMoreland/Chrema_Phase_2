@@ -6,11 +6,9 @@ import AccountBar from './components/AccountBar'
 import './App.css'
 
 function App() {
-  const [cashBalance, setCashBalance] = useState(1298)
-  const [creditBalance, setCreditBalance] = useState(-450)
 
   const [selectedType, setSelectedType] = useState('cash')
-  const displayBalance = selectedType === 'cash' ? cashBalance : creditBalance
+  //const displayBalance = selectedType === 'cash' ? cashBalance : creditBalance (NEW DISPLAYBLANCE VARIABLE BELOW)
   {/*Deciding between which of 2 different states to show, use if () {}/ternary, to set the correct state to variable */ }
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
@@ -25,6 +23,16 @@ function App() {
   const [transactionKind, setTransactionKind] = useState('expense') //expense or income
   const [accounts, setAccounts] = useState([])
 
+  const [selectedAccountId, setSelectedAccountId] = useState(null)
+
+  //finds and returns the first single item matching the condition
+
+  const selectedAccount = accounts.find((account) => account.id === selectedAccountId)
+
+  const displayBalance = selectedAccount
+    ? (selectedType === 'cash' ? selectedAccount.cashBalance : selectedAccount.creditBalance)
+    : 0
+
 //useing async function to use "await". it does that same as using .then().
 
   useEffect(() => {
@@ -38,7 +46,11 @@ function App() {
 
         const accountData = await response.json() //without await JS wont stop and wait for promise to resolve it will setAccounts to a Promise object
         setAccounts(accountData)
-      } catch (error) {
+
+        if (accountData.length > 0) { //if there are multiple accounts, default to first one.
+          setSelectedAccountId(accountData[0].id)
+        }
+      } catch (error) { 
         console.error(error) //or use console.log or use console.error(error.message)
       }
     }
