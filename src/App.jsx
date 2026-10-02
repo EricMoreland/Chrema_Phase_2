@@ -129,7 +129,13 @@ function App() {
       <div className='app_container'>
         <h1>Chrema</h1>
 
-        <AccountBar selectedType={selectedType} setSelectedType={setSelectedType} accounts={accounts} />
+        <AccountBar 
+        selectedType={selectedType} 
+        setSelectedType={setSelectedType} 
+        accounts={accounts}
+        selectedAccountId={selectedAccountId}
+        setSelectedAccountId={setSelectedAccountId} 
+        />
         <div className='dashboard'>
           <SavingsPanel savingGoals={savingGoals} />
           <BalanceCard
