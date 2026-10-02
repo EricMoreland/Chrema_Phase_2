@@ -1,10 +1,13 @@
 import { useState } from "react";
 
-function AccountBar({ selectedType, setSelectedType, accounts }) {
+function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId, setSelectedAccountId }) {
    
     return (
         <div className="account_bar">
-            <select>
+            <select
+                value={selectedAccountId ?? ''} //while fetch runs and before accounts are loaded, selectedAccountId is null. ?? evaluate between null and '' and returns the first non-null value. 
+                onChange={(e) => setSelectedAccountId(Number(e.target.value))} //value from selectedAccountId is a string
+            >
                 {accounts.map((account) => (
                 <option key={account.id} value={account.id}>{account.name}</option>
                 ))}

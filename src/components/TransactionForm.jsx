@@ -8,7 +8,8 @@ function TransactionForm({
     setNewCategory,
     categories,
     transactionKind,
-    setTransactionKind
+    setTransactionKind,
+    onClose
 }) {
     return (
         <>
@@ -58,6 +59,7 @@ function TransactionForm({
             </div>
             <div>
                 <button onClick={handleAddTransactionProp}>Add Transaction</button>
+                <button onClick={onClose}>Close</button>
             </div>
         </>
     )
