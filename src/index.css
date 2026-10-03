@@ -1,3 +1,9 @@
+@import "tailwindcss";
+
+@theme { /*Sets the font-serif font as Ancizar Serif and fallback as serif. error is just a flag from eslint*/
+  --font-serif: "Ancizar Serif", serif;
+}
+
 * {
   box-sizing: border-box;
 }
