@@ -1,6 +1,6 @@
 function SavingsPanel({ savingGoals }) {
     return (
-        <div className="bg-slate-800 rounded-3xl p-8 min-h-[410px] min-w-[280px]">
+        <div className="bg-[#172733] rounded-3xl p-8 min-h-[410px] min-w-[280px]">
             <h3 className="font-serif text-xl text-white mb-4">Saving Goals</h3>
             {/* .map runs once PER ITEM in the array*/}
             {savingGoals.map((goal) => {

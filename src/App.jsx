@@ -27,7 +27,7 @@ function App() {
 
 
   //finds and returns the first single item matching the condition
-  
+
   const [selectedAccountId, setSelectedAccountId] = useState(null)
   const selectedAccount = accounts.find((account) => account.id === selectedAccountId)
 
@@ -35,7 +35,7 @@ function App() {
     ? (selectedType === 'cash' ? selectedAccount.cashBalance : selectedAccount.creditBalance)
     : 0
 
-//useing async function to use "await". it does that same as using .then().
+  //useing async function to use "await". it does that same as using .then().
 
   useEffect(() => {
     async function loadAccounts() {
@@ -52,7 +52,7 @@ function App() {
         if (accountData.length > 0) { //if there are multiple accounts, default to first one.
           setSelectedAccountId(accountData[0].id)
         }
-      } catch (error) { 
+      } catch (error) {
         console.error(error) //or use console.log or use console.error(error.message)
       }
     }
@@ -127,19 +127,30 @@ function App() {
   }
 
   return (
-    <>
-      <div className='max-w-5xl mx-auto p-8 text-center'>
-        <h1 className="text-4xl font-bold font-serif text-white">Chrema</h1>
+    <div className='min-h-screen bg-[#0d1720] px-2 py-4 text-center text-[#eee9de]'>
+      <header className="flex items-center justify-between px-2">
+        <h1 className="font-serif text-3xl tracking-wide text-[#eee9de]">Chrema</h1>
+        <button
+          type="button"
+          aria-label="Notifications"
+          className="grid size-10 place-items-center rounded-full border-4 border-[#eee9de] bg-[#0d1720] text-2xl text-red-600"
+        >
+          !
+        </button>
+      </header>
 
-        <AccountBar 
-        selectedType={selectedType} 
-        setSelectedType={setSelectedType} 
-        accounts={accounts}
-        selectedAccountId={selectedAccountId}
-        setSelectedAccountId={setSelectedAccountId} 
-        />
-        <div className='flex gap-6 justify-center items-start'>
-          <SavingsPanel savingGoals={savingGoals} />
+      <main className="mx-auto mt-8 grid max-w-[1340px] grid-cols-1 items-start gap-4 lg:grid-cols-[278px_minmax(0,1fr)_278px]">
+        <SavingsPanel savingGoals={savingGoals} />
+
+        <section className="rounded-[42px] border border-[#41515b] bg-[#172733] p-5 shadow-2xl">
+          <AccountBar
+            selectedType={selectedType}
+            setSelectedType={setSelectedType}
+            accounts={accounts}
+            selectedAccountId={selectedAccountId}
+            setSelectedAccountId={setSelectedAccountId}
+          />
+
           <BalanceCard
             balance={displayBalance}
             showTransactionForm={showTransactionForm}
@@ -156,10 +167,11 @@ function App() {
             transactionKind={transactionKind}
             setTransactionKind={setTransactionKind}
           />
-          <BudgetsPanel budgets={budgets} />
-        </div>
-      </div>
-    </>
+        </section>
+
+        <BudgetsPanel budgets={budgets} />
+      </main>
+    </div>
   )
 }
 
