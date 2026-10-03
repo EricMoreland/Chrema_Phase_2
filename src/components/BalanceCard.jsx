@@ -18,13 +18,18 @@ function BalanceCard({
 }) {
 
     return (
-        <div className="card">
-            <p className="balance_label">Available Balance</p>
-            <p className="balance_amount">R {balance}</p>
+        <div className="min-h-[440px] w-full rounded-[36px] bg-[#172733] p-8 text-center">
+            <p className="text-slate-400 font-serif text-sm tracking-widest uppercase mb-2">Available Balance</p>
+            <p className="text-6xl font-serif text-white mb-8">R {balance}</p>
 
-            <button onClick={() => setShowTransactionForm(true)}>
-                + Add Transaction
-            </button>
+            <div className="flex flex-col items-center bg-sky-600 text-white rounded-4xl p-3 max-w-[500px] center mx-auto">
+                <button 
+                onClick={() => setShowTransactionForm(true)}
+                className="font-serif uppercase text-slate-300 mt-4"
+                >
+                    + Add Transaction
+                </button>
+            </div>
 
             {showTransactionForm && (
             <TransactionForm
@@ -44,7 +49,7 @@ function BalanceCard({
 
 
             {transactions.length > 0 && (
-                <p>
+                <p className="text-slate-400 font-serif text-sm tracking-widest uppercase mt-8">
                     Recent: {transactions[transactions.length - 1].description} - R
                     {transactions[transactions.length - 1].amount}
                     ({transactions[transactions.length - 1].type})
