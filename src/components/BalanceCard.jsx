@@ -18,9 +18,9 @@ function BalanceCard({
 }) {
 
     return (
-        <div className="card">
-            <p className="balance_label">Available Balance</p>
-            <p className="balance_amount">R {balance}</p>
+        <div className="bg-slate-800 rounded-3xl p-8 text-center">
+            <p className="text-slate-400 text-sm tracking-widest uppercase mb-2">Available Balance</p>
+            <p className="text-6xl font-serif text-white mb-8">R {balance}</p>
 
             <button onClick={() => setShowTransactionForm(true)}>
                 + Add Transaction
