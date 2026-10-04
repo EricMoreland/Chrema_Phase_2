@@ -20,3 +20,4 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 | 2026-10-1 | Eric | Gemeni Flash 3.6 | Verify schema.sql according to our vision for the app | Identified errors and helped understand current errors regarding my inserts to test. |
 | 2026-10-2 | Eric | Copilot student | Help fix onClose not working | Identified I need to add it to a button -I was tired at this point :( |
 | 2026-10-3 | Eric | Copilot student | Debug added css with tailwind to understand how to match it with wireframes | Identified and explained missing elements from classNames |
+| 2026-10-4 | Eric | Gemini Pro | Format wording of process writeup on whatsapp to a more clear structure | Formated our existing process write up to a bullet point type format |
