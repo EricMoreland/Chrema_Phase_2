@@ -4,6 +4,7 @@ import SavingsPanel from './components/SavingsPanel'
 import BudgetsPanel from './components/BudgetsPanel'
 import AccountBar from './components/AccountBar'
 import './App.css'
+import axios from 'axios'
 
 function App() {
 
@@ -35,66 +36,46 @@ function App() {
     ? (selectedType === 'cash' ? selectedAccount.cashBalance : selectedAccount.creditBalance)
     : 0
 
-  //useing async function to use "await". it does that same as using .then().
+
 
   useEffect(() => {
-    async function loadAccounts() {
-      try {
-        const response = await fetch('api/accounts')
-
-        if (!response.ok) {
-          throw new Error('Could not load the accounts') //new Error creates Error object, throw stops code and sends error to nearest catch
-        }
-
-        const accountData = await response.json() //without await JS wont stop and wait for promise to resolve it will setAccounts to a Promise object
+    axios
+    .get('/api/accounts') //receives response object, axios automatically converts json to js array of objects
+      .then((response) => {
+        const accountData = response.data //therefore use data property to get the array of objects from response object
+        
         setAccounts(accountData)
 
         if (accountData.length > 0) { //if there are multiple accounts, default to first one.
           setSelectedAccountId(accountData[0].id)
         }
-      } catch (error) {
-        console.error(error) //or use console.log or use console.error(error.message)
-      }
-    }
-    loadAccounts()
+      })  
+      .catch((error) => {
+        console.error(error) //axios throws error when request fails.
+      })
   }, [])
 
   useEffect(() => {
-    async function loadBudgets() {
-      try {
-        const response = await fetch('/api/budgets') //receives response object
-
-        if (!response.ok) { //response object has a property called ok, which = true if successful
-          throw new Error('Could not load budgets')
-        }
-
-        const budgetData = await response.json() //converts jsaon response to js array of objects
-        setBudgets(budgetData)
-      } catch (error) {
-        console.error(error) //logging if response.ok is false
-      }
-    }
-
-    loadBudgets()
+    axios
+    .get('/api/budgets')
+    .then((response) => {
+      const budgetData = response.data
+      setBudgets(budgetData)
+    })   
+    .catch((error) => {
+        console.error(error) //logs error if axios request fails. Could also use alert() to show user error message.
+      })
   }, [])
 
   useEffect(() => {
-    async function loadSavingGoals() {
-      try {
-        const response = await fetch('/api/saving-goals')
-
-        if (!response.ok) {
-          throw new Error('Could not load saving goals')
-        }
-
-        const savingGoalData = await response.json()
+    axios.get('/api/saving-goals')
+      .then((response) => {
+        const savingGoalData = response.data
         setSavingGoals(savingGoalData)
-      } catch (error) {
+      })
+      .catch((error) => {
         console.error(error)
-      }
-    }
-
-    loadSavingGoals()
+      })
   }, [])
 
 
