@@ -1,3 +1,5 @@
+/*Not all of these are being used, but they are kept as failsafe options in case they are needed later.*/
+
 .dashboard {
   display: flex;
   gap: 1rem;
