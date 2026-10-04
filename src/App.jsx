@@ -64,7 +64,7 @@ function App() {
             setNewCategory={setNewCategory}
             categories={categories}
           />
-          <BudgetsPanel budgets={budgets} />
+          <BudgetsPanel budgets={budgets} setBudgets={setBudgets} />
         </div>
       </div>
     </>
