@@ -1,13 +1,11 @@
-function BudgetsPanel() {
-    const budgetsArray = [
-        { id: 1, name: 'Food', spent: 400, max: 850 }
-    ]
+function BudgetsPanel({ budgets }) {
+    
 
     return (
         <div className="card">
             <h3>Budgets</h3>
             {/* .map runs once PER ITEM in the array*/}
-            {budgetsArray.map((budget) => {
+            {budgets.map((budget) => {
                 const percentbudget = (budget.spent / budget.max) * 100
 
                 return (

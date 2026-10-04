@@ -17,7 +17,9 @@ function App() {
 
   const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
   const [newCategory, setNewCategory] = useState(categories[0])
-
+  const [budgets, setBudgets] = useState([
+    { id: 1, name: 'Food', spent: 400, max: 850}
+  ])
   function handleAddTransaction() {
     const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */ }
 
@@ -62,7 +64,7 @@ function App() {
             setNewCategory={setNewCategory}
             categories={categories}
           />
-          <BudgetsPanel />
+          <BudgetsPanel budgets={budgets} />
         </div>
       </div>
     </>
