@@ -1,24 +1,18 @@
-function SavingsPanel() {
-    const savingsArray = [
-        { id: 1, name: 'Emergency fund', spent: 350, max: 700 }
-    ]
-
+function SavingsPanel({ savingGoals }) {
     return (
-        <div className="card">
-            <h3>Saving Goals</h3>
+        <div className="bg-[#172733] rounded-3xl p-8 min-h-[410px] min-w-[280px]">
+            <h3 className="font-serif text-xl text-white mb-4">Saving Goals</h3>
             {/* .map runs once PER ITEM in the array*/}
-            {savingsArray.map((goal) => {
-                const percentSpent = (goal.spent / goal.max) * 100
+            {savingGoals.map((goal) => {
+                const percentComplete = (goal.currentAmount / goal.max) * 100
 
                 return (
-                    <div key={goal.id}>
-                        <div>{goal.name} - Spent R{goal.spent} / Max R{goal.max}</div>
-                        <div className="progress_track">
-                            <div className="progress_fill" style={{ width: `${percentSpent}%` }}></div>
-                            {/*
-                            -{} to run javascript inside style={} and get the variable declared at start.
-                            -Style has to be inline css because it uses the calculated variable.
-                            */}
+                    <div key={goal.id} className="mb-4">
+                        <div className="text-slate-300 text-sm mb-1 font-serif">
+                            {goal.name} - R{goal.currentAmount} / R{goal.max}
+                        </div>
+                        <div className="bg-slate-600 rounded-full h-2 w-full overflow-hidden">
+                            <div className="bg-sky-500 h-full" style={{ width: `${percentComplete}%` }}></div>
                         </div>
                     </div>
                 )

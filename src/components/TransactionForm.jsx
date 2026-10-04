@@ -6,10 +6,28 @@ function TransactionForm({
     handleAddTransactionProp,
     newCategory,
     setNewCategory,
-    categories
+    categories,
+    transactionKind,
+    setTransactionKind,
+    onClose
 }) {
     return (
         <>
+            <div className="account_bar">
+                <button
+                    className={transactionKind === 'income' ? 'active' : ''}
+                    onClick={() => setTransactionKind('income')}
+                >
+                    Income
+                </button>
+                <button
+                    className={transactionKind === 'expense' ? 'active' : ''}
+                    onClick={() => setTransactionKind('expense')}
+                >
+                    Expense
+                </button>
+            </div>
+
             <div className="category_buttons">
                 {categories.map((category) => {
                     return (
@@ -41,6 +59,7 @@ function TransactionForm({
             </div>
             <div>
                 <button onClick={handleAddTransactionProp}>Add Transaction</button>
+                <button onClick={onClose}>Close</button>
             </div>
         </>
     )
