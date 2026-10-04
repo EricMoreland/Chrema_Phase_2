@@ -1,4 +1,4 @@
-import express from 'express' //type = module in package.json allows us to use import instead of require
+import express, { response } from 'express' //type = module in package.json allows us to use import instead of require
 import database from './db.js'
 
 const server = express()
@@ -6,10 +6,11 @@ const port = 3001
 
 server.use(express.json()) //Attaches a incoming JSON,  parses it,  and makes the data available in request.body. NB for Post Requests
 
-server.get('/api/health', (request, response) => {
-  response.json({
-    status: 'ok'
-  }) //makes the object json and sends to client (therefore: the response)
+//testing request to modify and view whats inside the database
+server.get('/api/test', (req, res) => {
+  const test = database.prepare('SELECT * FROM Budget').all()
+  res.json(test)
+  console.log(test)
 })
 
 server.get('/api/accounts', (request, response) => { //register GET request on the path api/acounts
