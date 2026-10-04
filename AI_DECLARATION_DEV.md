@@ -21,3 +21,5 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 | 2026-10-2 | Eric | Copilot student | Help fix onClose not working | Identified I need to add it to a button -I was tired at this point :( |
 | 2026-10-3 | Eric | Copilot student | Debug added css with tailwind to understand how to match it with wireframes | Identified and explained missing elements from classNames |
 | 2026-10-4 | Eric | Gemini Pro | Format wording of process writeup on whatsapp to a more clear structure | Formated our existing process write up to a bullet point type format |
+| 2026-10-4 | Eric | Copilot Student | Explain how axios whould work for current code structure and show example of how to implement it with .then() | Explained its auto reject and parse capability and showed exmaple to help me understand how to implement it. |
+| 2026-10-4 | Eric | Copilot Student | Explain possible errors or what needs revision since using axios and .then in API calls | Identified error in .catch and extra .then |
