@@ -66,14 +66,14 @@ server.get('/api/saving-goals', (request, response) => { //GoalName AS name, the
   const savingGoals = database
     .prepare(`
       SELECT
-        SavingGoalId AS id,
+        SavingId AS id,
         GoalName AS name, 
         GoalAmount AS max,
         CurrentAmount AS currentAmount,
         GoalDate AS goalDate,
         AccountAccountId AS accountId
       FROM "Saving Goal"
-      ORDER BY SavingGoalId
+      ORDER BY SavingId
     `)
     .all()
 
