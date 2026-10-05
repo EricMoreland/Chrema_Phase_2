@@ -45,8 +45,9 @@ function App() {
   const [transactionKind, setTransactionKind] = useState('expense') //expense or income
   const [accounts, setAccounts] = useState([])
 
-  const [showTransactionForm, setShowTransactionForm] = useState(false)
-
+  const [showReportError, setShowReportError] = useState(false)
+  //const [showTransactionForm, setShowTransactionForm] = useState(false)
+  const [activeWorkspaceView, setActiveWorkspaceView] = useState('dashboard')
 
   //finds and returns the first single item matching the condition
 
@@ -56,7 +57,9 @@ function App() {
     ? (selectedType === 'cash' ? selectedAccount.cashBalance : selectedAccount.creditBalance)
     : 0
 
-  const [showReportError, setShowReportError] = useState(false)
+  
+
+
 
 
   useEffect(() => {
@@ -161,8 +164,9 @@ setAccounts((currentAccounts) =>
 
           <BalanceCard
             balance={displayBalance}
-            showTransactionForm={showTransactionForm}
-            setShowTransactionForm={setShowTransactionForm}
+            activeWorkspaceView={activeWorkspaceView}
+            onOpenTransaction={() => setActiveWorkspaceView("add-transaction")} 
+            onCloseView={() => setActiveWorkspaceView("dashboard")}
             newDescription={newDescription}
             setNewDescription={setNewDescription}
             newAmount={newAmount}

@@ -28,3 +28,5 @@ Process Write Up has been discussed in class meetings on monday's, written and c
 
  - Documentation Updates: As the codebase grew more complex and intertwined, extensive in-code comments were continuously added to ensure all members could understand and effectively build upon the base logic.
 
+ - Switch to PGlite implementation
+
