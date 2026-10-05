@@ -41,7 +41,11 @@ function TransactionForm({
                     return (
                         <button
                             key={category}
-                            className={newCategory === category ? 'active' : ''}
+                            className={`rounded-full px-4 py-2 font-serif text-sm ${
+                                newCategory === category
+                                    ? 'bg-sky-600 text-white'
+                                    : 'bg-slate-700 text-slate-300'
+                            }`}
                             onClick={() => setNewCategory(category)}
                         >
                             {category}
