@@ -17,7 +17,26 @@ function App() {
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
 
-  const [budgets, setBudgets] = useState([])
+  const [budgets, setBudgets] = useState([
+    {
+      id: 1,
+      category: 'Groceries',
+      currentAmount: 125,
+      limit: 350
+    },
+    {
+      id: 2,
+      category: 'Transport',
+      currentAmount: 80,
+      limit: 200
+    },
+    {
+      id: 3,
+      category: 'Entertainment',
+      currentAmount: 45,
+      limit: 100
+    }
+  ])
   const [savingGoals, setSavingGoals] = useState([])
 
   const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
