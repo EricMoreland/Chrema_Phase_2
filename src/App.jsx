@@ -97,17 +97,22 @@ function App() {
 
     const plusOrMinusAmount = transactionKind === 'income' ? amountNumber : -amountNumber
 
-    if (selectedType === 'cash') {
-      setCashBalance(cashBalance + plusOrMinusAmount)
-    } else {
-      setCreditBalance(creditBalance + plusOrMinusAmount)
-    }
+    if (selectedAccount) {
+      const updatedAccount = {
+        ...selectedAccount,
+        [selectedType === 'cash' ? 'cashBalance' : 'creditBalance' ]:
+        (selectedType === 'cash'
+          ? selectedAccount.cashBalance 
+          : selectedAccount.creditBalance) + plusOrMinusAmount
+      }
+    
 
-    setNewAmount('')
-    setNewDescription('')
-    setNewCategory(categories[0])
-    setTransactionKind('expense')
+setAccounts((currentAccounts) =>
+ currentAccounts.map((account) => 
+    account.id === selectedAccount.id ? updatedAccount : account))
+}
   }
+
 
   return (
     <div className='min-h-screen bg-[#0d1720] px-2 py-4 text-center text-[#eee9de]'>
