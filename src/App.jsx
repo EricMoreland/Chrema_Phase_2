@@ -109,7 +109,7 @@ setAccounts((currentAccounts) =>
  currentAccounts.map((account) => 
     account.id === selectedAccount.id ? updatedAccount : account))
 }
-
+  }
 
 
   return (

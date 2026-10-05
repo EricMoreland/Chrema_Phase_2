@@ -13,22 +13,30 @@ function TransactionForm({
 }) {
     return (
         <>
-            <div className="account_bar">
+            <div className="mb-5 flex gap-2">
                 <button
-                    className={transactionKind === 'income' ? 'active' : ''}
+                    className={`flex-1 rounded-full px-4 py-2 font-serif ${
+                        transactionKind === 'income'
+                            ? 'bg-sky-600 text-white'
+                            : 'bg-slate-700 text-slate-300'
+                    }`}
                     onClick={() => setTransactionKind('income')}
                 >
                     Income
                 </button>
                 <button
-                    className={transactionKind === 'expense' ? 'active' : ''}
+                    className={`flex-1 rounded-full px-4 py-2 font-serif ${
+                        transactionKind === 'expense'
+                            ? 'bg-sky-600 text-white'
+                            : 'bg-slate-700 text-slate-300'
+                    }`}
                     onClick={() => setTransactionKind('expense')}
                 >
                     Expense
                 </button>
             </div>
 
-            <div className="category_buttons">
+            <div className="mb-6 flex flex-wrap justify-center gap-2">
                 {categories.map((category) => {
                     return (
                         <button
