@@ -70,6 +70,14 @@ function TransactionForm({
                     onChange={(event) => setNewAmount(event.target.value)}
                     className="mb-2 w-full rounded-x1 border border-slate-600 bg-slate-800 px-4 py-3 text-white outline-none"
                 />
+                < label className =" mb-2 block font-serif text-sm text-slate-300">
+                date
+                </label>
+                
+                <input 
+                type = 'date'
+                className = " mb-6 w-full rounded-x1 border border-slate-600 bg-slate-800 px-4 py-3 text-white outline-none" /> 
+
             </div>
             <div>
                 <button onClick={handleAddTransactionProp}>Add Transaction</button>
