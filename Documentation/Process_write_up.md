@@ -10,6 +10,8 @@ Process Write Up has been discussed in class meetings on monday's, written and c
 
  - 2–3 October 2026: The development plan was structured into phases, focusing first on individual account state management and home screen compilation, followed by a semi complete integration and use of Tailwind CSS into the main branch.
 
+ - 4-5 October 2026: Ben and Aqeel started with their assigned pages, Eric continued with Error page. Meeting held to sync all members on where we are and communicate whats to be done by 11 Oct. (Activities to follow...)
+
 ## Key Decisions Take:
 
   - A strict branching strategy was enforced, where team members were required to pull from the main branch, push code to their individual branches, and submit pull requests.
