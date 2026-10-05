@@ -14,6 +14,7 @@ function BudgetsPanel({ budgets }) {
     const [showAddForm, setShowAddForm] = useState(false)
     const [newBudgetCategory, setNewBudgetCategory] = useState('Groceries')
     const [newBudgetLimit, setNewBudgetLimit] = useState('')
+    const [editingBudgetId, setEditingBudgetId] = useState(null)
 
     return (
         <div className="bg-[#172733] rounded-3xl p-8 min-h-[410px] min-w-[280px]">
@@ -21,7 +22,12 @@ function BudgetsPanel({ budgets }) {
             <h3 className="font-serif text-xl text-white">Budgets</h3>
             <button
               type="button"
-              onClick={() => setShowAddForm(true)} 
+              onClick={() => {
+                   setEditingBudgetId(null)
+                   setNewBudgetCategory('Groceries')
+                   setNewBudgetLimit('')
+                   setShowAddForm(true)
+                }}
               className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
               >
                 Add Budget
@@ -34,7 +40,7 @@ function BudgetsPanel({ budgets }) {
         onSubmit={(event) => event.preventDefault()}
     >
         <h4 className="mb-4 font-serif text-lg text-white">
-            Create budget
+            {editingBudgetId === null ? 'Create budget' : 'Edit budget'}
         </h4>
 
         <div className="mb-4">
@@ -82,11 +88,14 @@ function BudgetsPanel({ budgets }) {
                 type="submit"
                 className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
             >
-                Save budget
+                {editingBudgetId === null ? 'Save budget' : 'Save changes'}
             </button>
             <button
                 type="button"
-                onClick={() => setShowAddForm(false)}
+                onClick={() => {
+                       setShowAddForm(false)
+                       setEditingBudgetId(null)
+                    }} 
                 className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
             >
                 Cancel
@@ -119,6 +128,12 @@ function BudgetsPanel({ budgets }) {
                     <div className="flex gap-2">
                         <button
                             type="button"
+                            onClick={() => {
+                              setEditingBudgetId(budget.id)
+                              setNewBudgetCategory(budget.category)
+                              setNewBudgetLimit(String(budget.limit))
+                              setShowAddForm(true)
+                            }}
                             className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
                         >
                             Edit
