@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function BudgetsPanel({ budgets }) {
+function BudgetsPanel({ budgets, onDeleteBudget }) {
     const budgetCategories = [
         'Home',
         'Groceries',
@@ -15,6 +15,7 @@ function BudgetsPanel({ budgets }) {
     const [newBudgetCategory, setNewBudgetCategory] = useState('Groceries')
     const [newBudgetLimit, setNewBudgetLimit] = useState('')
     const [editingBudgetId, setEditingBudgetId] = useState(null)
+    const [budgetIdToDelete, setBudgetIdToDelete] = useState(null)
 
     return (
         <div className="bg-[#172733] rounded-3xl p-8 min-h-[410px] min-w-[280px]">
@@ -103,6 +104,39 @@ function BudgetsPanel({ budgets }) {
         </div>
     </form>
 )}
+
+            {budgetIdToDelete !== null && (
+    <div
+        className="mb-4 rounded-2xl border border-red-400 bg-[#0d1720] p-4 text-left"
+        role="alert"
+    >
+        <h4 className="font-serif text-lg text-white">Delete budget?</h4>
+        <p className="mt-2 text-sm text-slate-300">
+            This will remove the budget from the list.
+        </p>
+
+        <div className="mt-4 flex gap-2">
+            <button
+                type="button"
+                onClick={() => {
+                    onDeleteBudget(budgetIdToDelete)
+                    setBudgetIdToDelete(null)
+                }}
+                className="rounded-lg border border-red-400 px-3 py-2 text-sm text-red-300"
+            >
+                Delete budget
+            </button>
+
+            <button
+                type="button"
+                onClick={() => setBudgetIdToDelete(null)}
+                className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
+            >
+                Cancel
+            </button>
+        </div>
+    </div>
+)}
             {/* .map runs once PER ITEM in the array*/}
             {budgets.length === 0 ? (
     <p className="rounded-2xl border border-slate-600 bg-[#0d1720] p-4 text-left text-sm text-slate-300">
@@ -140,10 +174,15 @@ function BudgetsPanel({ budgets }) {
                         </button>
                         <button
                             type="button"
-                            className="rounded-lg border border-red-400 px-3 py-2 text-sm text-red-300"
-                        >
-                            Delete
-                        </button>
+                            onClick={() => {
+                               setShowAddForm(false)
+                               setEditingBudgetId(null)
+                               setBudgetIdToDelete(budget.id)
+                        }}
+                     className="rounded-lg border border-red-400 px-3 py-2 text-sm text-red-300"
+                   >
+                        Delete
+                   </button>
                     </div>
                 </div>
 

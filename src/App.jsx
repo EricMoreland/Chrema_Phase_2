@@ -134,7 +134,11 @@ setAccounts((currentAccounts) =>
     account.id === selectedAccount.id ? updatedAccount : account))
 }
   }
-
+function handleDeleteBudget(budgetId) {
+  setBudgets((currentBudgets) =>
+    currentBudgets.filter((budget) => budget.id !== budgetId)
+  )
+}
 
   return (
     <div className='min-h-screen bg-[#0d1720] px-2 py-4 text-center text-[#eee9de]'>
@@ -181,7 +185,10 @@ setAccounts((currentAccounts) =>
           />
         </section>
 
-        <BudgetsPanel budgets={budgets} />
+        <BudgetsPanel
+              budgets={budgets}
+              onDeleteBudget={handleDeleteBudget}
+        />
       </main>
 
       {showReportError && (<ReportError onClose={() => setShowReportError(false)} />)}
