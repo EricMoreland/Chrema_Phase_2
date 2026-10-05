@@ -65,9 +65,10 @@ function TransactionForm({
 
                 <input
                     type='number'
-                    placeholder='Amount'
+                    placeholder='Transaction Amount'
                     value={newAmount}
                     onChange={(event) => setNewAmount(event.target.value)}
+                    className="mb-2 w-full rounded-x1 border border-slate-600 bg-slate-800 px-4 py-3 text-white outline-none"
                 />
             </div>
             <div>
