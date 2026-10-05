@@ -56,11 +56,12 @@ function TransactionForm({
             <div>
                 <input
                     type='text'
-                    placeholder='Description'
+                    placeholder='Transaction name'
                     value={newDescription}
                     //event = info about what just happend in the input box (here: the new text typed)
                     onChange={(event) => setNewDescription(event.target.value)} //event.target = the input box, .value = its current text
-                /> {/*type a letter, onChange execute -> setNewDescription updates state -> react makes value={newDescription} */}
+                    className="mb-2 w-full rounded-x1 border border-slate-600 bg-slate-800 px-4 py-3 text-white outline-none"
+               /> {/*type a letter, onChange execute -> setNewDescription updates state -> react makes value={newDescription} */}
 
                 <input
                     type='number'
