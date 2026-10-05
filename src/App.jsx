@@ -75,7 +75,7 @@ function App() {
         console.error(error) //axios throws error when request fails.
       })
   }, [])
-
+/*
   useEffect(() => {
     axios
     .get('/api/budgets')
@@ -87,7 +87,7 @@ function App() {
         console.error(error) //logs error if axios request fails. Could also use alert() to show user error message.
       })
   }, [])
-
+*/
   useEffect(() => {
     axios.get('/api/saving-goals')
       .then((response) => {
