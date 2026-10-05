@@ -71,7 +71,7 @@ function TransactionForm({
                     className="mb-2 w-full rounded-x1 border border-slate-600 bg-slate-800 px-4 py-3 text-white outline-none"
                 />
                 < label className =" mb-2 block font-serif text-sm text-slate-300">
-                date
+                Date
                 </label>
                 
                 <input 
@@ -80,8 +80,17 @@ function TransactionForm({
 
             </div>
             <div>
-                <button onClick={handleAddTransactionProp}>Add Transaction</button>
-                <button onClick={onClose}>Close</button>
+
+                <button onClick={handleAddTransactionProp}
+                className="flex-1 rounded-full bg-sky-600 px-4 py-3 font-serif text-white"
+                > 
+                Save
+                 </button>
+
+                <button onClick={onClose}
+                className="rounded-full bg-slate-700 px-5 py-3 font-serif text-slate-300"
+                > Cancel  
+                </button>
             </div>
         </>
     )
