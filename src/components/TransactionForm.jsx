@@ -102,7 +102,7 @@ function TransactionForm({
                 > Cancel  
                 </button>
             </div>
-        </>
+        </div>
     )
 }
 
