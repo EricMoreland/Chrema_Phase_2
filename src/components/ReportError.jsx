@@ -34,21 +34,26 @@ function ReportError({ onClose }) {
     }
     
     return(
+        <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4">
+
     <form onSubmit={handleSubmit}>
         <div>
-            Report Error
+            <h2>Report Error</h2>
         </div>
 
-    <ErrorButton text='Account Issue' setErrorType={setErrorType} selectedError={errorType === 'Account Issue'} />
-    <ErrorButton text='Savings Goal Issue' setErrorType={setErrorType} selectedError={errorType === 'Savings Goal Issue'} />
-    <ErrorButton text='Budget Issue' setErrorType={setErrorType} selectedError={errorType === 'Budget Issue'} />
-    <ErrorButton text='Transaction Error' setErrorType={setErrorType} selectedError={errorType === 'Transaction Error'} />
-    <ErrorButton text='Balance Error' setErrorType={setErrorType} selectedError={errorType === 'Balance Error'} />
-    <ErrorButton text='General Error' setErrorType={setErrorType} selectedError={errorType === 'General Error'} />
-
+        <button type="button" onClick={onClose}>x</button>
+        <div>
+        {errorTypes.map((type) => (
+            <ErrorButton key={type} text={type} setErrorType={setErrorType} selectedError={errorType === type} />
+        ))}  
+        </div>
     
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)}/>
-        <button>SUBMIT</button>
+        <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Please describe your problem...'/>
+        <button type='submit'>SUBMIT</button>
+        <button type="button" onClick={onClose}>CANCLE</button>
     </form>
+    </div>
     )
 }
+
+export default ReportError
