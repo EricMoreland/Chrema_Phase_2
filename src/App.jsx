@@ -210,6 +210,8 @@ function handleUpdateBudget(budgetId, category, limit) {
               onDeleteBudget={handleDeleteBudget}
               onAddBudget={handleAddBudget}
               onUpdateBudget={handleUpdateBudget}
+              activeWorkspaceView={activeWorkspaceView}
+              setActiveWorkspaceView={setActiveWorkspaceView}
         />
       </main>
 

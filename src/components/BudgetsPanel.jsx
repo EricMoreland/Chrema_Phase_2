@@ -1,6 +1,14 @@
 import { useState } from 'react'
 
-function BudgetsPanel({ budgets, onDeleteBudget, onAddBudget, onUpdateBudget }) {
+function BudgetsPanel({
+    budgets,
+    onDeleteBudget,
+    onAddBudget,
+    onUpdateBudget,
+    activeWorkspaceView,
+    setActiveWorkspaceView
+}) 
+ {
     const budgetCategories = [
         'Home',
         'Groceries',
@@ -17,22 +25,21 @@ function BudgetsPanel({ budgets, onDeleteBudget, onAddBudget, onUpdateBudget }) 
     const [editingBudgetId, setEditingBudgetId] = useState(null)
     const [budgetIdToDelete, setBudgetIdToDelete] = useState(null)
 
+    if (activeWorkspaceView === 'add-budget') {
+    return <BudgetForm onClose={() => setActiveWorkspaceView('dashboard')} />
+}
+
     return (
         <div className="bg-[#172733] rounded-3xl p-8 min-h-[410px] min-w-[280px]">
            <div className="mb-4 flex items-center justify-between gap-4">
             <h3 className="font-serif text-xl text-white">Budgets</h3>
             <button
-              type="button"
-              onClick={() => {
-                   setEditingBudgetId(null)
-                   setNewBudgetCategory('Groceries')
-                   setNewBudgetLimit('')
-                   setShowAddForm(true)
-                }}
-              className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
-              >
-                Add Budget
-              </button>
+             type="button"
+             onClick={() => setActiveWorkspaceView('add-budget')}
+             className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
+           >
+             Add Budget
+           </button>
            </div>
 
            {showAddForm && (
