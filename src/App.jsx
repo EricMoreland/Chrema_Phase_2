@@ -3,8 +3,10 @@ import BalanceCard from './components/BalanceCard'
 import SavingsPanel from './components/SavingsPanel'
 import BudgetsPanel from './components/BudgetsPanel'
 import AccountBar from './components/AccountBar'
+import ReportError from './components/ReportError'
 import './App.css'
 import axios from 'axios'
+
 
 function App() {
 
@@ -31,11 +33,11 @@ function App() {
 
   const [selectedAccountId, setSelectedAccountId] = useState(null)
   const selectedAccount = accounts.find((account) => account.id === selectedAccountId)
-
   const displayBalance = selectedAccount
     ? (selectedType === 'cash' ? selectedAccount.cashBalance : selectedAccount.creditBalance)
     : 0
 
+  const [showReportError, setShowReportError] = useState(false)
 
 
   useEffect(() => {
@@ -118,7 +120,8 @@ setAccounts((currentAccounts) =>
         <h1 className="font-serif text-3xl tracking-wide text-[#eee9de]">Chrema</h1>
         <button
           type="button"
-          aria-label="Notifications"
+          onClick={() => setShowReportError(true)}
+          aria-label="Report Error"
           className="grid size-10 place-items-center rounded-full border-4 border-[#eee9de] bg-[#0d1720] text-2xl text-red-600"
         >
           !
@@ -157,6 +160,9 @@ setAccounts((currentAccounts) =>
 
         <BudgetsPanel budgets={budgets} />
       </main>
+
+      {showReportError && (<ReportError onClose={() => setShowReportError(false)} />)}
+
     </div>
   )
 }
