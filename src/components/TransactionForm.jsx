@@ -10,7 +10,10 @@ function TransactionForm({
     transactionKind,
     setTransactionKind,
     onClose
-}) {
+}){
+        const[step,setStep] = useState(1)
+
+
     return (
         <>
             <div className="mb-5 flex gap-2">
