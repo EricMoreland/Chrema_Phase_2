@@ -1,30 +1,28 @@
 PRAGMA foreign_keys = ON;
 
+CREATE TABLE IF NOT EXISTS Category (
+  CategoryId INTEGER PRIMARY KEY AUTOINCREMENT,
+  CategoryName TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "Saving Goal" (
+  SavingId INTEGER PRIMARY KEY AUTOINCREMENT,
+  GoalName TEXT NOT NULL,
+  GoalAmount REAL NOT NULL,
+  CurrentAmount REAL NOT NULL,
+  GoalDate TEXT NOT NULL,
+  AccountAccountId INTEGER NOT NULL,
+
+  FOREIGN KEY (AccountAccountId)
+    REFERENCES Account(AccountId)
+);
+
 CREATE TABLE IF NOT EXISTS Account ( --prevent creation of duplicate tables when running the schema.sql file multiple times(i.e start & stop the server multiple times)
   AccountId INTEGER PRIMARY KEY AUTOINCREMENT,
   Name TEXT NOT NULL UNIQUE, --no dublicate accounts (i.e only 1 FNB account)
   CashBalance REAL NOT NULL,
   CreditBalance REAL NOT NULL,
   AccountType TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS Category (
-  CategoryId INTEGER PRIMARY KEY AUTOINCREMENT,
-  CategoryName TEXT NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS "Transaction" ( --use "" because SQL uses Transaction as a reserved keyword
-  TransactionId INTEGER PRIMARY KEY AUTOINCREMENT,
-  Description TEXT NOT NULL,
-  Amount REAL NOT NULL,
-  AccountAccountId INTEGER NOT NULL, --Links transaction to the account it belongs to
-  CategoryCategoryId INTEGER NOT NULL, --Links transaction to the category it belong to
-
-  FOREIGN KEY (AccountAccountId)
-    REFERENCES Account(AccountId), -- AccountAccountId in transaction table must match an exisintg AcountId in the Account table
-
-  FOREIGN KEY (CategoryCategoryId)
-    REFERENCES Category(CategoryId)
 );
 
 CREATE TABLE IF NOT EXISTS Budget (
@@ -42,16 +40,18 @@ CREATE TABLE IF NOT EXISTS Budget (
     REFERENCES Account(AccountId)
 );
 
-CREATE TABLE IF NOT EXISTS "Saving Goal" (
-  SavingGoalId INTEGER PRIMARY KEY AUTOINCREMENT,
-  GoalName TEXT NOT NULL,
-  GoalAmount REAL NOT NULL,
-  CurrentAmount REAL NOT NULL,
-  GoalDate TEXT NOT NULL,
-  AccountAccountId INTEGER NOT NULL,
+CREATE TABLE IF NOT EXISTS "Transaction" ( --use "" because SQL uses Transaction as a reserved keyword
+  TransactionId INTEGER PRIMARY KEY AUTOINCREMENT,
+  Description TEXT NOT NULL,
+  Amount REAL NOT NULL,
+  AccountAccountId INTEGER NOT NULL, --Links transaction to the account it belongs to
+  CategoryCategoryId INTEGER NOT NULL, --Links transaction to the category it belong to
 
   FOREIGN KEY (AccountAccountId)
-    REFERENCES Account(AccountId)
+    REFERENCES Account(AccountId), -- AccountAccountId in transaction table must match an exisintg AcountId in the Account table
+
+  FOREIGN KEY (CategoryCategoryId)
+    REFERENCES Category(CategoryId)
 );
 
 
