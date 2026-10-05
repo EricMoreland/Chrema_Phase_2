@@ -140,6 +140,26 @@ function handleDeleteBudget(budgetId) {
   )
 }
 
+function handleAddBudget(category, limit) {
+  const newBudget = {
+    id: Date.now(),
+    category,
+    currentAmount: 0,
+    limit
+  }
+
+  setBudgets((currentBudgets) => [...currentBudgets, newBudget])
+}
+
+function handleUpdateBudget(budgetId, category, limit) {
+  setBudgets((currentBudgets) =>
+    currentBudgets.map((budget) =>
+      budget.id === budgetId
+        ? { ...budget, category, limit }
+        : budget
+    )
+  )
+}
   return (
     <div className='min-h-screen bg-[#0d1720] px-2 py-4 text-center text-[#eee9de]'>
       <header className="flex items-center justify-between px-2">
@@ -188,6 +208,8 @@ function handleDeleteBudget(budgetId) {
         <BudgetsPanel
               budgets={budgets}
               onDeleteBudget={handleDeleteBudget}
+              onAddBudget={handleAddBudget}
+              onUpdateBudget={handleUpdateBudget}
         />
       </main>
 

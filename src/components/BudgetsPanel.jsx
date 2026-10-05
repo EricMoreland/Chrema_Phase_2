@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function BudgetsPanel({ budgets, onDeleteBudget }) {
+function BudgetsPanel({ budgets, onDeleteBudget, onAddBudget, onUpdateBudget }) {
     const budgetCategories = [
         'Home',
         'Groceries',
@@ -38,7 +38,22 @@ function BudgetsPanel({ budgets, onDeleteBudget }) {
            {showAddForm && (
     <form
         className="mb-4 rounded-2xl border border-slate-600 bg-[#0d1720] p-4 text-left"
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={(event) => {
+    event.preventDefault()
+
+    const limit = Number(newBudgetLimit)
+
+    if (editingBudgetId === null) {
+        onAddBudget(newBudgetCategory, limit)
+    } else {
+        onUpdateBudget(editingBudgetId, newBudgetCategory, limit)
+    }
+
+    setShowAddForm(false)
+    setEditingBudgetId(null)
+    setNewBudgetCategory('Groceries')
+    setNewBudgetLimit('')
+}}
     >
         <h4 className="mb-4 font-serif text-lg text-white">
             {editingBudgetId === null ? 'Create budget' : 'Edit budget'}
