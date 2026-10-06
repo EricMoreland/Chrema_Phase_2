@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import BudgetForm from './BudgetForm'
 
 function BudgetsPanel({
     budgets,
@@ -19,14 +20,19 @@ function BudgetsPanel({
         'Other'
     ]
 
-    const [showAddForm, setShowAddForm] = useState(false)
-    const [newBudgetCategory, setNewBudgetCategory] = useState('Groceries')
-    const [newBudgetLimit, setNewBudgetLimit] = useState('')
-    const [editingBudgetId, setEditingBudgetId] = useState(null)
+    const [editingBudget, setEditingBudget] = useState(null)
     const [budgetIdToDelete, setBudgetIdToDelete] = useState(null)
 
     if (activeWorkspaceView === 'add-budget') {
-    return <BudgetForm onClose={() => setActiveWorkspaceView('dashboard')} />
+    return (
+        <BudgetForm
+            budgetCategories={budgetCategories}
+            onAddBudget={onAddBudget}
+            onUpdateBudget={onUpdateBudget}
+            onClose={() => setActiveWorkspaceView('dashboard')}
+        />
+      )
+   }
 }
 
     return (
