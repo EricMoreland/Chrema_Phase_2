@@ -286,8 +286,9 @@ activeWorkspaceView === 'edit-budget' ? (
     />
   </>
 )}
+          </section>
 
-        <BudgetsPanel
+          <BudgetsPanel
       budgets={budgets}
       onRequestAdd={openAddBudget}
       onRequestEdit={openEditBudget}
