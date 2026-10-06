@@ -7,6 +7,22 @@ import ReportError from './components/ReportError'
 import './App.css'
 import axios from 'axios'
 
+const initialAccounts = [
+  {
+    id: 1,
+    name: 'FNB Account',
+    cashBalance: 1298,
+    creditBalance: 0,
+    type: 'bank'
+  },
+  {
+    id: 2,
+    name: 'Capitec Account',
+    cashBalance: 500,
+    creditBalance: 0,
+    type: 'bank'
+  }
+]
 
 function App() {
 
@@ -24,7 +40,7 @@ function App() {
   const [newCategory, setNewCategory] = useState(categories[0])
 
   const [transactionKind, setTransactionKind] = useState('expense') //expense or income
-  const [accounts, setAccounts] = useState([])
+  const [accounts, setAccounts] = useState(initialAccounts)
 
   const [showReportError, setShowReportError] = useState(false)
   //const [showTransactionForm, setShowTransactionForm] = useState(false)
@@ -32,33 +48,40 @@ function App() {
 
   //finds and returns the first single item matching the condition
 
-  const [selectedAccountId, setSelectedAccountId] = useState(null)
+  const [selectedAccountId, setSelectedAccountId] = useState(initialAccounts[0].id)
   const selectedAccount = accounts.find((account) => account.id === selectedAccountId)
   const displayBalance = selectedAccount
     ? (selectedType === 'cash' ? selectedAccount.cashBalance : selectedAccount.creditBalance)
     : 0
 
-  
 
+function handleAddAccount(accountDetails) {
+  const trimmedName = accountDetails.name.trim()
+  const startingCashBalance = Number(accountDetails.cashBalance)
 
+  const nameAlreadyExists = accounts.some(
+    (account) => account.name.toLowerCase() === trimmedName.toLowerCase()
+  )
 
+  if (nameAlreadyExists) {
+    return
+  }
 
-  useEffect(() => {
-    axios
-    .get('/api/accounts') //receives response object, axios automatically converts json to js array of objects
-      .then((response) => {
-        const accountData = response.data //therefore use data property to get the array of objects from response object
-        
-        setAccounts(accountData)
+  const newAccount = {
+    id: Date.now(),
+    name: trimmedName,
+    cashBalance: startingCashBalance,
+    creditBalance: 0,
+    type: 'bank'
+  }
 
-        if (accountData.length > 0) { //if there are multiple accounts, default to first one.
-          setSelectedAccountId(accountData[0].id)
-        }
-      })  
-      .catch((error) => {
-        console.error(error) //axios throws error when request fails.
-      })
-  }, [])
+  setAccounts((currentAccounts) => [...currentAccounts, newAccount])
+  setSelectedAccountId(newAccount.id)
+
+  return true
+}
+
+ //useEffect for accounts in coding.txt on eric desktop
 
   useEffect(() => {
     axios
@@ -82,6 +105,7 @@ function App() {
         console.error(error)
       })
   }, [])
+
 
 
   function handleAddTransaction() {
@@ -141,6 +165,7 @@ setAccounts((currentAccounts) =>
             accounts={accounts}
             selectedAccountId={selectedAccountId}
             setSelectedAccountId={setSelectedAccountId}
+            onAddAccount={handleAddAccount}
           />
 
           <BalanceCard

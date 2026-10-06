@@ -1,7 +1,28 @@
 import { useState } from "react";
+import AccountCRUD from "./AccountCRUD";
 
-function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId, setSelectedAccountId }) {
-   
+function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId, setSelectedAccountId, onAddAccount }) {
+    const [showAccountForm, setShowAccountForm] = useState(false)
+    const [accountName, setAccountName] = useState('')
+    const [cashBalance, setCashBalance] = useState('')
+
+    function handleSubmit(event) {
+        event.preventDefault()
+
+        const accountWasAdded = onAddAccount({
+            name: accountName,
+            cashBalance
+        })
+
+        if (!accountWasAdded) {
+            return
+        }
+
+        setAccountName('')
+        setCashBalance('')
+        setShowAccountForm(false)
+    }
+
     return (
         <div className="flex items-center gap-4 mb-6">
             <select
@@ -13,6 +34,14 @@ function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId
                 <option key={account.id} value={account.id}>{account.name}</option>
                 ))}
             </select>
+
+            <button
+                type="button"
+                onClick={() => setShowAccountForm((visible) => !visible)}
+                className="rounded-full bg-emerald-700 px-4 py-2.5 font-serif tracking-wide text-white"
+            >
+                {showAccountForm ? 'Cancel' : '+ Account'}
+            </button>
 
             <button 
                 className={`rounded-full px-5 py-2.5 font-serif tracking-wide ${selectedType === 'credit' ? 'bg-sky-600 text-white' : 'bg-slate-800 text-slate-300'}`} 
@@ -27,6 +56,17 @@ function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId
             >
                 Cash
             </button>
+
+            {showAccountForm && (
+                <AccountCRUD
+                    accountName={accountName}
+                    setAccountName={setAccountName}
+                    cashBalance={cashBalance}
+                    setCashBalance={setCashBalance}
+                    onSubmit={handleSubmit}
+                    onClose={() => setShowAccountForm(false)}
+                />
+            )}
         </div>
 
     )
