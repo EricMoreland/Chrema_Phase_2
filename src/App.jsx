@@ -288,13 +288,11 @@ activeWorkspaceView === 'edit-budget' ? (
 )}
 
         <BudgetsPanel
-              budgets={budgets}
-              onDeleteBudget={handleDeleteBudget}
-              onAddBudget={handleAddBudget}
-              onUpdateBudget={handleUpdateBudget}
-              activeWorkspaceView={activeWorkspaceView}
-              setActiveWorkspaceView={setActiveWorkspaceView}
-        />
+      budgets={budgets}
+      onRequestAdd={openAddBudget}
+      onRequestEdit={openEditBudget}
+      onRequestDelete={openDeleteBudget}
+/>
       </main>
 
       {showReportError && (<ReportError onClose={() => setShowReportError(false)} />)}
