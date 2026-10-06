@@ -116,23 +116,14 @@ function BudgetsPanel({
                     <div className="flex gap-2">
                         <button
                             type="button"
-                            onClick={() => {
-                              setEditingBudgetId(budget.id)
-                              setNewBudgetCategory(budget.category)
-                              setNewBudgetLimit(String(budget.limit))
-                              setShowAddForm(true)
-                            }}
+                            onClick={() => setEditingBudget(budget)}
                             className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
                         >
                             Edit
                         </button>
                         <button
                             type="button"
-                            onClick={() => {
-                               setShowAddForm(false)
-                               setEditingBudgetId(null)
-                               setBudgetIdToDelete(budget.id)
-                        }}
+                            onClick={() => setBudgetIdToDelete(budget.id)}
                      className="rounded-lg border border-red-400 px-3 py-2 text-sm text-red-300"
                    >
                         Delete
