@@ -6,6 +6,7 @@ import AccountBar from './components/AccountBar'
 import ReportError from './components/ReportError'
 import './App.css'
 import axios from 'axios'
+import BudgetForm from './components/BudgetForm'
 
 
 function App() {
@@ -51,6 +52,18 @@ function App() {
 
   //finds and returns the first single item matching the condition
 
+  const [editingBudget, setEditingBudget] = useState(null)
+  const [budgetIdToDelete, setBudgetIdToDelete] = useState(null)
+
+  const budgetCategories = [
+  'Home',
+  'Groceries',
+  'Car',
+  'Food',
+  'Entertainment',
+  'Transport',
+  'Other'
+]
   const [selectedAccountId, setSelectedAccountId] = useState(null)
   const selectedAccount = accounts.find((account) => account.id === selectedAccountId)
   const displayBalance = selectedAccount
@@ -159,6 +172,27 @@ function handleUpdateBudget(budgetId, category, limit) {
         : budget
     )
   )
+}
+
+function closeBudgetView() {
+  setActiveWorkspaceView('dashboard')
+  setEditingBudget(null)
+  setBudgetIdToDelete(null)
+}
+
+function openAddBudget() {
+  setEditingBudget(null)
+  setActiveWorkspaceView('add-budget')
+}
+
+function openEditBudget(budget) {
+  setEditingBudget(budget)
+  setActiveWorkspaceView('edit-budget')
+}
+
+function openDeleteBudget(budgetId) {
+  setBudgetIdToDelete(budgetId)
+  setActiveWorkspaceView('delete-budget')
 }
   return (
     <div className='min-h-screen bg-[#0d1720] px-2 py-4 text-center text-[#eee9de]'>
