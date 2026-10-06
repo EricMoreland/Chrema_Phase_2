@@ -194,6 +194,7 @@ function openDeleteBudget(budgetId) {
   setBudgetIdToDelete(budgetId)
   setActiveWorkspaceView('delete-budget')
 }
+
   return (
     <div className='min-h-screen bg-[#0d1720] px-2 py-4 text-center text-[#eee9de]'>
       <header className="flex items-center justify-between px-2">
@@ -212,32 +213,79 @@ function openDeleteBudget(budgetId) {
         <SavingsPanel savingGoals={savingGoals} />
 
         <section className="rounded-[42px] border border-[#41515b] bg-[#172733] p-5 shadow-2xl">
-          <AccountBar
-            selectedType={selectedType}
-            setSelectedType={setSelectedType}
-            accounts={accounts}
-            selectedAccountId={selectedAccountId}
-            setSelectedAccountId={setSelectedAccountId}
-          />
+          
+          {activeWorkspaceView === 'add-budget' ||
+activeWorkspaceView === 'edit-budget' ? (
+  <div className="min-h-[440px] p-8 text-left">
+    <h2 className="mb-6 font-serif text-2xl text-white">
+      {activeWorkspaceView === 'edit-budget' ? 'Edit Budget' : 'Add Budget'}
+    </h2>
 
-          <BalanceCard
-            balance={displayBalance}
-            activeWorkspaceView={activeWorkspaceView}
-            onOpenTransaction={() => setActiveWorkspaceView("add-transaction")} 
-            onCloseView={() => setActiveWorkspaceView("dashboard")}
-            newDescription={newDescription}
-            setNewDescription={setNewDescription}
-            newAmount={newAmount}
-            setNewAmount={setNewAmount}
-            handleAddTransactionProp={handleAddTransaction}
-            transactions={transactions}
-            newCategory={newCategory}
-            setNewCategory={setNewCategory}
-            categories={categories}
-            transactionKind={transactionKind}
-            setTransactionKind={setTransactionKind}
-          />
-        </section>
+    <BudgetForm
+      budget={activeWorkspaceView === 'edit-budget' ? editingBudget : undefined}
+      budgetCategories={budgetCategories}
+      onAddBudget={handleAddBudget}
+      onUpdateBudget={handleUpdateBudget}
+      onClose={closeBudgetView}
+    />
+  </div>
+) : activeWorkspaceView === 'delete-budget' ? (
+  <div className="min-h-[440px] p-8 text-left">
+    <h2 className="font-serif text-2xl text-white">Delete budget?</h2>
+    <p className="mt-2 text-sm text-slate-300">
+      This will remove the budget from the list.
+    </p>
+
+    <div className="mt-4 flex gap-2">
+      <button
+        type="button"
+        onClick={() => {
+          handleDeleteBudget(budgetIdToDelete)
+          closeBudgetView()
+        }}
+        className="rounded-lg border border-red-400 px-3 py-2 text-sm text-red-300"
+      >
+        Delete budget
+      </button>
+
+      <button
+        type="button"
+        onClick={closeBudgetView}
+        className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+) : (
+  <>
+    <AccountBar
+      selectedType={selectedType}
+      setSelectedType={setSelectedType}
+      accounts={accounts}
+      selectedAccountId={selectedAccountId}
+      setSelectedAccountId={setSelectedAccountId}
+    />
+
+    <BalanceCard
+      balance={displayBalance}
+      activeWorkspaceView={activeWorkspaceView}
+      onOpenTransaction={() => setActiveWorkspaceView('add-transaction')}
+      onCloseView={() => setActiveWorkspaceView('dashboard')}
+      newDescription={newDescription}
+      setNewDescription={setNewDescription}
+      newAmount={newAmount}
+      setNewAmount={setNewAmount}
+      handleAddTransactionProp={handleAddTransaction}
+      transactions={transactions}
+      newCategory={newCategory}
+      setNewCategory={setNewCategory}
+      categories={categories}
+      transactionKind={transactionKind}
+      setTransactionKind={setTransactionKind}
+    />
+  </>
+)}
 
         <BudgetsPanel
               budgets={budgets}
