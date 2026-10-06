@@ -33,7 +33,7 @@ function BudgetsPanel({
         />
       )
    }
-}
+
 
     return (
         <div className="bg-[#172733] rounded-3xl p-8 min-h-[410px] min-w-[280px]">
@@ -48,89 +48,15 @@ function BudgetsPanel({
            </button>
            </div>
 
-           {showAddForm && (
-    <form
-        className="mb-4 rounded-2xl border border-slate-600 bg-[#0d1720] p-4 text-left"
-        onSubmit={(event) => {
-    event.preventDefault()
-
-    const limit = Number(newBudgetLimit)
-
-    if (editingBudgetId === null) {
-        onAddBudget(newBudgetCategory, limit)
-    } else {
-        onUpdateBudget(editingBudgetId, newBudgetCategory, limit)
-    }
-
-    setShowAddForm(false)
-    setEditingBudgetId(null)
-    setNewBudgetCategory('Groceries')
-    setNewBudgetLimit('')
-}}
-    >
-        <h4 className="mb-4 font-serif text-lg text-white">
-            {editingBudgetId === null ? 'Create budget' : 'Edit budget'}
-        </h4>
-
-        <div className="mb-4">
-            <label
-                htmlFor="new-budget-category"
-                className="mb-1 block text-sm text-slate-300"
-            >
-                Category
-            </label>
-            <select
-                id="new-budget-category"
-                value={newBudgetCategory}
-                onChange={(event) => setNewBudgetCategory(event.target.value)}
-                className="w-full rounded-lg border border-slate-500 bg-[#172733] p-2 text-slate-200"
-            >
-                {budgetCategories.map((category) => (
-                    <option key={category} value={category}>
-                        {category}
-                    </option>
-                ))}
-            </select>
-        </div>
-
-        <div className="mb-4">
-            <label
-                htmlFor="new-budget-limit"
-                className="mb-1 block text-sm text-slate-300"
-            >
-                Monthly limit (R)
-            </label>
-            <input
-                id="new-budget-limit"
-                type="number"
-                min="0"
-                step="0.01"
-                required
-                value={newBudgetLimit}
-                onChange={(event) => setNewBudgetLimit(event.target.value)}
-                className="w-full rounded-lg border border-slate-500 bg-[#172733] p-2 text-slate-200"
-            />
-        </div>
-
-        <div className="flex gap-2">
-            <button
-                type="submit"
-                className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
-            >
-                {editingBudgetId === null ? 'Save budget' : 'Save changes'}
-            </button>
-            <button
-                type="button"
-                onClick={() => {
-                       setShowAddForm(false)
-                       setEditingBudgetId(null)
-                    }} 
-                className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
-            >
-                Cancel
-            </button>
-        </div>
-    </form>
+           {editingBudget !== null && (
+    <BudgetForm
+        key={editingBudget.id}
+        budget={editingBudget}
+        budgetCategories={budgetCategories}
+        onAddBudget={onAddBudget}
+        onUpdateBudget={onUpdateBudget}
+        onClose={() => setEditingBudget(null)}
+    />
 )}
 
             {budgetIdToDelete !== null && (
