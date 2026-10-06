@@ -1,96 +1,25 @@
 import { useState } from 'react'
-import BudgetForm from './BudgetForm'
 
 function BudgetsPanel({
     budgets,
-    onDeleteBudget,
-    onAddBudget,
-    onUpdateBudget,
-    activeWorkspaceView,
-    setActiveWorkspaceView
+    onRequestAdd,
+    onRequestEdit,
+    onRequestDelete
 }) 
  {
-    const budgetCategories = [
-        'Home',
-        'Groceries',
-        'Car',
-        'Food',
-        'Entertainment',
-        'Transport',
-        'Other'
-    ]
-
-    const [editingBudget, setEditingBudget] = useState(null)
-    const [budgetIdToDelete, setBudgetIdToDelete] = useState(null)
-
-    if (activeWorkspaceView === 'add-budget') {
-    return (
-        <BudgetForm
-            budgetCategories={budgetCategories}
-            onAddBudget={onAddBudget}
-            onUpdateBudget={onUpdateBudget}
-            onClose={() => setActiveWorkspaceView('dashboard')}
-        />
-      )
-   }
-
-
     return (
         <div className="bg-[#172733] rounded-3xl p-8 min-h-[410px] min-w-[280px]">
            <div className="mb-4 flex items-center justify-between gap-4">
             <h3 className="font-serif text-xl text-white">Budgets</h3>
             <button
              type="button"
-             onClick={() => setActiveWorkspaceView('add-budget')}
+             onClick={onRequestAdd}
              className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
            >
              Add Budget
            </button>
            </div>
 
-           {editingBudget !== null && (
-    <BudgetForm
-        key={editingBudget.id}
-        budget={editingBudget}
-        budgetCategories={budgetCategories}
-        onAddBudget={onAddBudget}
-        onUpdateBudget={onUpdateBudget}
-        onClose={() => setEditingBudget(null)}
-    />
-)}
-
-            {budgetIdToDelete !== null && (
-    <div
-        className="mb-4 rounded-2xl border border-red-400 bg-[#0d1720] p-4 text-left"
-        role="alert"
-    >
-        <h4 className="font-serif text-lg text-white">Delete budget?</h4>
-        <p className="mt-2 text-sm text-slate-300">
-            This will remove the budget from the list.
-        </p>
-
-        <div className="mt-4 flex gap-2">
-            <button
-                type="button"
-                onClick={() => {
-                    onDeleteBudget(budgetIdToDelete)
-                    setBudgetIdToDelete(null)
-                }}
-                className="rounded-lg border border-red-400 px-3 py-2 text-sm text-red-300"
-            >
-                Delete budget
-            </button>
-
-            <button
-                type="button"
-                onClick={() => setBudgetIdToDelete(null)}
-                className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
-            >
-                Cancel
-            </button>
-        </div>
-    </div>
-)}
             {/* .map runs once PER ITEM in the array*/}
             {budgets.length === 0 ? (
     <p className="rounded-2xl border border-slate-600 bg-[#0d1720] p-4 text-left text-sm text-slate-300">
@@ -116,14 +45,14 @@ function BudgetsPanel({
                     <div className="flex gap-2">
                         <button
                             type="button"
-                            onClick={() => setEditingBudget(budget)}
+                            onClick={() => onRequestEdit(budget)}
                             className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
                         >
                             Edit
                         </button>
                         <button
                             type="button"
-                            onClick={() => setBudgetIdToDelete(budget.id)}
+                            onClick={() => onRequestDelete(budget.id)}
                      className="rounded-lg border border-red-400 px-3 py-2 text-sm text-red-300"
                    >
                         Delete
