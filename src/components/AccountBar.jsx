@@ -37,12 +37,13 @@ function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId
 
             <button
                 type="button"
-                onClick={() => setShowAccountForm((visible) => !visible)}
+                onClick={() => setShowAccountForm(() => true)}
                 className="rounded-full bg-emerald-700 px-4 py-2.5 font-serif tracking-wide text-white"
             >
-                {showAccountForm ? 'Cancel' : '+ Account'}
+                +
             </button>
-
+            
+            <div className="ml-auto">
             <button 
                 className={`rounded-full px-5 py-2.5 font-serif tracking-wide ${selectedType === 'credit' ? 'bg-sky-600 text-white' : 'bg-slate-800 text-slate-300'}`} 
                 onClick={() => setSelectedType('credit')}
@@ -56,6 +57,7 @@ function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId
             >
                 Cash
             </button>
+            </div>
 
             {showAccountForm && (
                 <AccountCRUD
