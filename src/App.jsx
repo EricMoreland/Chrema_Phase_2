@@ -127,6 +127,7 @@ function handleDeleteAccount(accountId) {
       id: Date.now(),
       description: newDescription,
       amount: amountNumber,
+      accountId: selectedAccountId,
       type: selectedType,
       category: newCategory,
       kind: transactionKind

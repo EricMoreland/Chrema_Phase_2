@@ -26,3 +26,4 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 | 2026-10-5 | Eric | Copilot Student | Identify the best and scalable solution to implement different screens on one seperate main card and how to setup error page accordingly | Explained to use one state that manages which screen is showing on main card/use overlay for other and correct structure for ReportError.jsx |
 | 2026-10-5 | Eric | Copilot Student | Suggest approach and explain what I need to get current Error page closer to wireframe | Explained css required and logic still needed for form to work correcly |
 | 2026-10-7 | Eric | Copilot Student | Create component boilerplate for Account add and delete | Created the boilerplate code ready to implement logic and elements |
+| 2026-10-7 | Eric | Copilot Student | Help identify gaps in SQL translation from old schema to new PGlite | Identified lacking columns in transaciton table and its connecting variable's uses in code logic |
