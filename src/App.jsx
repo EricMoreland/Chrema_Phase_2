@@ -4,6 +4,7 @@ import SavingsPanel from './components/SavingsPanel'
 import BudgetsPanel from './components/BudgetsPanel'
 import AccountBar from './components/AccountBar'
 import ReportError from './components/ReportError'
+import ReportErrorButton from './components/ReportErrorButton'
 import './App.css'
 import axios from 'axios'
 
@@ -27,8 +28,7 @@ const initialAccounts = [
 function App() {
 
   const [selectedType, setSelectedType] = useState('cash')
-  //const displayBalance = selectedType === 'cash' ? cashBalance : creditBalance (NEW DISPLAYBLANCE VARIABLE BELOW)
-  {/*Deciding between which of 2 different states to show, use if () {}/ternary, to set the correct state to variable */ }
+
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
@@ -145,14 +145,7 @@ setAccounts((currentAccounts) =>
     <div className='min-h-screen bg-[#0d1720] px-2 py-4 text-center text-[#eee9de]'>
       <header className="flex items-center justify-between px-2">
         <h1 className="font-serif text-3xl tracking-wide text-[#eee9de]">Chrema</h1>
-        <button
-          type="button"
-          onClick={() => setShowReportError(true)}
-          aria-label="Report Error"
-          className="grid size-10 place-items-center rounded-full border-4 border-[#eee9de] bg-[#0d1720] text-2xl text-red-600"
-        >
-          !
-        </button>
+        <ReportErrorButton onClick={() => setShowReportError(true)}/>
       </header>
 
       <main className="mx-auto mt-8 grid max-w-[1340px] grid-cols-1 items-start gap-4 lg:grid-cols-[278px_minmax(0,1fr)_278px]">
