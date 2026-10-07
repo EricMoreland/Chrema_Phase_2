@@ -1,4 +1,4 @@
-const AccountCRUD = ({
+const AccountAdd = ({
   accountName,
   setAccountName,
   cashBalance,
@@ -85,4 +85,4 @@ const AccountCRUD = ({
     )
 }
 
-export default AccountCRUD
+export default AccountAdd

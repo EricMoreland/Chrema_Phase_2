@@ -1,10 +1,14 @@
 import { useState } from "react";
-import AccountCRUD from "./AccountCRUD";
+import AccountAdd from "./AccountAdd";
+import AccountDelete from './AccountDelete';
 
-function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId, setSelectedAccountId, onAddAccount }) {
+
+
+function AccountBar({ selectedType, setSelectedType, accounts, onDeleteAccount, selectedAccountId, setSelectedAccountId, onAddAccount }) {
     const [showAccountForm, setShowAccountForm] = useState(false)
     const [accountName, setAccountName] = useState('')
     const [cashBalance, setCashBalance] = useState('')
+    const [showDeleteForm, setShowDeleteForm] = useState(false)
 
     function handleSubmit(event) {
         event.preventDefault()
@@ -23,6 +27,19 @@ function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId
         setShowAccountForm(false)
     }
 
+    function handleDeleteSelectedAccount() {
+        const selectedAccount = accounts.find(
+            (account) => account.id === selectedAccountId
+        )
+
+        if (!selectedAccount) {
+            return
+        }
+
+        onDeleteAccount(selectedAccount.id)
+        setShowDeleteForm(false)
+    }
+
     return (
         <div className="flex items-center gap-4 mb-6">
             <select
@@ -34,7 +51,7 @@ function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId
                 <option key={account.id} value={account.id}>{account.name}</option>
                 ))}
             </select>
-
+            
             <button
                 type="button"
                 onClick={() => setShowAccountForm(() => true)}
@@ -42,8 +59,17 @@ function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId
             >
                 +
             </button>
+
+            <button
+                type="button"
+                onClick={() => setShowDeleteForm(() => true)}
+                className="rounded-full bg-red-700 px-4.5 py-2.5 font-serif tracking-wide text-white"
+            >
+                -
+            </button>
             
-            <div className="ml-auto">
+            
+            <div className="ml-auto flex gap-2">
             <button 
                 className={`rounded-full px-5 py-2.5 font-serif tracking-wide ${selectedType === 'credit' ? 'bg-sky-600 text-white' : 'bg-slate-800 text-slate-300'}`} 
                 onClick={() => setSelectedType('credit')}
@@ -60,13 +86,23 @@ function AccountBar({ selectedType, setSelectedType, accounts, selectedAccountId
             </div>
 
             {showAccountForm && (
-                <AccountCRUD
+                <AccountAdd
                     accountName={accountName}
                     setAccountName={setAccountName}
                     cashBalance={cashBalance}
                     setCashBalance={setCashBalance}
                     onSubmit={handleSubmit}
                     onClose={() => setShowAccountForm(false)}
+                />
+            )}
+
+            {showDeleteForm && (
+                <AccountDelete
+                    accountName={
+                        accounts.find((account) => account.id === selectedAccountId)?.name ?? ''
+                    }
+                    onConfirm={handleDeleteSelectedAccount}
+                    onClose={() => setShowDeleteForm(false)}
                 />
             )}
         </div>

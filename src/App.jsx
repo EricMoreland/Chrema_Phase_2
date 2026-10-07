@@ -81,6 +81,18 @@ function handleAddAccount(accountDetails) {
   return true
 }
 
+function handleDeleteAccount(accountId) {
+ const remainingAccounts = accounts.filter(
+    (account) => account.id !== accountId
+  )
+
+  setAccounts(remainingAccounts)
+
+  if (selectedAccountId === accountId) {
+    setSelectedAccountId(remainingAccounts[0].id)
+  }
+}
+
  //useEffect for accounts in coding.txt on eric desktop
 
   useEffect(() => {
@@ -159,6 +171,7 @@ setAccounts((currentAccounts) =>
             selectedAccountId={selectedAccountId}
             setSelectedAccountId={setSelectedAccountId}
             onAddAccount={handleAddAccount}
+            onDeleteAccount={handleDeleteAccount}
           />
 
           <BalanceCard
