@@ -33,7 +33,14 @@ function ReportError({ onClose }) {
     }
 
     return (
-        <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4">
+        <div 
+            className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4"
+            onMouseDown={(event) => {
+                if (event.target === event.currentTarget) {
+                    onClose()
+                }
+            }}
+        >
 
             <form
                 onSubmit={handleSubmit}

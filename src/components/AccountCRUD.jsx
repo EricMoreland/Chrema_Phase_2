@@ -40,15 +40,8 @@ const AccountCRUD = ({
           </button>
         </div>
 
-        <label
-          htmlFor="account-name"
-          className="mb-2 block font-serif text-slate-200"
-        >
-          Account name
-        </label>
-
         <input
-          id="account-name"
+          aria-label="Account Name"
           type="text"
           value={accountName}
           onChange={(event) => setAccountName(event.target.value)}
@@ -58,15 +51,8 @@ const AccountCRUD = ({
           className="mb-5 w-full rounded-lg border border-slate-500 bg-slate-700 p-3 text-white outline-none placeholder:text-slate-400 focus:border-sky-400"
         />
 
-        <label
-          htmlFor="cash-balance"
-          className="mb-2 block font-serif text-slate-200"
-        >
-          Opening cash balance
-        </label>
-
         <input
-          id="cash-balance"
+          aria-label="Cash Balance"
           type="number"
           min="0"
           step="0.01"
