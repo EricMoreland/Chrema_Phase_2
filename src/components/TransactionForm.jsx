@@ -1,3 +1,4 @@
+import { Home, ShoppingCart, Car, Utensils, MoreHorizontal} from "lucide-react";
 function TransactionForm({
     newDescription,
     setNewDescription,
@@ -38,23 +39,37 @@ function TransactionForm({
                 </button>
             </div> 
 
+
+                    <p className="mb-2 font-serif text-sm text-slate-300">
+                        Category
+                    </p>
+
+
+
             <div className="mb-6 flex flex-wrap justify-center gap-2">
                 {categories.map((category) => {
                     return (
                         <button
                             key={category}
-                            className={`rounded-full px-4 py-2 font-serif text-sm ${
+                            className={'rounded-full px-4 py-2 font-serif text-sm' + (
                                 newCategory === category
-                                    ? 'bg-sky-600 text-white'
-                                    : 'bg-slate-700 text-slate-300'
-                            }`}
+                                    ? ' bg-sky-600 text-white'
+                                    : ' bg-slate-700 text-slate-300'
+                            )}
                             onClick={() => setNewCategory(category)}
                         >
-                            {category}
+                            {category == 'Home' && <Home size={22} />}
+                            {category == 'Shopping' && <ShoppingCart size={22} />}
+                            {category == 'Transport' && <Car size={22} />}
+                            {category == 'Food' && <Utensils size={22} />}
+                            {category == 'Other' && <MoreHorizontal size={22} />}
                         </button>
                     )
                 })}
             </div>
+
+
+
             <div className="mx-auto w-full max-w-[650px]">
                 <input
                     type='text'
