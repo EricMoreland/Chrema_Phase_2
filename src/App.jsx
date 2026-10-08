@@ -7,7 +7,7 @@ import ReportError from './components/ReportError'
 import './App.css'
 import axios from 'axios'
 import BudgetForm from './components/BudgetForm'
-
+import DeleteBudget from './components/DeleteBudget'
 
 function App() {
 
@@ -216,47 +216,21 @@ function openDeleteBudget(budgetId) {
           
           {activeWorkspaceView === 'add-budget' ||
 activeWorkspaceView === 'edit-budget' ? (
-  <div className="min-h-[440px] p-8 text-left">
-    <h2 className="mb-6 font-serif text-2xl text-white">
-      {activeWorkspaceView === 'edit-budget' ? 'Edit Budget' : 'Add Budget'}
-    </h2>
-
-    <BudgetForm
-      budget={activeWorkspaceView === 'edit-budget' ? editingBudget : undefined}
-      budgetCategories={budgetCategories}
-      onAddBudget={handleAddBudget}
-      onUpdateBudget={handleUpdateBudget}
-      onClose={closeBudgetView}
-    />
-  </div>
+  <BudgetForm
+    budget={activeWorkspaceView === 'edit-budget' ? editingBudget : undefined}
+    budgetCategories={budgetCategories}
+    onAddBudget={handleAddBudget}
+    onUpdateBudget={handleUpdateBudget}
+    onClose={closeBudgetView}
+/>
 ) : activeWorkspaceView === 'delete-budget' ? (
-  <div className="min-h-[440px] p-8 text-left">
-    <h2 className="font-serif text-2xl text-white">Delete budget?</h2>
-    <p className="mt-2 text-sm text-slate-300">
-      This will remove the budget from the list.
-    </p>
-
-    <div className="mt-4 flex gap-2">
-      <button
-        type="button"
-        onClick={() => {
-          handleDeleteBudget(budgetIdToDelete)
-          closeBudgetView()
-        }}
-        className="rounded-lg border border-red-400 px-3 py-2 text-sm text-red-300"
-      >
-        Delete budget
-      </button>
-
-      <button
-        type="button"
-        onClick={closeBudgetView}
-        className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
-      >
-        Cancel
-      </button>
-    </div>
-  </div>
+  <DeleteBudget
+    onDelete={() => {
+        handleDeleteBudget(budgetIdToDelete)
+        closeBudgetView()
+    }}
+    onExit={closeBudgetView}
+/>
 ) : (
   <>
     <AccountBar

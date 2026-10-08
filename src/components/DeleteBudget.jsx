@@ -15,3 +15,5 @@ function DeleteBudget({ onDelete, onExit}) {
         </div>
     )
 }
+
+export default DeleteBudget 
