@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import EditButton from './EditButton'
 
 function BudgetsPanel({
     budgets,
@@ -43,13 +43,7 @@ function BudgetsPanel({
                     </div>
 
                     <div className="flex gap-2">
-                        <button
-                            type="button"
-                            onClick={() => onRequestEdit(budget)}
-                            className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
-                        >
-                            Edit
-                        </button>
+                        <EditButton budget={budget} onEdit={onRequestEdit} />
                         <button
                             type="button"
                             onClick={() => onRequestDelete(budget.id)}
