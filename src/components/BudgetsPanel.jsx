@@ -27,7 +27,10 @@ function BudgetsPanel({
     </p>
 ) : (
     budgets.map((budget) => {
-        const percentbudget = (budget.currentAmount / budget.limit) * 100
+       
+        const percentBudget = budget.limit > 0
+        ? Math.min((budget.currentAmount / budget.limit) * 100, 100)
+        : 0
 
         return (
             <div
@@ -57,7 +60,7 @@ function BudgetsPanel({
                 <div className="h-2 w-full overflow-hidden rounded-full bg-slate-600">
                     <div
                         className="h-full bg-sky-500"
-                        style={{ width: `${percentbudget}%` }}
+                        style={{ width: `${percentBudget}%` }}
                     ></div>
                 </div>
             </div>

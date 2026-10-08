@@ -73,7 +73,7 @@ function BudgetForm({
                     <input
                         id="new-budget-limit"
                         type="number"
-                        min="0"
+                        min="0.01"
                         step="0.01"
                         required
                         value={limit}
