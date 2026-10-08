@@ -20,6 +20,8 @@ function BudgetsPanel({
            </button>
            </div>
 
+        <div className="max-h-[60vh] overflow-y-auto pr-2">
+
             {/* .map runs once PER ITEM in the array*/}
             {budgets.length === 0 ? (
     <p className="rounded-2xl border border-slate-600 bg-[#0d1720] p-4 text-left text-sm text-slate-300">
@@ -67,6 +69,7 @@ function BudgetsPanel({
         )
     })
 )}
+    </div>
         </div>
     )
 }
