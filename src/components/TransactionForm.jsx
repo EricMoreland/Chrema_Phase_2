@@ -55,42 +55,32 @@ function TransactionForm({
                     )
                 })}
             </div>
-            <div>
-
-
-
-
-             <div className="mx-auto w-full max-w-[650px]">
+            <div className="mx-auto w-full max-w-[650px]">
                 <input
                     type='text'
                     placeholder='Transaction name'
                     value={newDescription}
                     //event = info about what just happend in the input box (here: the new text typed)
                     onChange={(event) => setNewDescription(event.target.value)} //event.target = the input box, .value = its current text
-                    className="mb-4 w-full rounded-x1 border border-slate-600 bg-slate-800 px-5 py-4 text-white outline-none"
+                    className="mb-4 w-full rounded-xl border border-slate-600 bg-slate-800 px-5 py-4 text-white outline-none"
                /> {/*type a letter, onChange execute -> setNewDescription updates state -> react makes value={newDescription} */}
-            </div>
-
-
 
                 <input
                     type='number'
                     placeholder='Transaction Amount'
                     value={newAmount}
                     onChange={(event) => setNewAmount(event.target.value)}
-                    className="mb-4 w-full rounded-x1 border border-slate-600 bg-slate-800 px-5 py-4 text-white outline-none"
+                    className="mb-4 w-full rounded-xl border border-slate-600 bg-slate-800 px-5 py-4 text-white outline-none"
                 />
-                < label className =" mb-3 block  font-serif text-center text-slate-300">
+                <label className =" mb-3 block  font-serif text-center text-slate-300">
                 Date
                 </label>
                 
                 <input 
                 type = 'date'
-                className = " mb-6 w-full rounded-x1 border border-slate-600 bg-slate-800 px-5 py-4 text-white outline-none" /> 
-
+                className = " mb-6 w-full rounded-xl border border-slate-600 bg-slate-800 px-5 py-4 text-white outline-none" /> 
             </div>
-            <div>
-
+            <div className="flex justify-center gap-2">
                 <button onClick={handleAddTransactionProp}
                 className="flex-1 rounded-full bg-sky-600 px-4 py-3 font-serif text-white"
                 > 
@@ -102,7 +92,7 @@ function TransactionForm({
                 > Cancel  
                 </button>
             </div>
-        </div>
+        </>
     )
 }
 
