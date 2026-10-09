@@ -14,11 +14,8 @@ export async function getAccounts(req, res) {
     `)
 
     res.status(200).json(result.rows)
-  } catch (error) {
-    console.error('Failed to load accounts:', error)
-    res.status(500).json({
-      error: 'Failed to load accounts'
-    })
+  } catch (err) {
+    throw err
   }
 }
 
@@ -53,11 +50,8 @@ export async function createAccount(req, res) {
     ])
 
     res.status(201).json(result.rows[0])
-  } catch (error) {
-    console.error('Failed to create account:', error)
-    res.status(500).json({
-      error: 'Failed to create account'
-    })
+  } catch (err) {
+    throw err
   }
 }
 
@@ -78,10 +72,7 @@ export async function deleteAccount(req, res) {
     }
 
     res.status(204).send()
-  } catch (error) {
-    console.error('Failed to delete account:', error)
-    res.status(500).json({
-      error: 'Failed to delete account'
-    })
+  } catch (err) {
+    throw err
   }
 }

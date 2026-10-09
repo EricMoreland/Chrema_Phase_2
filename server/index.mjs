@@ -13,6 +13,14 @@ server.post('/api/accounts', createAccount)
 server.delete('/api/accounts/:accountId', deleteAccount)
 
 
+server.use((err, req, res, next) => {
+  console.error('Server error:', err)
+
+  res.status(500).json({
+    error: 'Internal server error'
+  })
+}) //to catch all the thrown err's from Handler files
+
 server.listen(port, () => console.log("Server is listening..."))
 
 
