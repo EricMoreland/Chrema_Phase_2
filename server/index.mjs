@@ -1,5 +1,4 @@
 import express from 'express';
-import db from './PGliteDB.mjs';
 import { getAccounts, createAccount, deleteAccount } from './accountHandlers.mjs'
 
 const server = express()

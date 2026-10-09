@@ -10,10 +10,10 @@ await db.exec(`
     CreditBalance REAL NOT NULL,
     AccountType TEXT NOT NULL
   );
-  INSERT INTO Account (AccountId, Name, CashBalance, CreditBalance, AccountType) 
-  VALUES ('1', 'FNB Account', 1298, 0, 'bank');
-  INSERT INTO Account (AccountId, Name, CashBalance, CreditBalance, AccountType) 
-  VALUES ('2', 'Capitec Account', 500, 0, 'bank');
+  INSERT INTO Account (Name, CashBalance, CreditBalance, AccountType) 
+  VALUES ('FNB Account', 1298, 0, 'bank');
+  INSERT INTO Account (Name, CashBalance, CreditBalance, AccountType) 
+  VALUES ('Capitec Account', 500, 0, 'bank');
   
 
 
@@ -42,7 +42,7 @@ VALUES
     CreatedAt TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (AccountAccountId) REFERENCES Account (AccountId) ON DELETE CASCADE,
-    FOREIGN KEY (CategoryCategoryId) REFERENCES Category (CategoryId) 
+    FOREIGN KEY (CategoryCategoryId) REFERENCES Category (CategoryId) ON DELETE CASCADE 
   );
   INSERT INTO "Transaction" (
     TransactionId,
@@ -64,8 +64,8 @@ CREATE TABLE IF NOT EXISTS Budget (
   AmountSet REAL NOT NULL,
   Period TEXT NOT NULL,
   CurrentAmount REAL NOT NULL,
-  FOREIGN KEY (CategoryId) REFERENCES Category (CategoryId),
-  FOREIGN KEY (AccountAccountId) REFERENCES Account (AccountId)
+  FOREIGN KEY (CategoryId) REFERENCES Category (CategoryId) ON DELETE CASCADE,
+  FOREIGN KEY (AccountAccountId) REFERENCES Account (AccountId) ON DELETE CASCADE
 );
 INSERT INTO Budget (
   BudgetId, CategoryId, AccountAccountId, AmountSet, Period, CurrentAmount
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS "Saving Goal" (
   AccountAccountId INTEGER NOT NULL,
 
   FOREIGN KEY (AccountAccountId)
-    REFERENCES Account(AccountId)
+    REFERENCES Account(AccountId) ON DELETE CASCADE
 );
 INSERT INTO "Saving Goal" (
   SavingId, GoalName, GoalAmount, CurrentAmount, GoalDate, AccountAccountId

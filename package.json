@@ -8,9 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "serverOld": "node server/index.js",
-    "server:dev": "node --watch server/index.js",
-    "server": "node --watch server/indexNew.mjs"
+    "server": "node --watch server/index.mjs"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.8",
