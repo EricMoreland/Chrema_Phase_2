@@ -56,6 +56,14 @@ server.post('/api/accounts', async (req, res) => {
     res.status(201).json(result.rows[0])
 })
 
+server.post('./api/accounts', async (req, res) => {
+    
+    const result = await db.query(`
+        DELETE FROM Account
+        WHERE conditions;
+        `)
+})
+
 
 
 server.listen(port, () => console.log("Server is listening..."))

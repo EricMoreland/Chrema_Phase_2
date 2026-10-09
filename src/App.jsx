@@ -46,7 +46,7 @@ function App() {
   }
 
 
-function handleAddAccount(accountDetails) {
+async function handleAddAccount(accountDetails) {
   const trimmedName = accountDetails.name.trim()
   const startingCashBalance = Number(accountDetails.cashBalance)
 
@@ -58,18 +58,23 @@ function handleAddAccount(accountDetails) {
     return
   }
 
-  const newAccount = {
-    id: Date.now(),
+  try {
+  const response = await axios.post('/api/accounts', {
     name: trimmedName,
     cashBalance: startingCashBalance,
     creditBalance: 0,
     type: 'bank'
-  }
+  })
+
+  const newAccount = response.data
 
   setAccounts((currentAccounts) => [...currentAccounts, newAccount])
   setSelectedAccountId(newAccount.id)
 
   return true
+} catch (err) {console.error('Failed to add your account:', err)
+  return false
+  }
 }
 
 function handleDeleteAccount(accountId) {

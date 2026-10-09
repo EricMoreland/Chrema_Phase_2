@@ -10,10 +10,10 @@ function AccountBar({ selectedType, setSelectedType, accounts, onDeleteAccount, 
     const [cashBalance, setCashBalance] = useState('')
     const [showDeleteForm, setShowDeleteForm] = useState(false)
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault()
 
-        const accountWasAdded = onAddAccount({
+        const accountWasAdded = await onAddAccount({
             name: accountName,
             cashBalance
         })
