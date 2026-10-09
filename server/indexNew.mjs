@@ -56,12 +56,27 @@ server.post('/api/accounts', async (req, res) => {
     res.status(201).json(result.rows[0])
 })
 
-server.post('./api/accounts', async (req, res) => {
+server.delete('./api/accounts:accountId', async (req, res) => {
+     const accountId = Number(req.params.accountId)
     
-    const result = await db.query(`
-        DELETE FROM Account
-        WHERE conditions;
-        `)
+     try {
+        const result = await db.query(`
+            DELETE FROM Account
+            WHERE AccountId = $1
+            RETURNING AccountId AS "id" 
+            `, [accountId])//returning accountId as id, so that we can check if the account was deleted or not(if statement). If no rows are returned, then the account was not found and therefore not deleted.
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({err: 'No account to delete'})
+        }
+
+            res.status(204).send()
+
+    } catch (err) {
+        console.error('Failed to delete:', err)
+        
+        res.status(500).json({err: 'Failed to delete account'})
+    }
 })
 
 

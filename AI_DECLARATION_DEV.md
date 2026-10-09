@@ -28,3 +28,4 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 | 2026-10-7 | Eric | Copilot Student | Create component boilerplate for Account add and delete | Created the boilerplate code ready to implement logic and elements |
 | 2026-10-7 | Eric | Copilot Student | Help identify gaps in SQL translation from old schema to new PGlite | Identified lacking columns in transaciton table and its connecting variable's uses in code logic |
 | 2026-10-8 | Eric | Gemini Pro 3.1 | Help understand current server code from exmaple done in class with PGLite and how to continue to implement to for our app | Explain what works and whats missing currently and what is still needed for app. |
+| 2026-10-9 | Eric | Copilot Student | Help reformat existing code to seperate logic from API routes, to improve code structure | Showed an example of how to split it |

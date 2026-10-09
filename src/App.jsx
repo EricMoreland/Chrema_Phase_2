@@ -77,15 +77,25 @@ async function handleAddAccount(accountDetails) {
   }
 }
 
-function handleDeleteAccount(accountId) {
- const remainingAccounts = accounts.filter(
-    (account) => account.id !== accountId
-  )
+async function handleDeleteAccount(accountId) {
+   try {
+    await axios.delete(`/api/accounts/${accountId}`)
 
-  setAccounts(remainingAccounts)
+    setAccounts((currentAccounts) => {
+    const remainingAccounts = currentAccounts.filter(
+        (account) => account.id !== accountId
+      )
+
 
   if (selectedAccountId === accountId) {
-    setSelectedAccountId(remainingAccounts[0].id)
+    setSelectedAccountId(remainingAccounts[0]?.id ?? null)
+  }
+  return remainingAccounts
+    })
+    return true
+  } catch (err) {
+    console.error('Failed to delete account:', err)
+    return false
   }
 }
 

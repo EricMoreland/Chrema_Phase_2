@@ -27,7 +27,7 @@ function AccountBar({ selectedType, setSelectedType, accounts, onDeleteAccount, 
         setShowAccountForm(false)
     }
 
-    function handleDeleteSelectedAccount() {
+     async function handleDeleteSelectedAccount() {
         const selectedAccount = accounts.find(
             (account) => account.id === selectedAccountId
         )
@@ -36,7 +36,12 @@ function AccountBar({ selectedType, setSelectedType, accounts, onDeleteAccount, 
             return
         }
 
-        onDeleteAccount(selectedAccount.id)
+        const accountWasDeleted = await onDeleteAccount(selectedAccount.id)
+
+        if (!accountWasDeleted) {
+            return
+        }
+
         setShowDeleteForm(false)
     }
 

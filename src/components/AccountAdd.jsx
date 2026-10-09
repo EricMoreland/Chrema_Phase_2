@@ -90,7 +90,7 @@ const AccountAdd = ({
 
           <button
             type="submit"
-            className="rounded-lg bg-sky-600 px-5 py-3 font-serif text-white hover:bg-sky-500"
+            className="rounded-lg bg-[#2e6f8e] px-5 py-3 font-serif text-white hover:bg-[#3b8cae]"
             
           >
             Save Account
