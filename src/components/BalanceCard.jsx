@@ -49,14 +49,16 @@ function BalanceCard({
             )}
 
     return (
-        <div className="min-h-[440px] w-full rounded-[36px] bg-[#172733] p-8 text-center">
-            <p className="text-slate-400 font-serif text-sm tracking-widest uppercase mb-2">Available Balance</p>
-            <p className="text-6xl font-serif text-white mb-8">R {balance}</p>
-
-            <div className="flex flex-col items-center bg-sky-600 text-white rounded-4xl p-3 max-w-[500px] center mx-auto">
+        <div className="relative min-h-[300px] w-full text-center">
+            <div className="relative mx-auto mt-25 flex h-[154px] max-w-[573px] flex-col items-center justify-center overflow-hidden rounded-[58px] border border-white/5 bg-[#1b2d3b]/80">
+            <p className="font-serif text-2xl tracking-wide uppercase text-[#e8e1d3]">Available Balance</p>
+            <p className="text-7xl font-serif text-[#e8e1d3] mb-5">R {balance}</p>
+            </div>
+                               
+            <div className="mx-auto mt-16 flex h-[55px] max-w-[503px] items-center rounded-full bg-[#2e6f8e] px-6 text-white shadow-[0_8px_20px_rgba(0,0,0,0.12)] transition hover:bg-[#3b8cae]">
                 <button 
                 onClick={onOpenTransaction}
-                className="font-serif uppercase text-slate-300 mt-4"
+                className="flex w-full items-center justify-center gap-4 font-serif text-[15px] uppercase tracking-wide text-[#e8e1d3]"
                 >
                     + Add Transaction
                 </button>

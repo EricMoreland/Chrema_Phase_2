@@ -170,7 +170,7 @@ setAccounts((currentAccounts) =>
       <main className="mx-auto mt-8 grid max-w-[1340px] grid-cols-1 items-start gap-4 lg:grid-cols-[278px_minmax(0,1fr)_278px]">
         <SavingsPanel savingGoals={savingGoals} />
 
-        <section className="rounded-[42px] border border-[#41515b] bg-[#172733] p-5 shadow-2xl">
+        <section className="h-fit self-start rounded-[42px] border border-[#41515b] bg-[#172733] p-5 shadow-2xl">
           <AccountBar
             selectedType={selectedType}
             setSelectedType={setSelectedType}
