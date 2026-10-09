@@ -8,23 +8,6 @@ import ReportErrorButton from './components/ReportErrorButton'
 import './App.css'
 import axios from 'axios'
 
-const initialAccounts = [
-  {
-    id: 1,
-    name: 'FNB Account',
-    cashBalance: 1298,
-    creditBalance: 0,
-    type: 'bank'
-  },
-  {
-    id: 2,
-    name: 'Capitec Account',
-    cashBalance: 500,
-    creditBalance: 0,
-    type: 'bank'
-  }
-]
-
 function App() {
 
   const [selectedType, setSelectedType] = useState('cash')
@@ -40,19 +23,27 @@ function App() {
   const [newCategory, setNewCategory] = useState(categories[0])
 
   const [transactionKind, setTransactionKind] = useState('expense') //expense or income
-  const [accounts, setAccounts] = useState(initialAccounts)
+  const [accounts, setAccounts] = useState([])
 
   const [showReportError, setShowReportError] = useState(false)
   //const [showTransactionForm, setShowTransactionForm] = useState(false)
   const [activeWorkspaceView, setActiveWorkspaceView] = useState('dashboard')
+  const [selectedAccountId, setSelectedAccountId] = useState(null)
 
+  
   //finds and returns the first single item matching the condition
-
-  const [selectedAccountId, setSelectedAccountId] = useState(initialAccounts[0].id)
   const selectedAccount = accounts.find((account) => account.id === selectedAccountId)
-  const displayBalance = selectedAccount
-    ? (selectedType === 'cash' ? selectedAccount.cashBalance : selectedAccount.creditBalance)
-    : 0
+  let displayBalance
+
+  if (selectedAccount) {
+    if (selectedType === 'cash') {
+      displayBalance = selectedAccount.cashBalance
+    } else {
+      displayBalance = selectedAccount.creditBalance
+    }
+  } else {
+    displayBalance = 0
+  }
 
 
 function handleAddAccount(accountDetails) {
@@ -93,7 +84,22 @@ function handleDeleteAccount(accountId) {
   }
 }
 
- //useEffect for accounts in coding.txt on eric desktop
+  useEffect(() => {
+    axios
+    .get('/api/accounts') //receives response object, axios automatically converts json to js array of objects
+      .then((response) => {
+        const accountData = response.data //therefore use data property to get the array of objects from response object
+        
+        setAccounts(accountData)
+
+        if (accountData.length > 0) { //if there are multiple accounts, default to first one.
+          setSelectedAccountId(accountData[0]?.id ?? null) //returns null instead of error
+        }
+      })  
+      .catch((error) => {
+        console.error(error) //axios throws error when request fails.
+      })
+  }, [])
 
   useEffect(() => {
     axios

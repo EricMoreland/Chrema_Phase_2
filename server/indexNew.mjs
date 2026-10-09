@@ -8,7 +8,7 @@ const port = 3001
 //contente type in the response in network tab is mime type
 server.use(express.json())
 
-server.get('/api/account', async (req, res) => {
+server.get('/api/accounts', async (req, res) => {
     const result = await db.query(`
         SELECT
             AccountId AS "id",
