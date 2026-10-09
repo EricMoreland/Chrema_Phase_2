@@ -38,7 +38,8 @@ function AccountBar({ selectedType, setSelectedType, accounts, onDeleteAccount, 
 
         const accountWasDeleted = await onDeleteAccount(selectedAccount.id)
 
-        if (!accountWasDeleted) {
+        if (!accountWasDeleted) { //return if account was not deleted, therefore form doesnt close
+            alert('Failed to delete account. Please try again.')
             return
         }
 
