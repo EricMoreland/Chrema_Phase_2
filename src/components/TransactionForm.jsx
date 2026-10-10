@@ -4,6 +4,8 @@ function TransactionForm({
     setNewDescription,
     newAmount,
     setNewAmount,
+    newDate,
+    setNewDate,
     handleAddTransactionProp,
     newCategory,
     setNewCategory,
@@ -96,6 +98,8 @@ function TransactionForm({
                 
                 <input 
                 type = 'date'
+                value={newDate}
+                onChange={(event) => setNewDate(event.target.value)}
                 className = " mb-6 w-full rounded-xl border border-slate-600 bg-slate-800 px-5 py-4 text-white outline-none" /> 
             </div>
 
