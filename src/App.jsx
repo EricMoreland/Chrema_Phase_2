@@ -15,6 +15,12 @@ function App() {
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
+  const [newDate, setNewDate] = useState(() => {
+    const today = new Date()
+    const month = String(today.getMonth() + 1).padStart(2, '0')
+    const day = String(today.getDate()).padStart(2, '0')
+    return `${today.getFullYear()}-${month}-${day}`
+  })
 
   const [budgets, setBudgets] = useState([])
   const [savingGoals, setSavingGoals] = useState([])
@@ -151,7 +157,8 @@ async function handleDeleteAccount(accountId) {
       accountId: selectedAccountId,
       type: selectedType,
       category: newCategory,
-      kind: transactionKind
+      kind: transactionKind,
+      date: newDate
     }
 
     setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */ }
@@ -205,6 +212,8 @@ setAccounts((currentAccounts) =>
             setNewDescription={setNewDescription}
             newAmount={newAmount}
             setNewAmount={setNewAmount}
+            newDate={newDate}
+            setNewDate={setNewDate}
             handleAddTransactionProp={handleAddTransaction}
             transactions={transactions}
             newCategory={newCategory}

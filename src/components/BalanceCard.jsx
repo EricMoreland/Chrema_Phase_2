@@ -11,6 +11,8 @@ function BalanceCard({
     setNewDescription,
     newAmount,
     setNewAmount,
+    newDate,
+    setNewDate,
     handleAddTransactionProp,
     transactions,
     newCategory,
@@ -37,6 +39,8 @@ function BalanceCard({
                 setNewDescription={setNewDescription}
                 newAmount={newAmount}
                 setNewAmount={setNewAmount}
+                newDate={newDate}
+                setNewDate={setNewDate}
                 handleAddTransactionProp={handleSaveTransaction}
                 newCategory={newCategory}
                 setNewCategory={setNewCategory}
