@@ -16,6 +16,7 @@ function TransactionForm({
 
     return (
         <>
+
             <div className="mb-5 flex gap-2">
                 <button
                     className={`flex-1 rounded-full px-4 py-2 font-serif ${
@@ -25,6 +26,7 @@ function TransactionForm({
                     }`}
                     onClick={() => setTransactionKind('income')}
                 >
+
                     Income
                 </button>
                 <button
@@ -46,12 +48,12 @@ function TransactionForm({
 
 
 
-            <div className="mb-6 flex flex-wrap justify-center gap-2">
+            <div className="mb-6 flex flex-wrap justify-center gap-4">
                 {categories.map((category) => {
                     return (
                         <button
                             key={category}
-                            className={'rounded-full px-4 py-2 font-serif text-sm' + (
+                            className={'flex h-12 w-12 items-center justify-center rounded-2x1 border border-slate-500/40 shadow-md' + (
                                 newCategory === category
                                     ? ' bg-sky-600 text-white'
                                     : ' bg-slate-700 text-slate-300'
@@ -59,8 +61,8 @@ function TransactionForm({
                             onClick={() => setNewCategory(category)}
                         >
                             {category == 'Home' && <Home size={22} />}
-                            {category == 'Shopping' && <ShoppingCart size={22} />}
-                            {category == 'Transport' && <Car size={22} />}
+                            {category == 'Groceries' && <ShoppingCart size={22} />}
+                            {category == 'Car' && <Car size={22} />}
                             {category == 'Food' && <Utensils size={22} />}
                             {category == 'Other' && <MoreHorizontal size={22} />}
                         </button>
@@ -71,6 +73,7 @@ function TransactionForm({
 
 
             <div className="mx-auto w-full max-w-[650px]">
+                
                 <input
                     type='text'
                     placeholder='Transaction name'
@@ -87,7 +90,7 @@ function TransactionForm({
                     onChange={(event) => setNewAmount(event.target.value)}
                     className="mb-4 w-full rounded-xl border border-slate-600 bg-slate-800 px-5 py-4 text-white outline-none"
                 />
-                <label className =" mb-3 block  font-serif text-center text-slate-300">
+                <label className =" mb-2 block  font-serif text-sm text-slate-300">
                 Date
                 </label>
                 
@@ -95,15 +98,17 @@ function TransactionForm({
                 type = 'date'
                 className = " mb-6 w-full rounded-xl border border-slate-600 bg-slate-800 px-5 py-4 text-white outline-none" /> 
             </div>
+
+            
             <div className="flex justify-center gap-2">
                 <button onClick={handleAddTransactionProp}
-                className="flex-1 rounded-full bg-sky-600 px-4 py-3 font-serif text-white"
+                className="w-3/4 rounded-x1 bg-sky-600 px-4 py-4 font-serif text-white"
                 > 
                 Save
                  </button>
 
                 <button onClick={onClose}
-                className="rounded-full bg-slate-700 px-5 py-3 font-serif text-slate-300"
+                className="w-1/4 rounded-x1 bg-slate-700 px-4 py-4 font-serif text-slate-300"
                 > Cancel  
                 </button>
             </div>
