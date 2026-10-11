@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ExitButton from './ExitButton'; 
+import { Bus, Car, Film, Home, MoreHorizontal, ShoppingCart, Utensils } from 'lucide-react'; 
 
 function BudgetForm({
     budget,
@@ -12,6 +13,15 @@ function BudgetForm({
     const [limit, setLimit] = useState(
         budget ? String(budget.limit) : ''
     )
+    const categoryIcons = {
+    Home,
+    Groceries: ShoppingCart,
+    Car,
+    Food: Utensils,
+    Entertainment: Film,
+    Transport: Bus,
+    Other: MoreHorizontal
+}
     const isEditing = budget != null
 
     function handleSubmit(event) {
@@ -30,12 +40,12 @@ function BudgetForm({
 
         return (
         <div className="min-h-[440px] p-8 text-left">
-            <h2 className="mb-6 font-serif text-2xl text-white">
-                {isEditing ? 'Edit Budget' : 'Add Budget'}
+            <h2 className="mx-auto mb-5 grid h-[72px] max-w-[290px] place-items-center rounded-[16px] bg-[#1d3040] font-serif text-2xl text-[#eee9de] shadow-[0_8px_20px_rgba(0,0,0,0.18)]">
+            {isEditing ? 'Edit Budgets' : 'Add Budgets'}
             </h2>
 
             <form
-                className="mb-4 rounded-2xl border border-slate-600 bg-[#0d1720] p-4 text-left"
+                className="mx-auto w-full max-w-[510px] text-left"
                 onSubmit={handleSubmit}
             >
                 <h4 className="mb-4 font-serif text-lg text-white">
