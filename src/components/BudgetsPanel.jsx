@@ -5,6 +5,7 @@ import {
     Film,
     Home,
     MoreHorizontal,
+    Plus,
     ShoppingCart,
     Utensils
 } from 'lucide-react'
@@ -27,17 +28,13 @@ function BudgetsPanel({
 }) 
  {     const [openMenuBudgetId, setOpenMenuBudgetId] = useState(null)
     return (
-        <div className="bg-[#172733] rounded-3xl p-8 min-h-[410px] min-w-[280px]">
-           <div className="mb-4 flex items-center justify-between gap-4">
-            <h3 className="font-serif text-xl text-white">Budgets</h3>
-            <button
-             type="button"
-             onClick={onRequestAdd}
-             className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
-           >
-             Add Budget
-           </button>
-           </div>
+        <div className="flex h-[490px] min-w-[280px] flex-col rounded-3xl bg-[#172733] p-8">
+           <div className="mb-5 shrink-0">
+    <h3 className="text-center font-serif text-xl uppercase tracking-wide text-[#eee9de]">
+        Budgets
+    </h3>
+      <div className="mt-5 border-t border-[#64717a]" />
+        </div>
 
         <div className="max-h-[60vh] overflow-y-auto pr-2">
 
