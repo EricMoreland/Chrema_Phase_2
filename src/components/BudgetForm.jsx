@@ -83,7 +83,7 @@ function BudgetForm({
                 <div className="mb-4">
                     <label
                         htmlFor="new-budget-limit"
-                        className="mb-1 block text-sm text-slate-300"
+                        className="mb-2 block font-serif text-base text-[#eee9de]"
                     >
                         Monthly limit (R)
                     </label>
@@ -95,14 +95,14 @@ function BudgetForm({
                         required
                         value={limit}
                         onChange={(event) => setLimit(event.target.value)}
-                        className="w-full rounded-lg border border-slate-500 bg-[#172733] p-2 text-slate-200"
+                        className="w-full rounded-[10px] border border-slate-600 bg-[#263747] px-3 py-2 text-[#eee9de] outline-none focus:border-sky-400"
                     />
                 </div>
 
-                <div className="flex gap-2">
+                <div className="mt-8 flex gap-6">
                     <button
                         type="submit"
-                        className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
+                       className="flex-1 rounded-[10px] bg-[#2e6f8e] px-4 py-3 font-serif text-lg text-[#eee9de] hover:bg-[#3b8cae]"
                     >
                         {isEditing ? 'Save changes' : 'Save budget'}
                     </button>
