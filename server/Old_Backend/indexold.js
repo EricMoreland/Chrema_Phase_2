@@ -1,4 +1,4 @@
-import express, { response } from 'express' //type = module in package.json allows us to use import instead of require
+/* import express, { response } from 'express' //type = module in package.json allows us to use import instead of require
 import database from './db.js'
 
 const server = express()
@@ -83,4 +83,4 @@ server.get('/api/saving-goals', (request, response) => { //GoalName AS name, the
 server.listen(port, () => { //bind express app to network port and start listening for incoming requests (fetch() calls)
   console.log(`Server running at http://localhost:${port}`) //callback runs after server bound to port
 })
-//
+// */

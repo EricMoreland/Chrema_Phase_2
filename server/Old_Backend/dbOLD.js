@@ -1,4 +1,4 @@
-import Database from "better-sqlite3";
+/* import Database from "better-sqlite3";
 import fs from 'node:fs' 
 
 const database = new Database('server/chrema.db')
@@ -12,4 +12,4 @@ const schema = fs.readFileSync( // "file system" used to read schema.sql setup f
 
 database.exec(schema) //takes raw SQL text and executes to create tables in database
 
-export default database
+export default database */
