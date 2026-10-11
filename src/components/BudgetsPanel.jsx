@@ -36,12 +36,12 @@ function BudgetsPanel({
       <div className="mt-5 border-t border-[#64717a]" />
         </div>
 
-        <div className="max-h-[60vh] overflow-y-auto pr-2">
+        <div className="min-h-0 flex-1 overflow-y-auto pr-2">
 
             {/* .map runs once PER ITEM in the array*/}
             {budgets.length === 0 ? (
     <p className="rounded-2xl border border-slate-600 bg-[#0d1720] p-4 text-left text-sm text-slate-300">
-        No budgets yet. Select “Add Budget” to create one.
+        No budgets yet. Select the plus button below to create one.
     </p>
 ) : (
     budgets.map((budget) => {
