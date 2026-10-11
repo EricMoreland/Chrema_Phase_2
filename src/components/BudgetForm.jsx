@@ -52,26 +52,33 @@ function BudgetForm({
                     {isEditing ? 'Edit budget' : 'Create budget'}
                 </h4>
 
-                <div className="mb-4">
-                    <label
-                        htmlFor="new-budget-category"
-                        className="mb-1 block text-sm text-slate-300"
-                    >
-                        Category
-                    </label>
-                    <select
-                        id="new-budget-category"
-                        value={category}
-                        onChange={(event) => setCategory(event.target.value)}
-                        className="w-full rounded-lg border border-slate-500 bg-[#172733] p-2 text-slate-200"
-                    >
-                        {budgetCategories.map((item) => (
-                            <option key={item} value={item}>
-                                {item}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+            <div className="mb-4">
+                <label className="mb-2 block font-serif text-base text-[#eee9de]">
+                  Category
+                </label>
+                <div className="flex flex-wrap gap-4">
+                  {budgetCategories.map((item) => {
+                    const CategoryIcon = categoryIcons[item] ?? MoreHorizontal
+
+                     return (
+                       <button
+                           key={item}
+                           type="button"
+                           aria-label={item}
+                           aria-pressed={category === item}
+                           onClick={() => setCategory(item)}
+                           className={`grid size-11 place-items-center rounded-[12px] border ${
+                              category === item
+                                ? 'border-[#eee9de] bg-[#2e6f8e] text-white'
+                                : 'border-white/10 bg-[#263747] text-[#eee9de]'
+                    }`}
+                >
+                    <CategoryIcon size={20} />
+                </button>
+            )
+        })}
+    </div>
+</div>
 
                 <div className="mb-4">
                     <label
