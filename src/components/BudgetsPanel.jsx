@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import EditButton from './EditButton'
 import {
     Bus,
     Car,
@@ -58,7 +57,7 @@ function BudgetsPanel({
         return (
             <div
                 key={budget.id}
-                className="relative mb-5 grid grid-cols-[40px_minmax(0,1fr)_28px] items-center gap-3"
+                className="relative mb-6 grid min-h-[76px] grid-cols-[40px_minmax(0,1fr)_28px] items-center gap-3"
             >
                 <div className="grid size-9 place-items-center rounded-full bg-[#263747] text-[#eee9de]">
                     <CategoryIcon size={20} aria-hidden="true" />
@@ -79,7 +78,7 @@ function BudgetsPanel({
                             style={{ width: `${percentBudget}%` }}
                         />
                     </div>
-                    <div className="mt-1 flex justify-between gap-2 text-xs text-slate-300">
+                    <div className="mt-1 flex justify-between gap-2 whitespace-nowrap text-xs text-slate-300">
                         <span>Spent: R{budget.currentAmount}</span>
                         <span>Max: R{budget.limit}</span>
                     </div>
