@@ -1,4 +1,4 @@
-PRAGMA foreign_keys = ON;
+/* PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS Category (
   CategoryId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -148,4 +148,4 @@ WHERE Name = 'FNB Account'
     SELECT 1
     FROM "Saving Goal"
     WHERE AccountAccountId = Account.AccountId
-  );;
+  );; */
