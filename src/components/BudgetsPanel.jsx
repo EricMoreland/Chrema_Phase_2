@@ -130,6 +130,16 @@ function BudgetsPanel({
     })
 )}
     </div>
+    <div className="flex shrink-0 justify-center pt-2">
+    <button
+        type="button"
+        aria-label="Add budget"
+        onClick={onRequestAdd}
+        className="grid size-12 place-items-center rounded-full text-[#eee9de] hover:bg-[#263747] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+    >
+        <Plus size={34} aria-hidden="true" />
+    </button>
+</div>
         </div>
     )
 }
