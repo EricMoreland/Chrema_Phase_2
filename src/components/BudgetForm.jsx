@@ -48,9 +48,7 @@ function BudgetForm({
                 className="mx-auto w-full max-w-[510px] text-left"
                 onSubmit={handleSubmit}
             >
-                <h4 className="mb-4 font-serif text-lg text-white">
-                    {isEditing ? 'Edit budget' : 'Create budget'}
-                </h4>
+        
 
             <div className="mb-4">
                 <label className="mb-2 block font-serif text-base text-[#eee9de]">
