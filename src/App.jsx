@@ -29,18 +29,6 @@ function App() {
       category: 'Groceries',
       currentAmount: 125,
       limit: 350
-    },
-    {
-      id: 2,
-      category: 'Transport',
-      currentAmount: 80,
-      limit: 200
-    },
-    {
-      id: 3,
-      category: 'Entertainment',
-      currentAmount: 45,
-      limit: 100
     }
   ])
   const [savingGoals, setSavingGoals] = useState([])
@@ -176,8 +164,8 @@ async function handleDeleteAccount(accountId) {
         const savingGoalData = response.data
         setSavingGoals(savingGoalData)
       })
-      .catch((error) => {
-        console.error(error)
+      .catch((err) => {
+        console.error(err)
       })
   }, [])
 

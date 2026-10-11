@@ -6,6 +6,7 @@ Deviations has been kept up to date, manualy with pen and paper up to 04-10-2026
  - description added in Transaction table
  - GoalName added in savingsGoals table
  - currentamount added in Budgets table
+ - Savings Goal data split into StartDate and EndDate
 
  ## Wireframes vs final product
 
