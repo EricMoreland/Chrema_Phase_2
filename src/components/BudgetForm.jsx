@@ -79,7 +79,23 @@ function BudgetForm({
         })}
     </div>
 </div>
-
+                <div className="mb-4">
+                     <label
+                         htmlFor="new-budget-name"
+                         className="mb-2 block font-serif text-base text-[#eee9de]"
+                   >
+                         Budget Name
+                      </label>
+                      <input
+                          id="new-budget-name"
+                          type="text"
+                          required
+                          value={name}
+                          onChange={(event) => setName(event.target.value)}
+                          placeholder="e.g. Groceries"
+                          className="w-full rounded-[10px] border border-slate-600 bg-[#263747] px-3 py-2 text-[#eee9de] outline-none focus:border-sky-400"
+                     />
+                </div>
                 <div className="mb-4">
                     <label
                         htmlFor="new-budget-limit"
