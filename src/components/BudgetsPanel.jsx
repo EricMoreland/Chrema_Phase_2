@@ -1,4 +1,23 @@
 import EditButton from './EditButton'
+import {
+    Bus,
+    Car,
+    Film,
+    Home,
+    MoreHorizontal,
+    ShoppingCart,
+    Utensils
+} from 'lucide-react'
+
+const categoryIcons = {
+    Home,
+    Groceries: ShoppingCart,
+    Car,
+    Food: Utensils,
+    Entertainment: Film,
+    Transport: Bus,
+    Other: MoreHorizontal
+}
 
 function BudgetsPanel({
     budgets,
@@ -33,6 +52,7 @@ function BudgetsPanel({
         const percentBudget = budget.limit > 0
         ? Math.min((budget.currentAmount / budget.limit) * 100, 100)
         : 0
+        const CategoryIcon = categoryIcons[budget.category] ?? MoreHorizontal
 
         return (
             <div
@@ -41,7 +61,10 @@ function BudgetsPanel({
             >
                 <div className="mb-3">
                     <div className="mb-3 min-w-0 text-slate-300 text-sm font-serif">
-                        <p className="break-words">{budget.category}</p>
+                        <p className="flex items-center gap-2 break-words">
+                            <CategoryIcon size={20} aria-hidden="true" />
+                            {budget.category}
+                        </p>
                         <p className="mt-1">
                             Spent R{budget.currentAmount} / Max R{budget.limit}
                         </p>
@@ -75,7 +98,6 @@ function BudgetsPanel({
 }
 
 export default BudgetsPanel
-
 
 
 
