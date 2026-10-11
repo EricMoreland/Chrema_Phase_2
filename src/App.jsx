@@ -255,9 +255,11 @@ function App() {
                 onCloseView={() => setActiveWorkspaceView('dashboard')}
                 newDescription={newDescription}
                 setNewDescription={setNewDescription}
-                newAmount={newAmount}
-                setNewAmount={setNewAmount}
-                handleAddTransactionProp={handleAddTransaction}
+        newAmount={newAmount}
+        setNewAmount={setNewAmount}
+        newDate={newDate}
+        setNewDate={setNewDate}
+        handleAddTransactionProp={handleAddTransaction}
                 transactions={transactions}
                 newCategory={newCategory}
                 setNewCategory={setNewCategory}
