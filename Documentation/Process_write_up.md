@@ -12,6 +12,8 @@ Process Write Up has been discussed in class meetings on monday's, written and c
 
  - 4-5 October 2026: Ben and Aqeel started with their assigned pages, Eric continued with Error page. Meeting held to sync all members on where we are and communicate whats to be done by 11 Oct. (Activities to follow...)
 
+ - 10-12 October 2026: Merge all current working code into Main and reset to new code "checkpoint". Requirements: Aqeel & Benno implement required css and understand new backend. Eric continue backend implementation. Everyone, finalise code and implement last pieces of dupilcate logic for savings.
+
 ## Key Decisions Take:
 
   - A strict branching strategy was enforced, where team members were required to pull from the main branch, push code to their individual branches, and submit pull requests.

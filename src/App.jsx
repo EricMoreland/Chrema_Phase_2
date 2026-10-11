@@ -4,7 +4,7 @@ import SavingsPanel from './components/SavingsPanel'
 import BudgetsPanel from './components/BudgetsPanel'
 import AccountBar from './components/AccountBar'
 import ReportError from './components/ReportError'
-import './App.css'
+import ReportErrorButton from './components/ReportErrorButton'
 import axios from 'axios'
 import BudgetForm from './components/BudgetForm'
 import DeleteBudget from './components/DeleteBudget'
@@ -12,8 +12,7 @@ import DeleteBudget from './components/DeleteBudget'
 function App() {
 
   const [selectedType, setSelectedType] = useState('cash')
-  //const displayBalance = selectedType === 'cash' ? cashBalance : creditBalance (NEW DISPLAYBLANCE VARIABLE BELOW)
-  {/*Deciding between which of 2 different states to show, use if () {}/ternary, to set the correct state to variable */ }
+
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
@@ -71,15 +70,76 @@ function App() {
     'Other'
   ]
   const [selectedAccountId, setSelectedAccountId] = useState(null)
+
+  
+  //finds and returns the first single item matching the condition
   const selectedAccount = accounts.find((account) => account.id === selectedAccountId)
-  const displayBalance = selectedAccount
-    ? (selectedType === 'cash' ? selectedAccount.cashBalance : selectedAccount.creditBalance)
-    : 0
+  let displayBalance
+
+  if (selectedAccount) {
+    if (selectedType === 'cash') {
+      displayBalance = selectedAccount.cashBalance
+    } else {
+      displayBalance = selectedAccount.creditBalance
+    }
+  } else {
+    displayBalance = 0
+  }
 
 
 
+async function handleAddAccount(accountDetails) {
+  const trimmedName = accountDetails.name.trim()
+  const startingCashBalance = Number(accountDetails.cashBalance)
+
+  const nameAlreadyExists = accounts.some(
+    (account) => account.name.toLowerCase() === trimmedName.toLowerCase()
+  )
+
+  if (nameAlreadyExists) {
+    return
+  }
+
+  try {
+  const response = await axios.post('/api/accounts', {
+    name: trimmedName,
+    cashBalance: startingCashBalance,
+    creditBalance: 0,
+    type: 'bank'
+  })
+
+  const newAccount = response.data
+
+  setAccounts((currentAccounts) => [...currentAccounts, newAccount])
+  setSelectedAccountId(newAccount.id)
+
+  return true
+} catch (err) {console.error('Failed to add your account:', err)
+  return false
+  }
+}
+
+async function handleDeleteAccount(accountId) {
+   try {
+    await axios.delete(`/api/accounts/${accountId}`)
+
+    setAccounts((currentAccounts) => {
+    const remainingAccounts = currentAccounts.filter(
+        (account) => account.id !== accountId
+      )
 
 
+  if (selectedAccountId === accountId) {
+    setSelectedAccountId(remainingAccounts[0]?.id ?? null)
+  }
+  return remainingAccounts
+    })
+    return true
+  } catch (err) {
+    console.error('Failed to delete account:', err)
+    return false
+  }
+}
 
   useEffect(() => {
     axios
@@ -90,7 +150,7 @@ function App() {
         setAccounts(accountData)
 
         if (accountData.length > 0) { //if there are multiple accounts, default to first one.
-          setSelectedAccountId(accountData[0].id)
+          setSelectedAccountId(accountData[0]?.id ?? null) //returns null instead of error
         }
       })
       .catch((error) => {
@@ -122,6 +182,7 @@ function App() {
   }, [])
 
 
+
   function handleAddTransaction() {
     const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */ }
 
@@ -129,6 +190,7 @@ function App() {
       id: Date.now(),
       description: newDescription,
       amount: amountNumber,
+      accountId: selectedAccountId,
       type: selectedType,
       category: newCategory,
       kind: transactionKind,
@@ -206,14 +268,7 @@ function App() {
     <div className='min-h-screen bg-[#0d1720] px-2 py-4 text-center text-[#eee9de]'>
       <header className="flex items-center justify-between px-2">
         <h1 className="font-serif text-3xl tracking-wide text-[#eee9de]">Chrema</h1>
-        <button
-          type="button"
-          onClick={() => setShowReportError(true)}
-          aria-label="Report Error"
-          className="grid size-10 place-items-center rounded-full border-4 border-[#eee9de] bg-[#0d1720] text-2xl text-red-600"
-        >
-          !
-        </button>
+        <ReportErrorButton onClick={() => setShowReportError(true)}/>
       </header>
 
       <main className="mx-auto mt-8 grid max-w-[1340px] grid-cols-1 items-start gap-4 lg:grid-cols-[278px_minmax(0,1fr)_278px]">
@@ -240,6 +295,7 @@ function App() {
             />
           ) : (
             <>
+              {activeWorkspaceView === 'dashboard' && (
               <AccountBar
                 selectedType={selectedType}
                 setSelectedType={setSelectedType}
@@ -247,6 +303,7 @@ function App() {
                 selectedAccountId={selectedAccountId}
                 setSelectedAccountId={setSelectedAccountId}
               />
+              )}
 
               <BalanceCard
                 balance={displayBalance}
@@ -255,11 +312,11 @@ function App() {
                 onCloseView={() => setActiveWorkspaceView('dashboard')}
                 newDescription={newDescription}
                 setNewDescription={setNewDescription}
-        newAmount={newAmount}
-        setNewAmount={setNewAmount}
-        newDate={newDate}
-        setNewDate={setNewDate}
-        handleAddTransactionProp={handleAddTransaction}
+                newAmount={newAmount}
+                setNewAmount={setNewAmount}
+                newDate={newDate}
+                setNewDate={setNewDate}
+                handleAddTransactionProp={handleAddTransaction}
                 transactions={transactions}
                 newCategory={newCategory}
                 setNewCategory={setNewCategory}
