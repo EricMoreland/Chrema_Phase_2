@@ -61,7 +61,9 @@ function BudgetsPanel({
                 </div>
 
                 <div className="min-w-0 font-serif text-sm text-[#eee9de]">
-                    <p className="mb-1 truncate text-center">{budget.category}</p>
+                    <p className="mb-1 truncate text-center">
+                         {budget.name || budget.category}
+                   </p>
                     <div
                         className="h-3 w-full overflow-hidden rounded-full bg-[#eee9de]"
                         role="progressbar"
