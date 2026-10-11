@@ -11,6 +11,8 @@ function BalanceCard({
     setNewDescription,
     newAmount,
     setNewAmount,
+    newDate,
+    setNewDate,
     handleAddTransactionProp,
     transactions,
     newCategory,
@@ -37,6 +39,8 @@ function BalanceCard({
                 setNewDescription={setNewDescription}
                 newAmount={newAmount}
                 setNewAmount={setNewAmount}
+                newDate={newDate}
+                setNewDate={setNewDate}
                 handleAddTransactionProp={handleSaveTransaction}
                 newCategory={newCategory}
                 setNewCategory={setNewCategory}
@@ -53,7 +57,7 @@ function BalanceCard({
             <p className="text-slate-400 font-serif text-sm tracking-widest uppercase mb-2">Available Balance</p>
             <p className="text-6xl font-serif text-white mb-8">R {balance}</p>
 
-            <div className="flex flex-col items-center bg-sky-600 text-white rounded-4xl p-3 max-w-[500px] center mx-auto">
+            <div className="mb-6 flex flex-col items bg-sky-600 text-white rounded-4xl p-3 max-w-[500px] center mx-auto">
                 <button 
                 onClick={onOpenTransaction}
                 className="font-serif uppercase text-slate-300 mt-4"

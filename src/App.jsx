@@ -17,6 +17,12 @@ function App() {
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
   const [newDescription, setNewDescription] = useState('')
+  const [newDate, setNewDate] = useState(() => {
+    const today = new Date()
+    const month = String(today.getMonth() + 1).padStart(2, '0')
+    const day = String(today.getDate()).padStart(2, '0')
+    return `${today.getFullYear()}-${month}-${day}`
+  })
 
   const [budgets, setBudgets] = useState([
     {
@@ -125,7 +131,8 @@ function App() {
       amount: amountNumber,
       type: selectedType,
       category: newCategory,
-      kind: transactionKind
+      kind: transactionKind,
+      date: newDate
     }
 
     setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */ }
@@ -241,26 +248,28 @@ activeWorkspaceView === 'edit-budget' ? (
       setSelectedAccountId={setSelectedAccountId}
     />
 
-    <BalanceCard
-      balance={displayBalance}
-      activeWorkspaceView={activeWorkspaceView}
-      onOpenTransaction={() => setActiveWorkspaceView('add-transaction')}
-      onCloseView={() => setActiveWorkspaceView('dashboard')}
-      newDescription={newDescription}
-      setNewDescription={setNewDescription}
-      newAmount={newAmount}
-      setNewAmount={setNewAmount}
-      handleAddTransactionProp={handleAddTransaction}
-      transactions={transactions}
-      newCategory={newCategory}
-      setNewCategory={setNewCategory}
-      categories={categories}
-      transactionKind={transactionKind}
-      setTransactionKind={setTransactionKind}
-    />
-  </>
-)}
-          </section>
+          <BalanceCard
+            balance={displayBalance}
+            activeWorkspaceView={activeWorkspaceView}
+            onOpenTransaction={() => setActiveWorkspaceView("add-transaction")} 
+            onCloseView={() => setActiveWorkspaceView("dashboard")}
+            newDescription={newDescription}
+            setNewDescription={setNewDescription}
+            newAmount={newAmount}
+            setNewAmount={setNewAmount}
+            newDate={newDate}
+            setNewDate={setNewDate}
+            handleAddTransactionProp={handleAddTransaction}
+            transactions={transactions}
+            newCategory={newCategory}
+            setNewCategory={setNewCategory}
+            categories={categories}
+            transactionKind={transactionKind}
+            setTransactionKind={setTransactionKind}
+          />
+        </>
+      )}
+         </section>
 
           <BudgetsPanel
       budgets={budgets}
