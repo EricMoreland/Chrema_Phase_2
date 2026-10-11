@@ -13,6 +13,8 @@ function BudgetForm({
     const [limit, setLimit] = useState(
         budget ? String(budget.limit) : ''
     )
+    const [name, setName] = useState(budget?.name ?? '')
+    const [period, setPeriod] = useState(budget?.period ?? 'This Month')
     const categoryIcons = {
     Home,
     Groceries: ShoppingCart,
@@ -30,9 +32,9 @@ function BudgetForm({
         const numericLimit = Number(limit)
 
         if (isEditing) {
-            onUpdateBudget(budget.id, category, numericLimit)
+            onUpdateBudget(budget.id, category, name.trim(), numericLimit, period)
         } else {
-            onAddBudget(category, numericLimit)
+            onAddBudget(category, name.trim(), numericLimit, period)
         }
 
         onClose()
