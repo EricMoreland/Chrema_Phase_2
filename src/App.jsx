@@ -8,6 +8,7 @@ import ReportErrorButton from './components/ReportErrorButton'
 import axios from 'axios'
 import BudgetForm from './components/BudgetForm'
 import DeleteBudget from './components/DeleteBudget'
+import SavingGoalForm from './components/SavingGoalForm'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
     }
   ])
   const [savingGoals, setSavingGoals] = useState([])
+  const [editingSavingGoal, setEditingSavingGoal] = useState(null)
 
   const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
   const [newCategory, setNewCategory] = useState(categories[0])
@@ -47,6 +49,7 @@ function App() {
 
   const [editingBudget, setEditingBudget] = useState(null)
   const [budgetIdToDelete, setBudgetIdToDelete] = useState(null)
+  
 
   const budgetCategories = [
     'Home',
@@ -128,6 +131,7 @@ async function handleDeleteAccount(accountId) {
     return false
   }
 }
+
 
   useEffect(() => {
     axios
@@ -252,6 +256,29 @@ async function handleDeleteAccount(accountId) {
     setActiveWorkspaceView('delete-budget')
   }
 
+  async function handleAddSavingGoal(goalDetails) {
+  try {
+    const response = await axios.post('/api/saving-goals', goalDetails)
+
+    setSavingGoals((currentGoals) => [...currentGoals, response.data])
+
+      return true
+    } catch (error) {
+      console.error('Failed to add saving goal:', error)
+      return false
+    }
+  }
+
+  function closeSavingGoalView() {
+    setActiveWorkspaceView('dashboard')
+    setEditingSavingGoal(null)
+  }
+
+  function openAddSavingGoal() {
+    setEditingSavingGoal(null)
+    setActiveWorkspaceView('add-saving-goal')
+  }
+
   return (
     <div className='min-h-screen bg-[#0d1720] px-2 py-4 text-center text-[#eee9de]'>
       <header className="flex items-center justify-between px-2">
@@ -260,11 +287,26 @@ async function handleDeleteAccount(accountId) {
       </header>
 
       <main className="mx-auto mt-8 grid max-w-[1340px] grid-cols-1 items-start gap-4 lg:grid-cols-[278px_minmax(0,1fr)_278px]">
-        <SavingsPanel savingGoals={savingGoals} />
+        <SavingsPanel
+          savingGoals={savingGoals}
+          onRequestAdd={openAddSavingGoal}
+        />
 
         <section className="rounded-[42px] border border-[#41515b] bg-[#172733] p-5 shadow-2xl">
 
-          {activeWorkspaceView === 'add-budget' ||
+          {activeWorkspaceView === 'add-saving-goal' ||
+            activeWorkspaceView === 'edit-saving-goal' ? (
+            <SavingGoalForm
+              savingGoal={
+                activeWorkspaceView === 'edit-saving-goal'
+                  ? editingSavingGoal
+                  : undefined
+              }
+              accountId={selectedAccountId}
+              onAddSavingGoal={handleAddSavingGoal}
+              onClose={closeSavingGoalView}
+            />
+          ) : activeWorkspaceView === 'add-budget' ||
             activeWorkspaceView === 'edit-budget' ? (
             <BudgetForm
               budget={activeWorkspaceView === 'edit-budget' ? editingBudget : undefined}
