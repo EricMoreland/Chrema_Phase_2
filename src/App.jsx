@@ -5,7 +5,6 @@ import BudgetsPanel from './components/BudgetsPanel'
 import AccountBar from './components/AccountBar'
 import ReportError from './components/ReportError'
 import ReportErrorButton from './components/ReportErrorButton'
-import './App.css'
 import axios from 'axios'
 import BudgetForm from './components/BudgetForm'
 import DeleteBudget from './components/DeleteBudget'
@@ -275,16 +274,6 @@ async function handleDeleteAccount(accountId) {
       <main className="mx-auto mt-8 grid max-w-[1340px] grid-cols-1 items-start gap-4 lg:grid-cols-[278px_minmax(0,1fr)_278px]">
         <SavingsPanel savingGoals={savingGoals} />
 
-        <section className="h-fit self-start rounded-[42px] border border-[#41515b] bg-[#172733] p-5 shadow-2xl">
-          <AccountBar
-            selectedType={selectedType}
-            setSelectedType={setSelectedType}
-            accounts={accounts}
-            selectedAccountId={selectedAccountId}
-            setSelectedAccountId={setSelectedAccountId}
-            onAddAccount={handleAddAccount}
-            onDeleteAccount={handleDeleteAccount}
-          />
         <section className="rounded-[42px] border border-[#41515b] bg-[#172733] p-5 shadow-2xl">
 
           {activeWorkspaceView === 'add-budget' ||
@@ -306,6 +295,7 @@ async function handleDeleteAccount(accountId) {
             />
           ) : (
             <>
+              {activeWorkspaceView === 'dashboard' && (
               <AccountBar
                 selectedType={selectedType}
                 setSelectedType={setSelectedType}
@@ -313,6 +303,7 @@ async function handleDeleteAccount(accountId) {
                 selectedAccountId={selectedAccountId}
                 setSelectedAccountId={setSelectedAccountId}
               />
+              )}
 
               <BalanceCard
                 balance={displayBalance}
@@ -321,11 +312,11 @@ async function handleDeleteAccount(accountId) {
                 onCloseView={() => setActiveWorkspaceView('dashboard')}
                 newDescription={newDescription}
                 setNewDescription={setNewDescription}
-        newAmount={newAmount}
-        setNewAmount={setNewAmount}
-        newDate={newDate}
-        setNewDate={setNewDate}
-        handleAddTransactionProp={handleAddTransaction}
+                newAmount={newAmount}
+                setNewAmount={setNewAmount}
+                newDate={newDate}
+                setNewDate={setNewDate}
+                handleAddTransactionProp={handleAddTransaction}
                 transactions={transactions}
                 newCategory={newCategory}
                 setNewCategory={setNewCategory}
