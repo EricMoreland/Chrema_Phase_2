@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import EditButton from './EditButton'
 import {
     Bus,
@@ -25,7 +26,7 @@ function BudgetsPanel({
     onRequestEdit,
     onRequestDelete
 }) 
- {
+ {     const [openMenuBudgetId, setOpenMenuBudgetId] = useState(null)
     return (
         <div className="bg-[#172733] rounded-3xl p-8 min-h-[410px] min-w-[280px]">
            <div className="mb-4 flex items-center justify-between gap-4">
@@ -57,37 +58,77 @@ function BudgetsPanel({
         return (
             <div
                 key={budget.id}
-                className="mb-4 rounded-2xl border border-slate-600 bg-[#0d1720] p-4"
+                className="relative mb-5 grid grid-cols-[40px_minmax(0,1fr)_28px] items-center gap-3"
             >
-                <div className="mb-3">
-                    <div className="mb-3 min-w-0 text-slate-300 text-sm font-serif">
-                        <p className="flex items-center gap-2 break-words">
-                            <CategoryIcon size={20} aria-hidden="true" />
-                            {budget.category}
-                        </p>
-                        <p className="mt-1">
-                            Spent R{budget.currentAmount} / Max R{budget.limit}
-                        </p>
-                    </div>
+                <div className="grid size-9 place-items-center rounded-full bg-[#263747] text-[#eee9de]">
+                    <CategoryIcon size={20} aria-hidden="true" />
+                </div>
 
-                    <div className="flex gap-2">
-                        <EditButton budget={budget} onEdit={onRequestEdit} />
+                <div className="min-w-0 font-serif text-sm text-[#eee9de]">
+                    <p className="mb-1 truncate text-center">{budget.category}</p>
+                    <div
+                        className="h-3 w-full overflow-hidden rounded-full bg-[#eee9de]"
+                        role="progressbar"
+                        aria-label={`${budget.category} budget spent`}
+                        aria-valuenow={Math.min(budget.currentAmount, budget.limit)}
+                        aria-valuemin={0}
+                        aria-valuemax={budget.limit}
+                    >
+                        <div
+                            className="h-full rounded-full bg-[#2e6f8e]"
+                            style={{ width: `${percentBudget}%` }}
+                        />
+                    </div>
+                    <div className="mt-1 flex justify-between gap-2 text-xs text-slate-300">
+                        <span>Spent: R{budget.currentAmount}</span>
+                        <span>Max: R{budget.limit}</span>
+                    </div>
+                </div>
+
+                <button
+                    type="button"
+                    aria-label={`Actions for ${budget.category} budget`}
+                    aria-haspopup="menu"
+                    aria-expanded={openMenuBudgetId === budget.id}
+                    onClick={() =>
+                        setOpenMenuBudgetId(
+                            openMenuBudgetId === budget.id ? null : budget.id
+                        )
+                    }
+                    className="grid size-7 place-items-center rounded-full border border-slate-500 text-slate-200 hover:bg-[#263747]"
+                >
+                    <MoreHorizontal size={18} aria-hidden="true" />
+                </button>
+
+                {openMenuBudgetId === budget.id && (
+                    <div
+                        role="menu"
+                        className="absolute right-0 top-full z-10 mt-1 min-w-28 rounded-lg border border-slate-600 bg-[#1d3040] p-1 shadow-xl"
+                    >
                         <button
                             type="button"
-                            onClick={() => onRequestDelete(budget.id)}
-                     className="rounded-lg border border-red-400 px-3 py-2 text-sm text-red-300"
-                   >
-                        Delete
-                   </button>
+                            role="menuitem"
+                            onClick={() => {
+                                setOpenMenuBudgetId(null)
+                                onRequestEdit(budget)
+                            }}
+                            className="block w-full rounded px-3 py-2 text-left text-sm text-[#eee9de] hover:bg-[#263747]"
+                        >
+                            Edit
+                        </button>
+                        <button
+                            type="button"
+                            role="menuitem"
+                            onClick={() => {
+                                setOpenMenuBudgetId(null)
+                                onRequestDelete(budget.id)
+                            }}
+                            className="block w-full rounded px-3 py-2 text-left text-sm text-red-300 hover:bg-[#263747]"
+                        >
+                            Delete
+                        </button>
                     </div>
-                </div>
-
-                <div className="h-2 w-full overflow-hidden rounded-full bg-slate-600">
-                    <div
-                        className="h-full bg-sky-500"
-                        style={{ width: `${percentBudget}%` }}
-                    ></div>
-                </div>
+                )}
             </div>
         )
     })
