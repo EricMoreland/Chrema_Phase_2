@@ -3,7 +3,7 @@ function ExitButton({ onExit}) {
         <button
         type = "button"
         onClick = {onExit}
-        className = "rounded-lg border border-slate-500 px-3 py-2 text-sm  text-slate-200"
+        className="flex-1 rounded-[10px] bg-[#34333e] px-4 py-3 font-serif text-lg text-[#eee9de] hover:bg-[#44434f]"
         >
             Cancel
         </button>
