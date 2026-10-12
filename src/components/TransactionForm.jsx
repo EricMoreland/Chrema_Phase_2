@@ -20,6 +20,7 @@ function TransactionForm({
 
     return (
         <div className="min-h-[440px] p-8 text-left">
+            
             <div className="mx-auto w-full max-w-[510px]">
             <div className="mb-5 flex gap-2">
                 <button
@@ -54,7 +55,7 @@ function TransactionForm({
                     return (
                         <button
                             key={category}
-                            className={`grid size-11 place-items-center rounded-[12px] border ${
+                            className={`grid size-13 place-items-center rounded-[12px] border ${
                                 newCategory === category
                                     ? 'border-[#eee9de] bg-[#2e6f8e] text-white'
                                     : 'border-white/10 bg-[#263747] text-[#eee9de]'
