@@ -56,7 +56,7 @@ function BudgetForm({
                 <label className="mb-2 block font-serif text-base text-[#eee9de]">
                   Category
                 </label>
-                <div className="flex flex-wrap gap-4">
+                <div className="grid w-full grid-cols-4 gap-2 place-items-center sm:grid-cols-7">
                   {budgetCategories.map((item) => {
                     const CategoryIcon = categoryIcons[item] ?? MoreHorizontal
 

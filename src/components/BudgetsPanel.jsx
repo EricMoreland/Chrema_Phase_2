@@ -77,7 +77,7 @@ function BudgetsPanel({
                             style={{ width: `${percentBudget}%` }}
                         />
                     </div>
-                    <div className="mt-1 flex justify-between gap-2 whitespace-nowrap text-xs text-slate-300">
+                    <div className="mt-1 flex justify-between gap-2 whitespace-nowrap text-xs text-[#eee9de]">
                         <span>Spent: R{budget.currentAmount}</span>
                         <span>Max: R{budget.limit}</span>
                     </div>
