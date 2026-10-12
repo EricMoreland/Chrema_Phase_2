@@ -222,26 +222,28 @@ async function handleDeleteAccount(accountId) {
     )
   }
 
-  function handleAddBudget(category, limit) {
-    const newBudget = {
-      id: Date.now(),
-      category,
-      currentAmount: 0,
-      limit
-    }
-
-    setBudgets((currentBudgets) => [...currentBudgets, newBudget])
+  function handleAddBudget(category, name, limit, period) {
+  const newBudget = {
+    id: Date.now(),
+    category,
+    name,
+    currentAmount: 0,
+    limit,
+    period
   }
 
-  function handleUpdateBudget(budgetId, category, limit) {
-    setBudgets((currentBudgets) =>
-      currentBudgets.map((budget) =>
-        budget.id === budgetId
-          ? { ...budget, category, limit }
-          : budget
-      )
+  setBudgets((currentBudgets) => [...currentBudgets, newBudget])
+}
+
+function handleUpdateBudget(budgetId, category, name, limit, period) {
+  setBudgets((currentBudgets) =>
+    currentBudgets.map((budget) =>
+      budget.id === budgetId
+        ? { ...budget, category, name, limit, period }
+        : budget
     )
-  }
+  )
+}
 
   function closeBudgetView() {
     setActiveWorkspaceView('dashboard')

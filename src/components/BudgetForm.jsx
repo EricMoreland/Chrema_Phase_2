@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ExitButton from './ExitButton'; 
+import { Bus, Car, Film, Home, MoreHorizontal, ShoppingCart, Utensils } from 'lucide-react'; 
 
 function BudgetForm({
     budget,
@@ -12,6 +13,17 @@ function BudgetForm({
     const [limit, setLimit] = useState(
         budget ? String(budget.limit) : ''
     )
+    const [name, setName] = useState(budget?.name ?? '')
+    const [period, setPeriod] = useState(budget?.period ?? 'This Month')
+    const categoryIcons = {
+    Home,
+    Groceries: ShoppingCart,
+    Car,
+    Food: Utensils,
+    Entertainment: Film,
+    Transport: Bus,
+    Other: MoreHorizontal
+}
     const isEditing = budget != null
 
     function handleSubmit(event) {
@@ -20,9 +32,9 @@ function BudgetForm({
         const numericLimit = Number(limit)
 
         if (isEditing) {
-            onUpdateBudget(budget.id, category, numericLimit)
+            onUpdateBudget(budget.id, category, name.trim(), numericLimit, period)
         } else {
-            onAddBudget(category, numericLimit)
+            onAddBudget(category, name.trim(), numericLimit, period)
         }
 
         onClose()
@@ -30,43 +42,64 @@ function BudgetForm({
 
         return (
         <div className="min-h-[440px] p-8 text-left">
-            <h2 className="mb-6 font-serif text-2xl text-white">
-                {isEditing ? 'Edit Budget' : 'Add Budget'}
+            <h2 className="mx-auto mb-5 grid h-[72px] max-w-[290px] place-items-center rounded-[16px] bg-[#1d3040] font-serif text-2xl text-[#eee9de] shadow-[0_8px_20px_rgba(0,0,0,0.18)]">
+            {isEditing ? 'Edit Budgets' : 'Add Budgets'}
             </h2>
 
             <form
-                className="mb-4 rounded-2xl border border-slate-600 bg-[#0d1720] p-4 text-left"
+                className="mx-auto w-full max-w-[510px] text-left"
                 onSubmit={handleSubmit}
             >
-                <h4 className="mb-4 font-serif text-lg text-white">
-                    {isEditing ? 'Edit budget' : 'Create budget'}
-                </h4>
+        
 
+            <div className="mb-4">
+                <label className="mb-2 block font-serif text-base text-[#eee9de]">
+                  Category
+                </label>
+                <div className="grid w-full grid-cols-4 gap-2 place-items-center sm:grid-cols-7">
+                  {budgetCategories.map((item) => {
+                    const CategoryIcon = categoryIcons[item] ?? MoreHorizontal
+
+                     return (
+                       <button
+                           key={item}
+                           type="button"
+                           aria-label={item}
+                           aria-pressed={category === item}
+                           onClick={() => setCategory(item)}
+                           className={`grid size-11 place-items-center rounded-[12px] border ${
+                              category === item
+                                ? 'border-[#eee9de] bg-[#2e6f8e] text-white'
+                                : 'border-white/10 bg-[#263747] text-[#eee9de]'
+                    }`}
+                >
+                    <CategoryIcon size={20} />
+                </button>
+            )
+        })}
+    </div>
+</div>
                 <div className="mb-4">
-                    <label
-                        htmlFor="new-budget-category"
-                        className="mb-1 block text-sm text-slate-300"
-                    >
-                        Category
-                    </label>
-                    <select
-                        id="new-budget-category"
-                        value={category}
-                        onChange={(event) => setCategory(event.target.value)}
-                        className="w-full rounded-lg border border-slate-500 bg-[#172733] p-2 text-slate-200"
-                    >
-                        {budgetCategories.map((item) => (
-                            <option key={item} value={item}>
-                                {item}
-                            </option>
-                        ))}
-                    </select>
+                     <label
+                         htmlFor="new-budget-name"
+                         className="mb-2 block font-serif text-base text-[#eee9de]"
+                   >
+                         Budget Name
+                      </label>
+                      <input
+                          id="new-budget-name"
+                          type="text"
+                          required
+                          value={name}
+                          onChange={(event) => setName(event.target.value)}
+                          placeholder="e.g. Groceries"
+                          className="w-full rounded-[10px] border border-slate-600 bg-[#263747] px-3 py-2 text-[#eee9de] outline-none focus:border-sky-400"
+                     />
                 </div>
-
                 <div className="mb-4">
                     <label
                         htmlFor="new-budget-limit"
-                        className="mb-1 block text-sm text-slate-300"
+                        className="mb-2 block font-serif text-base text-[#eee9de]"
                     >
                         Monthly limit (R)
                     </label>
@@ -78,14 +111,31 @@ function BudgetForm({
                         required
                         value={limit}
                         onChange={(event) => setLimit(event.target.value)}
-                        className="w-full rounded-lg border border-slate-500 bg-[#172733] p-2 text-slate-200"
+                        className="w-full rounded-[10px] border border-slate-600 bg-[#263747] px-3 py-2 text-[#eee9de] outline-none focus:border-sky-400"
                     />
                 </div>
-
-                <div className="flex gap-2">
+                <div className="mb-4">
+                   <label
+                      htmlFor="new-budget-period"
+                      className="mb-2 block font-serif text-base text-[#eee9de]"
+                   >
+                       Period
+                   </label>
+                   <select
+                     id="new-budget-period"
+                     value={period}
+                     onChange={(event) => setPeriod(event.target.value)}
+                     className="w-full rounded-[10px] border border-slate-600 bg-[#263747] px-3 py-2 text-[#eee9de] outline-none focus:border-sky-400"
+             >
+                <option value="This Week">This Week</option>
+                <option value="This Month">This Month</option>
+                <option value="This Year">This Year</option>
+            </select>
+         </div>
+                <div className="mt-8 flex gap-6">
                     <button
                         type="submit"
-                        className="rounded-lg border border-slate-500 px-3 py-2 text-sm text-slate-200"
+                       className="flex-1 rounded-[10px] bg-[#2e6f8e] px-4 py-3 font-serif text-lg text-[#eee9de] hover:bg-[#3b8cae]"
                     >
                         {isEditing ? 'Save changes' : 'Save budget'}
                     </button>
