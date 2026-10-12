@@ -8,6 +8,7 @@ import ReportErrorButton from './components/ReportErrorButton'
 import axios from 'axios'
 import BudgetForm from './components/BudgetForm'
 import DeleteBudget from './components/DeleteBudget'
+import DeleteSavingGoal from './components/DeleteSavingGoal'
 import SavingGoalForm from './components/SavingGoalForm'
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
   ])
   const [savingGoals, setSavingGoals] = useState([])
   const [editingSavingGoal, setEditingSavingGoal] = useState(null)
+  const [savingGoalIdToDelete, setSavingGoalIdToDelete] = useState(null)
 
   const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
   const [newCategory, setNewCategory] = useState(categories[0])
@@ -271,14 +273,56 @@ function handleUpdateBudget(budgetId, category, name, limit, period) {
     }
   }
 
+  async function handleUpdateSavingGoal(savingGoalId, goalDetails) {
+    try {
+      const response = await axios.post(
+        `/api/saving-goals/${savingGoalId}`,
+        goalDetails
+      )
+
+      setSavingGoals((currentGoals) =>
+        currentGoals.map((goal) =>
+          goal.id === savingGoalId ? response.data : goal
+        )
+      )
+
+      return true
+    } catch (error) {
+      console.error('Failed to update saving goal:', error)
+      return false
+    }
+  }
+
+  async function handleDeleteSavingGoal(savingGoalId) {
+    try {
+      await axios.delete(`/api/saving-goals/${savingGoalId}`)
+      setSavingGoals((currentGoals) =>
+        currentGoals.filter((goal) => goal.id !== savingGoalId)
+      )
+    } catch (error) {
+      console.error('Failed to delete saving goal:', error)
+    }
+  }
+
   function closeSavingGoalView() {
     setActiveWorkspaceView('dashboard')
     setEditingSavingGoal(null)
+    setSavingGoalIdToDelete(null)
   }
 
   function openAddSavingGoal() {
     setEditingSavingGoal(null)
     setActiveWorkspaceView('add-saving-goal')
+  }
+
+  function openEditSavingGoal(savingGoal) {
+    setEditingSavingGoal(savingGoal)
+    setActiveWorkspaceView('edit-saving-goal')
+  }
+
+  function openDeleteSavingGoal(savingGoalId) {
+    setSavingGoalIdToDelete(savingGoalId)
+    setActiveWorkspaceView('delete-saving-goal')
   }
 
   return (
@@ -292,6 +336,8 @@ function handleUpdateBudget(budgetId, category, name, limit, period) {
         <SavingsPanel
           savingGoals={savingGoals}
           onRequestAdd={openAddSavingGoal}
+          onRequestEdit={openEditSavingGoal}
+          onRequestDelete={openDeleteSavingGoal}
         />
 
         <section className="rounded-[42px] border border-[#41515b] bg-[#172733] p-5 shadow-2xl">
@@ -306,6 +352,7 @@ function handleUpdateBudget(budgetId, category, name, limit, period) {
               }
               accountId={selectedAccountId}
               onAddSavingGoal={handleAddSavingGoal}
+              onUpdateSavingGoal={handleUpdateSavingGoal}
               onClose={closeSavingGoalView}
             />
           ) : activeWorkspaceView === 'add-budget' ||
@@ -324,6 +371,14 @@ function handleUpdateBudget(budgetId, category, name, limit, period) {
                 closeBudgetView()
               }}
               onExit={closeBudgetView}
+            />
+          ) : activeWorkspaceView === 'delete-saving-goal' ? (
+            <DeleteSavingGoal
+              onDelete={() => {
+                handleDeleteSavingGoal(savingGoalIdToDelete)
+                closeSavingGoalView()
+              }}
+              onExit={closeSavingGoalView}
             />
           ) : (
             <>

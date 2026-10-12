@@ -1,6 +1,11 @@
 import express from 'express';
 import { getAccounts, createAccount, deleteAccount } from './accountHandlers.mjs'
-import { getSavingGoals, createSavingGoal } from './savingGoalHandlers.mjs'
+import {
+  getSavingGoals,
+  createSavingGoal,
+  updateSavingGoal,
+  deleteSavingGoal
+} from './savingGoalHandlers.mjs'
 
 const server = express()
 const port = 3001
@@ -15,6 +20,8 @@ server.delete('/api/accounts/:accountId', deleteAccount)
 //saving goal routes
 server.get('/api/saving-goals', getSavingGoals)
 server.post('/api/saving-goals', createSavingGoal)
+server.post('/api/saving-goals/:savingGoalId', updateSavingGoal)
+server.delete('/api/saving-goals/:savingGoalId', deleteSavingGoal)
 
 
 server.use((err, req, res, next) => {
