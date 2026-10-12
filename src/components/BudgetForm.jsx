@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ExitButton from './ExitButton'; 
-import { Bus, Car, Film, Home, MoreHorizontal, ShoppingCart, Utensils } from 'lucide-react'; 
+import {Car, Home, MoreHorizontal, ShoppingCart, Utensils } from 'lucide-react'; 
 
 function BudgetForm({
     budget,
@@ -20,8 +20,6 @@ function BudgetForm({
     Groceries: ShoppingCart,
     Car,
     Food: Utensils,
-    Entertainment: Film,
-    Transport: Bus,
     Other: MoreHorizontal
 }
     const isEditing = budget != null
@@ -56,7 +54,7 @@ function BudgetForm({
                 <label className="mb-2 block font-serif text-base text-[#eee9de]">
                   Category
                 </label>
-                <div className="grid w-full grid-cols-4 gap-2 place-items-center sm:grid-cols-7">
+                <div className="grid w-full grid-cols-5 gap-2 place-items-center sm:grid-cols-5">
                   {budgetCategories.map((item) => {
                     const CategoryIcon = categoryIcons[item] ?? MoreHorizontal
 
