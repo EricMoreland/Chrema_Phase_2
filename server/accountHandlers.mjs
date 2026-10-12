@@ -1,14 +1,17 @@
 import db from './PGliteDB.mjs'
 
+const accountColumns = `
+      AccountId AS "id",
+      Name AS "name",
+      CashBalance AS "cashBalance",
+      CreditBalance AS "creditBalance",
+      AccountType AS "type"
+`
+
 export async function getAccounts(req, res) {
   try {
     const result = await db.query(`
-      SELECT
-        AccountId AS "id",
-        Name AS "name",
-        CashBalance AS "cashBalance",
-        CreditBalance AS "creditBalance",
-        AccountType AS "type"
+      SELECT ${accountColumns}
       FROM Account
       ORDER BY AccountId
     `)
