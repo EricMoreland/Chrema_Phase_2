@@ -79,15 +79,16 @@ CREATE TABLE IF NOT EXISTS "Saving Goal" (
   GoalName TEXT NOT NULL,
   GoalAmount REAL NOT NULL,
   CurrentAmount REAL NOT NULL,
-  GoalDate TEXT NOT NULL,
+  StartDate TEXT NOT NULL,
+  EndDate TEXT NOT NULL,
   AccountAccountId INTEGER NOT NULL,
 
   FOREIGN KEY (AccountAccountId)
     REFERENCES Account(AccountId) ON DELETE CASCADE
 );
 INSERT INTO "Saving Goal" (
-  SavingId, GoalName, GoalAmount, CurrentAmount, GoalDate, AccountAccountId
-) VALUES (1, 'Vacation', 2000, 500, '2024-12-31', 1);
+  SavingId, GoalName, GoalAmount, CurrentAmount, StartDate, EndDate, AccountAccountId
+) VALUES (1, 'Vacation', 2000, 500, '2026-01-01', '2026-12-31', 1);
 
 `)
 
