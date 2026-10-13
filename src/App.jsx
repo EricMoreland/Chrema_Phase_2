@@ -24,15 +24,7 @@ function App() {
     const day = String(today.getDate()).padStart(2, '0')
     return `${today.getFullYear()}-${month}-${day}`
   })
-
-  const [budgets, setBudgets] = useState([
-    {
-      id: 1,
-      category: 'Groceries',
-      currentAmount: 125,
-      limit: 350
-    }
-  ])
+  const [budgets, setBudgets] = useState([])
   const [savingGoals, setSavingGoals] = useState([])
   const [editingSavingGoal, setEditingSavingGoal] = useState(null)
   const [savingGoalIdToDelete, setSavingGoalIdToDelete] = useState(null)
@@ -149,19 +141,33 @@ async function handleDeleteAccount(accountId) {
         console.error(error) //axios throws error when request fails.
       })
   }, [])
-  /*
-    useEffect(() => {
-      axios
-      .get('/api/budgets')
-      .then((response) => {
-        const budgetData = response.data
-        setBudgets(budgetData)
-      })   
-      .catch((error) => {
-          console.error(error) //logs error if axios request fails. Could also use alert() to show user error message.
-        })
-    }, [])
-  */
+
+ useEffect(() => {
+  if (selectedAccountId == null) {
+    setBudgets([])
+    return
+  }
+
+  let cancelled = false
+
+  axios
+    .get('/api/budgets', { params: { accountId: selectedAccountId } })
+    .then((response) => {
+      if (!cancelled) {
+        setBudgets(response.data)
+      }
+    })
+    .catch((error) => {
+      if (!cancelled) {
+        console.error('Failed to load budgets:', error)
+      }
+    })
+
+  return () => {
+    cancelled = true
+  }
+}, [selectedAccountId])
+
   useEffect(() => {
     axios.get('/api/saving-goals')
       .then((response) => {
@@ -208,33 +214,58 @@ async function handleDeleteAccount(accountId) {
           account.id === selectedAccount.id ? updatedAccount : account))
     }
   }
-  function handleDeleteBudget(budgetId) {
+
+  async function handleAddBudget(category, name, limit, period) {
+  try {
+    const response = await axios.post('/api/budgets', {
+      accountId: selectedAccountId,
+      category,
+      name,
+      limit,
+      period
+    })
+
+    setBudgets((currentBudgets) => [...currentBudgets, response.data])
+    return true
+  } catch (error) {
+    console.error('Failed to add budget:', error)
+    return false
+  }
+}
+
+async function handleUpdateBudget(budgetId, category, name, limit, period) {
+  try {
+    const response = await axios.put(`/api/budgets/${budgetId}`, {
+      accountId: selectedAccountId,
+      category,
+      name,
+      limit,
+      period
+    })
+
+    setBudgets((currentBudgets) =>
+      currentBudgets.map((budget) =>
+        budget.id === budgetId ? response.data : budget
+      )
+    )
+    return true
+  } catch (error) {
+    console.error('Failed to update budget:', error)
+    return false
+  }
+}
+
+async function handleDeleteBudget(budgetId) {
+  try {
+    await axios.delete(`/api/budgets/${budgetId}`)
     setBudgets((currentBudgets) =>
       currentBudgets.filter((budget) => budget.id !== budgetId)
     )
+    return true
+  } catch (error) {
+    console.error('Failed to delete budget:', error)
+    return false
   }
-
-  function handleAddBudget(category, name, limit, period) {
-  const newBudget = {
-    id: Date.now(),
-    category,
-    name,
-    currentAmount: 0,
-    limit,
-    period
-  }
-
-  setBudgets((currentBudgets) => [...currentBudgets, newBudget])
-}
-
-function handleUpdateBudget(budgetId, category, name, limit, period) {
-  setBudgets((currentBudgets) =>
-    currentBudgets.map((budget) =>
-      budget.id === budgetId
-        ? { ...budget, category, name, limit, period }
-        : budget
-    )
-  )
 }
 
   function closeBudgetView() {
