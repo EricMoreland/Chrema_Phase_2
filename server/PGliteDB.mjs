@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS Budget (
 );
 INSERT INTO Budget (
   BudgetId, CategoryId, AccountAccountId, AmountSet, Period, CurrentAmount
-) VALUES (1, 2, 1, 500, 'This month', 100);
+) VALUES (1, 2, 1, 500, 'This Month', 100);
 
 
 

@@ -6,6 +6,12 @@ import {
   updateSavingGoal,
   deleteSavingGoal
 } from './savingGoalHandlers.mjs'
+import {
+  getBudgets,
+  createBudget,
+  updateBudget,
+  deleteBudget
+} from './budgetHandlers.mjs'
 
 const server = express()
 const port = 3001
@@ -22,6 +28,12 @@ server.get('/api/saving-goals', getSavingGoals)
 server.post('/api/saving-goals', createSavingGoal)
 server.post('/api/saving-goals/:savingGoalId', updateSavingGoal)
 server.delete('/api/saving-goals/:savingGoalId', deleteSavingGoal)
+
+//budget routes
+server.get('/api/budgets', getBudgets)
+server.post('/api/budgets', createBudget)
+server.put('/api/budgets/:budgetId', updateBudget)
+server.delete('/api/budgets/:budgetId', deleteBudget)
 
 
 server.use((err, req, res, next) => {
