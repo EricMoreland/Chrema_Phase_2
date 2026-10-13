@@ -69,8 +69,8 @@ CREATE TABLE IF NOT EXISTS Budget (
   FOREIGN KEY (AccountAccountId) REFERENCES Account (AccountId) ON DELETE CASCADE
 );
 INSERT INTO Budget (
-  BudgetId, CategoryId, AccountAccountId, AmountSet, Period, CurrentAmount
-) VALUES (1, 2, 1, 500, 'This Month', 100);
+ CategoryId, AccountAccountId, AmountSet, Period, CurrentAmount
+) VALUES ( 2, 1, 500, 'This Month', 100);
 
 
 
