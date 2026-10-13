@@ -395,12 +395,18 @@ async function handleDeleteBudget(budgetId) {
             />
           ) : activeWorkspaceView === 'delete-budget' ? (
             <DeleteBudget
-              onDelete={() => {
-                handleDeleteBudget(budgetIdToDelete)
-                closeBudgetView()
-              }}
-              onExit={closeBudgetView}
-            />
+              onDelete={async () => {
+               const deleted = await handleDeleteBudget(budgetIdToDelete)
+
+               if (!deleted) {
+                alert('Failed to delete budget. Please try again.')
+                return
+              }
+
+              closeBudgetView()
+           }}
+            onExit={closeBudgetView}
+         />
           ) : activeWorkspaceView === 'delete-saving-goal' ? (
             <DeleteSavingGoal
               onDelete={() => {

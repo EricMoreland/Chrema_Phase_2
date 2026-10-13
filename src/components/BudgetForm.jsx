@@ -24,19 +24,27 @@ function BudgetForm({
 }
     const isEditing = budget != null
 
-    function handleSubmit(event) {
-        event.preventDefault()
+async function handleSubmit(event) {
+  event.preventDefault()
 
-        const numericLimit = Number(limit)
+  const numericLimit = Number(limit)
+  const saved = isEditing
+    ? await onUpdateBudget(
+        budget.id,
+        category,
+        name.trim(),
+        numericLimit,
+        period
+      )
+    : await onAddBudget(category, name.trim(), numericLimit, period)
 
-        if (isEditing) {
-            onUpdateBudget(budget.id, category, name.trim(), numericLimit, period)
-        } else {
-            onAddBudget(category, name.trim(), numericLimit, period)
-        }
+  if (!saved) {
+    alert('Failed to save budget. Please try again.')
+    return
+  }
 
-        onClose()
-    }
+  onClose()
+}
 
         return (
         <div className="min-h-[440px] p-8 text-left">
