@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ExitButton from './ExitButton'; 
-import { Bus, Car, Film, Home, MoreHorizontal, ShoppingCart, Utensils } from 'lucide-react'; 
+import {Car, Home, MoreHorizontal, ShoppingCart, Utensils } from 'lucide-react'; 
 
 function BudgetForm({
     budget,
@@ -20,25 +20,31 @@ function BudgetForm({
     Groceries: ShoppingCart,
     Car,
     Food: Utensils,
-    Entertainment: Film,
-    Transport: Bus,
     Other: MoreHorizontal
 }
     const isEditing = budget != null
 
-    function handleSubmit(event) {
-        event.preventDefault()
+async function handleSubmit(event) {
+  event.preventDefault()
 
-        const numericLimit = Number(limit)
+  const numericLimit = Number(limit)
+  const saved = isEditing
+    ? await onUpdateBudget(
+        budget.id,
+        category,
+        name.trim(),
+        numericLimit,
+        period
+      )
+    : await onAddBudget(category, name.trim(), numericLimit, period)
 
-        if (isEditing) {
-            onUpdateBudget(budget.id, category, name.trim(), numericLimit, period)
-        } else {
-            onAddBudget(category, name.trim(), numericLimit, period)
-        }
+  if (!saved) {
+    alert('Failed to save budget. Please try again.')
+    return
+  }
 
-        onClose()
-    }
+  onClose()
+}
 
         return (
         <div className="min-h-[440px] p-8 text-left">
@@ -56,7 +62,7 @@ function BudgetForm({
                 <label className="mb-2 block font-serif text-base text-[#eee9de]">
                   Category
                 </label>
-                <div className="grid w-full grid-cols-4 gap-2 place-items-center sm:grid-cols-7">
+                <div className="grid w-full grid-cols-5 gap-2 place-items-center sm:grid-cols-5">
                   {budgetCategories.map((item) => {
                     const CategoryIcon = categoryIcons[item] ?? MoreHorizontal
 
@@ -101,7 +107,7 @@ function BudgetForm({
                         htmlFor="new-budget-limit"
                         className="mb-2 block font-serif text-base text-[#eee9de]"
                     >
-                        Monthly limit (R)
+                        Budget limit (R)
                     </label>
                     <input
                         id="new-budget-limit"

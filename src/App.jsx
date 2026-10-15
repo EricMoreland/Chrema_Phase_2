@@ -8,6 +8,8 @@ import ReportErrorButton from './components/ReportErrorButton'
 import axios from 'axios'
 import BudgetForm from './components/BudgetForm'
 import DeleteBudget from './components/DeleteBudget'
+import DeleteSavingGoal from './components/DeleteSavingGoal'
+import SavingGoalForm from './components/SavingGoalForm'
 
 function App() {
 
@@ -22,28 +24,10 @@ function App() {
     const day = String(today.getDate()).padStart(2, '0')
     return `${today.getFullYear()}-${month}-${day}`
   })
-
-  const [budgets, setBudgets] = useState([
-    {
-      id: 1,
-      category: 'Groceries',
-      currentAmount: 125,
-      limit: 350
-    },
-    {
-      id: 2,
-      category: 'Transport',
-      currentAmount: 80,
-      limit: 200
-    },
-    {
-      id: 3,
-      category: 'Entertainment',
-      currentAmount: 45,
-      limit: 100
-    }
-  ])
+  const [budgets, setBudgets] = useState([])
   const [savingGoals, setSavingGoals] = useState([])
+  const [editingSavingGoal, setEditingSavingGoal] = useState(null)
+  const [savingGoalIdToDelete, setSavingGoalIdToDelete] = useState(null)
 
   const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
   const [newCategory, setNewCategory] = useState(categories[0])
@@ -59,14 +43,13 @@ function App() {
 
   const [editingBudget, setEditingBudget] = useState(null)
   const [budgetIdToDelete, setBudgetIdToDelete] = useState(null)
+  
 
   const budgetCategories = [
     'Home',
     'Groceries',
     'Car',
     'Food',
-    'Entertainment',
-    'Transport',
     'Other'
   ]
   const [selectedAccountId, setSelectedAccountId] = useState(null)
@@ -141,6 +124,7 @@ async function handleDeleteAccount(accountId) {
   }
 }
 
+
   useEffect(() => {
     axios
       .get('/api/accounts') //receives response object, axios automatically converts json to js array of objects
@@ -157,27 +141,41 @@ async function handleDeleteAccount(accountId) {
         console.error(error) //axios throws error when request fails.
       })
   }, [])
-  /*
-    useEffect(() => {
-      axios
-      .get('/api/budgets')
-      .then((response) => {
-        const budgetData = response.data
-        setBudgets(budgetData)
-      })   
-      .catch((error) => {
-          console.error(error) //logs error if axios request fails. Could also use alert() to show user error message.
-        })
-    }, [])
-  */
+
+ useEffect(() => {
+  if (selectedAccountId == null) {
+    setBudgets([])
+    return
+  }
+
+  let cancelled = false
+
+  axios
+    .get('/api/budgets', { params: { accountId: selectedAccountId } })
+    .then((response) => {
+      if (!cancelled) {
+        setBudgets(response.data)
+      }
+    })
+    .catch((error) => {
+      if (!cancelled) {
+        console.error('Failed to load budgets:', error)
+      }
+    })
+
+  return () => {
+    cancelled = true
+  }
+}, [selectedAccountId])
+
   useEffect(() => {
     axios.get('/api/saving-goals')
       .then((response) => {
         const savingGoalData = response.data
         setSavingGoals(savingGoalData)
       })
-      .catch((error) => {
-        console.error(error)
+      .catch((err) => {
+        console.error(err)
       })
   }, [])
 
@@ -216,33 +214,58 @@ async function handleDeleteAccount(accountId) {
           account.id === selectedAccount.id ? updatedAccount : account))
     }
   }
-  function handleDeleteBudget(budgetId) {
+
+  async function handleAddBudget(category, name, limit, period) {
+  try {
+    const response = await axios.post('/api/budgets', {
+      accountId: selectedAccountId,
+      category,
+      name,
+      limit,
+      period
+    })
+
+    setBudgets((currentBudgets) => [...currentBudgets, response.data])
+    return true
+  } catch (error) {
+    console.error('Failed to add budget:', error)
+    return false
+  }
+}
+
+async function handleUpdateBudget(budgetId, category, name, limit, period) {
+  try {
+    const response = await axios.put(`/api/budgets/${budgetId}`, {
+      accountId: selectedAccountId,
+      category,
+      name,
+      limit,
+      period
+    })
+
+    setBudgets((currentBudgets) =>
+      currentBudgets.map((budget) =>
+        budget.id === budgetId ? response.data : budget
+      )
+    )
+    return true
+  } catch (error) {
+    console.error('Failed to update budget:', error)
+    return false
+  }
+}
+
+async function handleDeleteBudget(budgetId) {
+  try {
+    await axios.delete(`/api/budgets/${budgetId}`)
     setBudgets((currentBudgets) =>
       currentBudgets.filter((budget) => budget.id !== budgetId)
     )
+    return true
+  } catch (error) {
+    console.error('Failed to delete budget:', error)
+    return false
   }
-
-  function handleAddBudget(category, name, limit, period) {
-  const newBudget = {
-    id: Date.now(),
-    category,
-    name,
-    currentAmount: 0,
-    limit,
-    period
-  }
-
-  setBudgets((currentBudgets) => [...currentBudgets, newBudget])
-}
-
-function handleUpdateBudget(budgetId, category, name, limit, period) {
-  setBudgets((currentBudgets) =>
-    currentBudgets.map((budget) =>
-      budget.id === budgetId
-        ? { ...budget, category, name, limit, period }
-        : budget
-    )
-  )
 }
 
   function closeBudgetView() {
@@ -266,6 +289,71 @@ function handleUpdateBudget(budgetId, category, name, limit, period) {
     setActiveWorkspaceView('delete-budget')
   }
 
+  async function handleAddSavingGoal(goalDetails) {
+  try {
+    const response = await axios.post('/api/saving-goals', goalDetails)
+
+    setSavingGoals((currentGoals) => [...currentGoals, response.data])
+
+      return true
+    } catch (error) {
+      console.error('Failed to add saving goal:', error)
+      return false
+    }
+  }
+
+  async function handleUpdateSavingGoal(savingGoalId, goalDetails) {
+    try {
+      const response = await axios.post(
+        `/api/saving-goals/${savingGoalId}`,
+        goalDetails
+      )
+
+      setSavingGoals((currentGoals) =>
+        currentGoals.map((goal) =>
+          goal.id === savingGoalId ? response.data : goal
+        )
+      )
+
+      return true
+    } catch (error) {
+      console.error('Failed to update saving goal:', error)
+      return false
+    }
+  }
+
+  async function handleDeleteSavingGoal(savingGoalId) {
+    try {
+      await axios.delete(`/api/saving-goals/${savingGoalId}`)
+      setSavingGoals((currentGoals) =>
+        currentGoals.filter((goal) => goal.id !== savingGoalId)
+      )
+    } catch (error) {
+      console.error('Failed to delete saving goal:', error)
+    }
+  }
+
+  function closeSavingGoalView() {
+    setActiveWorkspaceView('dashboard')
+    setEditingSavingGoal(null)
+    setSavingGoalIdToDelete(null)
+  }
+
+  function openAddSavingGoal() {
+    setEditingSavingGoal(null)
+    setActiveWorkspaceView('add-saving-goal')
+  }
+
+  function openEditSavingGoal(savingGoal) {
+    setEditingSavingGoal(savingGoal)
+    setActiveWorkspaceView('edit-saving-goal')
+  }
+
+  function openDeleteSavingGoal(savingGoalId) {
+    setSavingGoalIdToDelete(savingGoalId)
+    setActiveWorkspaceView('delete-saving-goal')
+  }
+
   return (
     <div className='min-h-screen bg-[#0d1720] px-2 py-4 text-center text-[#eee9de]'>
       <header className="flex items-center justify-between px-2">
@@ -274,11 +362,29 @@ function handleUpdateBudget(budgetId, category, name, limit, period) {
       </header>
 
       <main className="mx-auto mt-8 grid max-w-[1340px] grid-cols-1 items-start gap-4 lg:grid-cols-[278px_minmax(0,1fr)_278px]">
-        <SavingsPanel savingGoals={savingGoals} />
+        <SavingsPanel
+          savingGoals={savingGoals}
+          onRequestAdd={openAddSavingGoal}
+          onRequestEdit={openEditSavingGoal}
+          onRequestDelete={openDeleteSavingGoal}
+        />
 
         <section className="rounded-[42px] border border-[#41515b] bg-[#172733] p-5 shadow-2xl">
 
-          {activeWorkspaceView === 'add-budget' ||
+          {activeWorkspaceView === 'add-saving-goal' ||
+            activeWorkspaceView === 'edit-saving-goal' ? (
+            <SavingGoalForm
+              savingGoal={
+                activeWorkspaceView === 'edit-saving-goal'
+                  ? editingSavingGoal
+                  : undefined
+              }
+              accountId={selectedAccountId}
+              onAddSavingGoal={handleAddSavingGoal}
+              onUpdateSavingGoal={handleUpdateSavingGoal}
+              onClose={closeSavingGoalView}
+            />
+          ) : activeWorkspaceView === 'add-budget' ||
             activeWorkspaceView === 'edit-budget' ? (
             <BudgetForm
               budget={activeWorkspaceView === 'edit-budget' ? editingBudget : undefined}
@@ -289,11 +395,25 @@ function handleUpdateBudget(budgetId, category, name, limit, period) {
             />
           ) : activeWorkspaceView === 'delete-budget' ? (
             <DeleteBudget
+              onDelete={async () => {
+               const deleted = await handleDeleteBudget(budgetIdToDelete)
+
+               if (!deleted) {
+                alert('Failed to delete budget. Please try again.')
+                return
+              }
+
+              closeBudgetView()
+           }}
+            onExit={closeBudgetView}
+         />
+          ) : activeWorkspaceView === 'delete-saving-goal' ? (
+            <DeleteSavingGoal
               onDelete={() => {
-                handleDeleteBudget(budgetIdToDelete)
-                closeBudgetView()
+                handleDeleteSavingGoal(savingGoalIdToDelete)
+                closeSavingGoalView()
               }}
-              onExit={closeBudgetView}
+              onExit={closeSavingGoalView}
             />
           ) : (
             <>
