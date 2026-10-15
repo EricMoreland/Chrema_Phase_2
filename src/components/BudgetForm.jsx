@@ -107,7 +107,7 @@ async function handleSubmit(event) {
                         htmlFor="new-budget-limit"
                         className="mb-2 block font-serif text-base text-[#eee9de]"
                     >
-                        Monthly limit (R)
+                        Budget limit (R)
                     </label>
                     <input
                         id="new-budget-limit"
