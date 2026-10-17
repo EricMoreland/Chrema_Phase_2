@@ -1,4 +1,12 @@
-import { Home, ShoppingCart, Car, Utensils, MoreHorizontal} from "lucide-react";
+import {
+    Bus,
+    Car,
+    Film,
+    Home,
+    MoreHorizontal,
+    ShoppingCart,
+    Utensils
+} from "lucide-react";
 import ExitButton from './ExitButton';
 
 function TransactionForm({
@@ -66,6 +74,8 @@ function TransactionForm({
                             {category == 'Groceries' && <ShoppingCart size={22} />}
                             {category == 'Car' && <Car size={22} />}
                             {category == 'Food' && <Utensils size={22} />}
+                            {category == 'Entertainment' && <Film size={22} />}
+                            {category == 'Transport' && <Bus size={22} />}
                             {category == 'Other' && <MoreHorizontal size={22} />}
                         </button>
                     )
