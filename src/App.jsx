@@ -181,37 +181,42 @@ async function handleDeleteAccount(accountId) {
 
 
 
-  function handleAddTransaction() {
-    const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */ }
+  async function handleAddTransaction() {
+    const amountNumber = Number(newAmount)
 
-    const newTransaction = {
-      id: Date.now(),
-      description: newDescription,
-      amount: amountNumber,
-      accountId: selectedAccountId,
-      type: selectedType,
-      category: newCategory,
-      kind: transactionKind,
-      date: newDate
+    if (!selectedAccountId) {
+      alert('Please select an account first.')
+      return
     }
 
-    setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */ }
+    try {
+      const response = await axios.post('/api/transactions', {
+        description: newDescription,
+        amount: amountNumber,
+        accountId: selectedAccountId,
+        type: selectedType,
+        category: newCategory,
+        kind: transactionKind,
+        date: newDate
+      })
 
-    const plusOrMinusAmount = transactionKind === 'income' ? amountNumber : -amountNumber
+      setTransactions((currentTransactions) => [
+        ...currentTransactions,
+        response.data
+      ])
 
-    if (selectedAccount) {
-      const updatedAccount = {
-        ...selectedAccount,
-        [selectedType === 'cash' ? 'cashBalance' : 'creditBalance']:
-          (selectedType === 'cash'
-            ? selectedAccount.cashBalance
-            : selectedAccount.creditBalance) + plusOrMinusAmount
-      }
+      const accountsResponse = await axios.get('/api/accounts')
+      setAccounts(accountsResponse.data)
 
+      const budgetsResponse = await axios.get('/api/budgets', {
+        params: { accountId: selectedAccountId }
+      })
+      setBudgets(budgetsResponse.data)
 
-      setAccounts((currentAccounts) =>
-        currentAccounts.map((account) =>
-          account.id === selectedAccount.id ? updatedAccount : account))
+      setActiveWorkspaceView('dashboard')
+    } catch (error) {
+      console.error('Failed to add transaction:', error)
+      alert('Failed to save transaction. Please try again.')
     }
   }
 
