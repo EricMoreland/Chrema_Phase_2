@@ -50,8 +50,6 @@ function App() {
     'Groceries',
     'Car',
     'Food',
-    'Entertainment',
-    'Transport',
     'Other'
   ]
   const [selectedAccountId, setSelectedAccountId] = useState(null)
