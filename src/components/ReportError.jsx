@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import emailjs from '@emailjs/browser';
 
 const errorTypes = [
     'Account Issue',
@@ -24,13 +25,27 @@ function ErrorButton({ text, setErrorType, selectedError }) {
 }
 
 function ReportError({ onClose }) {
+    const form = useRef()
     const [errorType, setErrorType] = useState('')
     const [description, setDescription] = useState('')
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onClose()
-    }
+        
+        try {
+            await emailjs.sendForm(
+                'service_4kb9dmr',
+                'template_ul5ef48',
+                form.current,
+                { publicKey: '3wlINfEu4-zVPWUyI' }
+            );
+
+            console.log('SUCCESS!');
+            onClose();
+        } catch (error) {
+            console.log('FAILED...', error.text);
+        }
+    };
 
     return (
         <div 
@@ -43,6 +58,7 @@ function ReportError({ onClose }) {
         >
 
             <form
+                ref={form}
                 onSubmit={handleSubmit}
                 className="w-full max-w-2xl rounded-3xl border border-slate-500 bg-[#172733] p-6 text-left shadow-2xl"
             >
@@ -65,10 +81,18 @@ function ReportError({ onClose }) {
                     ))}
                 </div>
 
+                <input //allows emailjs to receive the error type
+                    type="hidden"
+                    name="error_type" //matches the name used in emailjs template
+                    value={errorType}
+                /> 
+
                 <textarea
                     className="mt-6 w-full rounded-lg border border-slate-500 bg-[#263747] p-3 text-white placeholder:text-slate-400 outline-none focus:border-sky-400"
                     rows={6}
+                    required
                     value={description}
+                    name='description'
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder='Please describe your problem...' />
                 <div className="mt-6 flex justify-center">
