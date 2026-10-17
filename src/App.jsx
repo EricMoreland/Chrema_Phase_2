@@ -424,6 +424,8 @@ async function handleDeleteBudget(budgetId) {
                 accounts={accounts}
                 selectedAccountId={selectedAccountId}
                 setSelectedAccountId={setSelectedAccountId}
+                onAddAccount={handleAddAccount}
+                onDeleteAccount={handleDeleteAccount}
               />
               )}
 
