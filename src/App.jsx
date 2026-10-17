@@ -50,6 +50,8 @@ function App() {
     'Groceries',
     'Car',
     'Food',
+    'Entertainment',
+    'Transport',
     'Other'
   ]
   const [selectedAccountId, setSelectedAccountId] = useState(null)
@@ -200,6 +202,11 @@ async function handleDeleteAccount(accountId) {
         date: newDate
       })
 
+      const budgetsResponse = await axios.get('/api/budgets', {
+        params: { accountId: selectedAccountId }
+      })
+      setBudgets(budgetsResponse.data)
+
       setTransactions((currentTransactions) => [
         ...currentTransactions,
         response.data
@@ -207,11 +214,6 @@ async function handleDeleteAccount(accountId) {
 
       const accountsResponse = await axios.get('/api/accounts')
       setAccounts(accountsResponse.data)
-
-      const budgetsResponse = await axios.get('/api/budgets', {
-        params: { accountId: selectedAccountId }
-      })
-      setBudgets(budgetsResponse.data)
 
       setActiveWorkspaceView('dashboard')
     } catch (error) {
