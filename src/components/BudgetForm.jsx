@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import ExitButton from './ExitButton'; 
-import {Car, Home, MoreHorizontal, ShoppingCart, Utensils } from 'lucide-react'; 
+import { Bus, Car, Film, Home, MoreHorizontal, ShoppingCart, Utensils } from 'lucide-react'; 
 
 function BudgetForm({
     budget,

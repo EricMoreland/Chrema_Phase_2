@@ -45,14 +45,13 @@ VALUES
     FOREIGN KEY (CategoryCategoryId) REFERENCES Category (CategoryId) ON DELETE CASCADE 
   );
   INSERT INTO "Transaction" (
-    TransactionId,
     Description,
     Amount,
     AccountAccountId,
     CategoryCategoryId,
     AccountType,
     TransactionKind
-  ) VALUES ('1','Groceries',100,1,1,'cash','expense');
+  ) VALUES ('Groceries',100,1,1,'cash','expense');
 
 
 
