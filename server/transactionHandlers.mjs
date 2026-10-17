@@ -43,7 +43,7 @@ function getValidTransactionInput(body) {
     !Number.isInteger(accountId) ||
     accountId <= 0 ||
     !['cash', 'credit'].includes(type) ||
-    !['Home', 'Groceries', 'Car', 'Food', 'Entertainment', 'Transport', 'Other'].includes(category) ||
+    !['Home', 'Groceries', 'Car', 'Food', 'Other'].includes(category) ||
     !['income', 'expense'].includes(kind) ||
     !validDate
   ) {

@@ -29,15 +29,7 @@ function App() {
   const [editingSavingGoal, setEditingSavingGoal] = useState(null)
   const [savingGoalIdToDelete, setSavingGoalIdToDelete] = useState(null)
 
-  const categories = [
-    'Home',
-    'Groceries',
-    'Car',
-    'Food',
-    'Entertainment',
-    'Transport',
-    'Other'
-  ]
+  const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
   const [newCategory, setNewCategory] = useState(categories[0])
 
   const [transactionKind, setTransactionKind] = useState('expense') //expense or income
@@ -189,35 +181,37 @@ async function handleDeleteAccount(accountId) {
 
 
 
-  async function handleAddTransaction() {
-    const amountNumber = Number(newAmount)
+  function handleAddTransaction() {
+    const amountNumber = Number(newAmount); {/*Input from form is always text, have to convert to a number */ }
 
-    try {
-      const response = await axios.post('/api/transactions', {
-        description: newDescription,
-        amount: amountNumber,
-        accountId: selectedAccountId,
-        type: selectedType,
-        category: newCategory,
-        kind: transactionKind,
-        date: newDate
-      })
+    const newTransaction = {
+      id: Date.now(),
+      description: newDescription,
+      amount: amountNumber,
+      accountId: selectedAccountId,
+      type: selectedType,
+      category: newCategory,
+      kind: transactionKind,
+      date: newDate
+    }
 
-      setTransactions((currentTransactions) => [
-        ...currentTransactions,
-        response.data
-      ])
+    setTransactions([...transactions, newTransaction]); {/*... copies everythin already in transactions state then add new one */ }
 
-      const accountsResponse = await axios.get('/api/accounts')
-      setAccounts(accountsResponse.data)
+    const plusOrMinusAmount = transactionKind === 'income' ? amountNumber : -amountNumber
 
-      const budgetsResponse = await axios.get('/api/budgets', {
-        params: { accountId: selectedAccountId }
-      })
-      setBudgets(budgetsResponse.data)
-    } catch (error) {
-      console.error('Failed to add transaction:', error)
-      alert('Failed to save transaction. Please try again.')
+    if (selectedAccount) {
+      const updatedAccount = {
+        ...selectedAccount,
+        [selectedType === 'cash' ? 'cashBalance' : 'creditBalance']:
+          (selectedType === 'cash'
+            ? selectedAccount.cashBalance
+            : selectedAccount.creditBalance) + plusOrMinusAmount
+      }
+
+
+      setAccounts((currentAccounts) =>
+        currentAccounts.map((account) =>
+          account.id === selectedAccount.id ? updatedAccount : account))
     }
   }
 
