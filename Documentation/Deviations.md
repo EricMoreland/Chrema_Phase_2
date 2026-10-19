@@ -24,7 +24,7 @@ Deviations has been kept up to date, manualy with pen and paper up to 04-10-2026
 
  ## Additions
 
- - Report button and functionality to allow users to report app errors to the lead developer
+ - Ambitious Extra: Report button and functionality to allow users to report app errors to the lead developer
  - Latest transaciton History
  - Update Progress button to add to savings goals
  - Plus and minus button to add accounts for a more accesible and ease of use structure

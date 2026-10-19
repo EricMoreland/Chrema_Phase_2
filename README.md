@@ -1,47 +1,71 @@
-# Chrema - Team Setup Guide
-One-time setup (each person, each new computer)
+### Aqeel (28630661@sun.ac.za) UX Lead
+### Benno (27218481@sun.ac.za) Business Analyst
+### Eric (28183339@sun.ac.za) Lead Developer
 
-## 1. Set up the dev environment (per assignment PDF Task A)
+# Chrema
 
-Download dev-env.zip, extract to a new folder on C: (e.g. workspace_yourstudentnum)
-Double-click launch.cmd, click Run through the security warnings, press R for "run once" if prompted
-First time only: enter your name/email when asked (sets up git)
+Chrema is a personal finance dashboard built with React, Vite, Express, and
+PGlite.
 
-## 2. Get the project code - do NOT run yarn create vite, that only applies to starting a brand new project. You're joining an existing one:
+## Prerequisites
 
-- git clone <https://github.com/EricMoreland/Chrema_Phase_2>
-- cd Chrema_Phase_2
+- Node.js 20 or newer
+- npm
 
-## 3. Open VS Code and install dependencies
+## Install from a clean checkout
 
-- code .
+Clone the repository and install the project dependencies:
 
-Then in the VS Code terminal:
+```bash
+git clone <repository-url>
+cd Chrema_Phase_2
+npm install
+```
 
-- yarn
+## Seed the database and run the application
 
-(If the Node.js security prompt appears, click Cancel - per the PDF.)
+The database is an in-memory PGlite database. There is no separate seed file
+or database migration command: starting the API server creates the tables and
+inserts the sample data automatically.
 
-## 4. Run it
+Open two terminals in the project directory.
 
-- yarn dev
+In the first terminal, start the API server:
 
-Click the localhost link it gives you.
+```bash
+npm run server
+```
 
-## Every session after that (no re-cloning needed)
-- cd Chrema_Phase_2
-- git pull
-- yarn
-- yarn dev
+The API listens on `http://localhost:3001`. Keep this terminal running.
 
-git pull gets everyone else's latest changes. Running yarn again is a safety habit in case someone added a new package.
+In the second terminal, start the Vite development server:
 
-## While working
-- Make your changes, save files
-- Commit and push through VS Code's Source Control panel (or terminal: git add ., git commit -m "message", git push)
-- Pull before you push if it's been a while - avoids conflicts
+```bash
+npm run dev
+```
 
-## What NOT to do
-- Don't run yarn create vite - that creates a new project, not what you want
-- Don't work outside the dev-env terminal/VS Code setup
-- Don't forget: lab PCs wipe files periodically - back up by copying your projects folder out after each session
+Open the localhost URL printed by Vite, normally
+`http://localhost:5173`.
+
+The Vite server forwards `/api` requests to the API server on port 3001.
+
+## Seed data
+
+On each API server start, the app is populated with:
+
+- Accounts: `FNB Account` and `Capitec Account`
+- Categories: `Home`, `Groceries`, `Car`, `Food`, and `Other`
+- A `Groceries` expense transaction
+- A `Groceries` budget for `FNB Account`
+- A `Vacation` savings goal for `FNB Account`
+
+Because the database is currently in memory, data added during a session is
+lost when the API server stops or restarts. The sample data is recreated on the
+next `npm run server`.
+
+## Useful commands
+
+```bash
+npm run build  # Create a production build
+npm run lint   # Check the source files with ESLint
+```
