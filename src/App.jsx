@@ -320,6 +320,11 @@ async function handleDeleteBudget(budgetId) {
         )
       )
 
+      if (goalDetails.kind === 'savings') {
+        const accountsResponse = await axios.get('/api/accounts')
+        setAccounts(accountsResponse.data)
+      }
+
       return true
     } catch (error) {
       console.error('Failed to update saving goal:', error)
@@ -354,6 +359,11 @@ async function handleDeleteBudget(budgetId) {
     setActiveWorkspaceView('edit-saving-goal')
   }
 
+  function openUpdateProgress(savingGoal) {
+    setEditingSavingGoal(savingGoal)
+    setActiveWorkspaceView('update-progress')
+  }
+
   function openDeleteSavingGoal(savingGoalId) {
     setSavingGoalIdToDelete(savingGoalId)
     setActiveWorkspaceView('delete-saving-goal')
@@ -372,15 +382,18 @@ async function handleDeleteBudget(budgetId) {
           onRequestAdd={openAddSavingGoal}
           onRequestEdit={openEditSavingGoal}
           onRequestDelete={openDeleteSavingGoal}
+          onRequestUpdateProgress={openUpdateProgress}
         />
 
         <section className="rounded-[42px] border border-[#41515b] bg-[#172733] p-5 shadow-2xl">
 
           {activeWorkspaceView === 'add-saving-goal' ||
-            activeWorkspaceView === 'edit-saving-goal' ? (
+            activeWorkspaceView === 'edit-saving-goal' ||
+            activeWorkspaceView === 'update-progress' ? (
             <SavingGoalForm
               savingGoal={
-                activeWorkspaceView === 'edit-saving-goal'
+                activeWorkspaceView === 'edit-saving-goal' ||
+                activeWorkspaceView === 'update-progress'
                   ? editingSavingGoal
                   : undefined
               }
@@ -388,6 +401,7 @@ async function handleDeleteBudget(budgetId) {
               onAddSavingGoal={handleAddSavingGoal}
               onUpdateSavingGoal={handleUpdateSavingGoal}
               onClose={closeSavingGoalView}
+              isUpdateProgress={activeWorkspaceView === 'update-progress'}
             />
           ) : activeWorkspaceView === 'add-budget' ||
             activeWorkspaceView === 'edit-budget' ? (
@@ -429,6 +443,8 @@ async function handleDeleteBudget(budgetId) {
                 accounts={accounts}
                 selectedAccountId={selectedAccountId}
                 setSelectedAccountId={setSelectedAccountId}
+                onAddAccount={handleAddAccount}
+                onDeleteAccount={handleDeleteAccount}
               />
               )}
 
