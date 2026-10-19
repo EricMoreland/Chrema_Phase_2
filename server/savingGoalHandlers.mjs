@@ -51,24 +51,6 @@ function getAccountId(body) {
   return Number.isInteger(accountId) ? accountId : null
 }
 
-function getValidSavingGoalProgress(body) {
-  const amount = Number(body.amount)
-
-  return Number.isFinite(amount) && amount > 0 ? amount : null
-}
-
-async function inDatabaseTransaction(callback) {
-  await db.exec('BEGIN')
-  try {
-    const result = await callback()
-    await db.exec('COMMIT')
-    return result
-  } catch (err) {
-    await db.exec('ROLLBACK')
-    throw err
-  }
-}
-
 export async function createSavingGoal(req, res) {
   try {
     const input = getValidSavingGoalInput(req.body)
@@ -105,6 +87,24 @@ export async function createSavingGoal(req, res) {
 
     res.status(201).json(result.rows[0])
   } catch (err) {
+    throw err
+  }
+}
+
+function getValidSavingGoalProgress(body) {
+  const amount = Number(body.amount)
+
+  return Number.isFinite(amount) && amount > 0 ? amount : null
+}
+
+async function inDatabaseTransaction(callback) {
+  await db.exec('BEGIN')
+  try {
+    const result = await callback()
+    await db.exec('COMMIT')
+    return result
+  } catch (err) {
+    await db.exec('ROLLBACK')
     throw err
   }
 }
