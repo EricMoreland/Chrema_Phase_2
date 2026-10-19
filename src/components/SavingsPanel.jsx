@@ -5,7 +5,8 @@ function SavingsPanel({
     savingGoals,
     onRequestAdd,
     onRequestEdit,
-    onRequestDelete
+    onRequestDelete,
+    onRequestUpdateProgress
 }) {
     const [openMenuGoalId, setOpenMenuGoalId] = useState(null)
 
@@ -83,6 +84,17 @@ function SavingsPanel({
                                         role="menu"
                                         className="absolute right-0 top-full z-10 mt-1 min-w-28 rounded-lg border border-slate-600 bg-[#1d3040] p-1 shadow-xl"
                                     >
+                                        <button
+                                            type="button"
+                                            role="menuitem"
+                                            onClick={() => {
+                                                setOpenMenuGoalId(null)
+                                                onRequestUpdateProgress(goal)
+                                            }}
+                                            className="block w-full rounded px-3 py-2 text-left text-sm text-[#eee9de] hover:bg-[#263747]"
+                                        >
+                                            Update progress
+                                        </button>
                                         <button
                                             type="button"
                                             role="menuitem"

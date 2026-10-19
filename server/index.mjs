@@ -12,6 +12,10 @@ import {
   updateBudget,
   deleteBudget
 } from './budgetHandlers.mjs'
+import {
+  getTransactions,
+  createTransaction
+} from './transactionHandlers.mjs'
 
 const server = express()
 const port = 3001
@@ -34,6 +38,10 @@ server.get('/api/budgets', getBudgets)
 server.post('/api/budgets', createBudget)
 server.put('/api/budgets/:budgetId', updateBudget)
 server.delete('/api/budgets/:budgetId', deleteBudget)
+
+//transaction routes
+server.get('/api/transactions', getTransactions)
+server.post('/api/transactions', createTransaction)
 
 
 server.use((err, req, res, next) => {
