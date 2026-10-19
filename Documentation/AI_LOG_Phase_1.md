@@ -25,12 +25,5 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 | 2026-09-03 | Ben | Chatgpt (GPT-5.6 Luna) | Assisted in creating UML diagrams for Chrema Use Case Diagrams and Flow of Events | Provided step-by-step guidance of the design of UML diagrams |
 | 2026-09-03 | Aqeel | ChatGPT | Provided complimentary colour codes to our main theme. Generated image of greek temple and greek banner | elevated the aesthetic appeal of the wireframes |
 | 2026-09-03 | Aqeel | ChatGPT |Explained what pre/post conditions and use case descriptions should sound like.| Solidified understanding of how to write the pre/post conditions and use case descriptions |
-| 2026-09-29 | Ben | ChatGPT (GPT-5.6 Luna) | Explained Express.js backend routes and GET/POST server behavior for the Chrema application | Clarification on how the front end of react communicated to the Express backend |
-| 2026-10-04 | Ben | ChatGPT (GPT-5.6 Luna) | Reviewed the Chrema backend and teammate's work to determine what had already been implemented and what was needed to work on | Identified the existing backend/database structure and mapped out the next development taks
-| 2026-10-06 | Ben | ChatGPT (GPT-5.6 Luna) | Worked through the migration to PGlite/PostgreSQL and discussed 'const db = new PGlite()' and database connection setup | Improved understanding of the new database setup and how it connects to the backend |
-| 2026-10-08 | Ben | ChatGPT (GPT-5.6 Luna) | Styled the TransactionForm, iincluding the Save and Cancel buttons and transaction layout after errors with visual consistency | Improved the visual consistency and usability of the transaction form |
-| 2026-10-13 | Ben | ChatGPT (GPT-5.6 Luna) | Worked through the Chrema frontend/backend development, iincluding the react components, transaction functionality, API/database behaviour and debugging | Resolved implementation issues and continued integrating the frontedn with the backend |
-| 2026-10-14 | Ben | ChatGPT (GPT-5.6 Luna) | Worked through the development and implementation issues of the backend project code | Recieved step guidance for resolving code issues |
-| 2026-10-17 | Ben | ChatGPT (GPT-5.6 Luna) | Implemented and debugged the transcation persistence, transaction routes, PGlite database handling, account balance updates in accordance to transaction categories | Transactions successfully persisted after page reload and account/budget functionality was connected to the transaction system |
-| 2026-10-17 | Ben | ChatGPT (GPT-5.6 Luna) | Refined the Chrema transaction and budget UI, including the category icon clash, and the distinction between transaction categories and budget categories | Altered and refined the interface so the transactions use the required categories |
+
 
