@@ -64,7 +64,6 @@ async function inDatabaseTransaction(callback) {
     throw err
   }
 }
-
 export async function getTransactions(req, res) {
   const accountId =
     req.query.accountId === undefined ? null : Number(req.query.accountId)
