@@ -29,20 +29,24 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 | 2026-10-04 | Ben | ChatGPT (GPT-5.6 Luna) | Reviewed the Chrema backend and teammate's work to determine what had already been implemented and what was needed to work on | Identified the existing backend/database structure and mapped out the next development tasks |
 | 2026-10-5 | Eric | Copilot Student | Identify the best and scalable solution to implement different screens on one seperate main card and how to setup error page accordingly | Explained to use one state that manages which screen is showing on main card/use overlay for other and correct structure for ReportError.jsx |
 | 2026-10-5 | Eric | Copilot Student | Suggest approach and explain what I need to get current Error page closer to wireframe | Explained css required and logic still needed for form to work correcly |
+| 2026-10-05 | Aqeel | Copilot Student | Explain how to approach building the structure and frontend of budgets page without any functionality yet | Steps on how to approach building the structure and tips for efficiency |
 | 2026-10-06 | Ben | ChatGPT (GPT-5.6 Luna) | Worked through the migration to PGlite/PostgreSQL and discussed 'const db = new PGlite()' and database connection setup | Improved understanding of the new database setup and how it connects to the backend |
+| 2026-10-06 | Aqeel | Copilot Student | Explain how to switch between views (budget and main) | Explains how to use activeWorkSpaceView and if statements to achieve this | 
 | 2026-10-7 | Eric | Copilot Student | Create component boilerplate for Account add and delete | Created the boilerplate code ready to implement logic and elements |
 | 2026-10-7 | Eric | Copilot Student | Help identify gaps in SQL translation from old schema to new PGlite | Identified lacking columns in transaciton table and its connecting variable's uses in code logic |
 | 2026-10-8 | Eric | Gemini Pro 3.1 | Help understand current server code from exmaple done in class with PGLite and how to continue to implement to for our app | Explain what works and whats missing currently and what is still needed for app. |
 | 2026-10-08 | Ben | ChatGPT (GPT-5.6 Luna) | Styled the TransactionForm, including the Save and Cancel buttons and transaction layout after errors with visual consistency | Improved the visual consistency and usability of the transaction form |
+| 2026-10-08 |Aqeel | Copilot | Explain how to move existing inline form code into BudgetForm.jsx and import it into BudgetsPanel.jsx, specifically how to connect the save, cancel, and onClose actions |helped achieve functionality of clicking "Add Budget" to open form and closing it returning to the dashboard smoothly|
 | 2026-10-9 | Eric | Copilot Student | Help reformat existing code to seperate logic from API routes, to improve code structure | Showed an example of how to split it |
 | 2026-10-9 | Eric | Copilot Student | Idenitfy and explain why Delete Backend logic is not working | Explained to test with new account because of possible foreign key error's for account references to savings or budgets |
 | 2026-10-10 | Eric | Copilot Student | Explain possible improvements for group members (budgets CRUD) code before implement same logic for savings and explain coding logic for backend + help debug Addsaving error | Showed minor improvements for now and future and explained in relation to accounts backend logic whats required, ID'ed missing handle call and state |
+| 2026-10-11 | Aqeel | Copilot Student | Assisted with bug fixes in App.jsx | Explained how to fix issues |
 | 2026-10-13 | Ben | ChatGPT (GPT-5.6 Luna) | Worked through the Chrema frontend/backend development, including the react components, transaction functionality, API/database behaviour and debugging | Resolved implementation issues and continued integrating the frontend with the backend |
+| 2026-10-13 | Aqeel | Copilot Student | How to approach coding the backend of the budgets panel efficiently and easily | Steps on how to approach coding the backend, broken down into small segments |
 | 2026-10-14 | Ben | ChatGPT (GPT-5.6 Luna) | Worked through the development and implementation issues of the backend project code | Received step guidance for resolving code issues |
 | 2026-10-17 | Ben | ChatGPT (GPT-5.6 Luna) | Implemented and debugged the transcation persistence, transaction routes, PGlite database handling, account balance updates in accordance to transaction categories | Transactions successfully persisted after page reload and account/budget functionality was connected to the transaction system |
 | 2026-10-17 | Ben | ChatGPT (GPT-5.6 Luna) | Refined the Chrema transaction and budget UI, including the category icon clash, and the distinction between transaction categories and budget categories | Altered and refined the interface so the transactions use the required categories |
-| 2026-10-05 | Aqeel | Copilot Student | Explain how to approach building the structure and frontend of budgets page without any functionality yet | Steps on how to approach building the structure and tips for efficiency |
-| 2026-10-06 | Aqeel | Copilot Student | Explain how to switch between views (budget and main) | Explains how to use activeWorkSpaceView and if statements to achieve this | 
-| 2026-10-08 |Aqeel | Copilot | Explain how to move existing inline form code into BudgetForm.jsx and import it into BudgetsPanel.jsx, specifically how to connect the save, cancel, and onClose actions |helped achieve functionality of clicking "Add Budget" to open form and closing it returning to the dashboard smoothly|
-| 2026-10-11 | Aqeel | Copilot Student | Assisted with bug fixes in App.jsx | Explained how to fix issues |
-| 2026-10-13 | Aqeel | Copilot Student | How to approach coding the backend of the budgets panel efficiently and easily | Steps on how to approach coding the backend, broken down into small segments |
+
+
+
+
