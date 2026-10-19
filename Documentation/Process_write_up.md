@@ -14,6 +14,8 @@ Process Write Up has been discussed in class meetings on monday's, written and c
 
  - 10-12 October 2026: Merge all current working code into Main and reset to new code "checkpoint". Requirements: Aqeel & Benno implement required css and understand new backend. Eric continue backend implementation. Everyone, finalise code and implement last pieces of dupilcate logic for savings.
 
+ - 15 Oct: Account, Savings, Budgets -CRUD backend complete. Benno to finish transactions logic and backend
+
 ## Key Decisions Take:
 
   - A strict branching strategy was enforced, where team members were required to pull from the main branch, push code to their individual branches, and submit pull requests.
@@ -31,4 +33,6 @@ Process Write Up has been discussed in class meetings on monday's, written and c
  - Documentation Updates: As the codebase grew more complex and intertwined, extensive in-code comments were continuously added to ensure all members could understand and effectively build upon the base logic.
 
  - Switch to PGlite implementation
+
+ - Discuss and Implement React router for main card to break up long conditional render code + browser control: Decide to stick with working code since Router has marginal benefits for small application.
 
