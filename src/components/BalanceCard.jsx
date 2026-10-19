@@ -30,10 +30,6 @@ function BalanceCard({
     if (activeWorkspaceView === 'add-transaction') {
         return (
             <div className="min-h-[440px] w-full rounded-[36px] bg-[#172733] p-8 text-center">
-                <h2 className="mb-6 font-serif text-2xl text-white">
-                    Add Transaction
-                </h2>
-
             <TransactionForm
                 newDescription={newDescription}
                 setNewDescription={setNewDescription}
