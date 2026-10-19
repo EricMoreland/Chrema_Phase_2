@@ -144,7 +144,6 @@ async function handleDeleteAccount(accountId) {
 
  useEffect(() => {
   if (selectedAccountId == null) {
-    setBudgets([])
     return
   }
 
@@ -472,7 +471,7 @@ async function handleDeleteBudget(budgetId) {
         </section>
 
         <BudgetsPanel
-          budgets={budgets}
+          budgets={selectedAccountId == null ? [] : budgets}
           onRequestAdd={openAddBudget}
           onRequestEdit={openEditBudget}
           onRequestDelete={openDeleteBudget}
