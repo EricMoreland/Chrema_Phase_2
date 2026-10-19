@@ -16,6 +16,8 @@ Process Write Up has been discussed in class meetings on monday's, written and c
 
  - 15 Oct: Account, Savings, Budgets -CRUD backend complete. Benno to finish transactions logic and backend
 
+ - 19 Oct: Implmenent last functionalities, Use app and try to find possible errors as team and discuss how to execute the presentation
+
 ## Key Decisions Take:
 
   - A strict branching strategy was enforced, where team members were required to pull from the main branch, push code to their individual branches, and submit pull requests.
