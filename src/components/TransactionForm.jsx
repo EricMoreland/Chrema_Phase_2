@@ -19,33 +19,36 @@ function TransactionForm({
 
 
     return (
-        <div className="min-h-[440px] p-8 text-left">
-            
-            <div className="mx-auto w-full max-w-[510px]">
-            <div className="mb-5 flex gap-2">
+        <div className="min-h-[440px] text-left">
+            <div className="relative mx-auto mb-5 h-[72px] w-full">
+                <h2 className="mx-auto grid h-[72px] max-w-[290px] place-items-center rounded-[16px] bg-[#1d3040] font-serif text-2xl text-[#eee9de] shadow-[0_8px_20px_rgba(0,0,0,0.18)]">
+                    Add Transaction
+                </h2>
+                <div className="absolute right-0 top-0 flex h-[72px] w-[136px] flex-col gap-2">
                 <button
                     className={`flex-1 rounded-[10px] border border-slate-600 px-4 py-2 font-serif ${
                         transactionKind === 'income'
-                            ? 'bg-[#2e6f8e] text-[#eee9de]'
+                            ? 'border-[#507a49] bg-[#507a49] text-[#eee9de] hover:bg-[#5d8955]'
                             : 'bg-[#263747] text-[#eee9de]'
                     }`}
                     onClick={() => setTransactionKind('income')}
                 >
-
                     Income
                 </button>
                 <button
                     className={`flex-1 rounded-[10px] border border-slate-600 px-4 py-2 font-serif ${
                         transactionKind === 'expense'
-                            ? 'bg-[#2e6f8e] text-[#eee9de]'
+                            ? 'border-[#693f3f] bg-[#693f3f] text-[#eee9de] hover:bg-[#784848]'
                             : 'bg-[#263747] text-[#eee9de]'
                     }`}
                     onClick={() => setTransactionKind('expense')}
                 >
                     Expense
                 </button>
+                </div>
             </div>
 
+            <div className="mx-auto w-full max-w-[510px]">
             <div className="mb-4">
                 <label className="mb-2 block text-center font-serif text-base text-[#eee9de]">
                     Category

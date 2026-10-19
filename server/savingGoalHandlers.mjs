@@ -51,6 +51,24 @@ function getAccountId(body) {
   return Number.isInteger(accountId) ? accountId : null
 }
 
+function getValidSavingGoalProgress(body) {
+  const amount = Number(body.amount)
+
+  return Number.isFinite(amount) && amount > 0 ? amount : null
+}
+
+async function inDatabaseTransaction(callback) {
+  await db.exec('BEGIN')
+  try {
+    const result = await callback()
+    await db.exec('COMMIT')
+    return result
+  } catch (err) {
+    await db.exec('ROLLBACK')
+    throw err
+  }
+}
+
 export async function createSavingGoal(req, res) {
   try {
     const input = getValidSavingGoalInput(req.body)
@@ -94,6 +112,57 @@ export async function createSavingGoal(req, res) {
 export async function updateSavingGoal(req, res) {
   try {
     const savingGoalId = Number(req.params.savingGoalId)
+
+    if (!Number.isInteger(savingGoalId)) {
+      return res.status(400).json({ error: 'Invalid saving goal id' })
+    }
+
+    if (req.body.kind === 'savings') {
+      const amount = getValidSavingGoalProgress(req.body)
+
+      if (amount === null) {
+        return res.status(400).json({
+          error: 'Provide a valid update amount'
+        })
+      }
+
+      const result = await inDatabaseTransaction(async () => {
+        const goalResult = await db.query(`
+          SELECT AccountAccountId
+          FROM "Saving Goal"
+          WHERE SavingId = $1
+        `, [savingGoalId])
+
+        if (goalResult.rows.length === 0) {
+          throw new Error('Saving goal not found')
+        }
+
+        const accountId = goalResult.rows[0].accountaccountid
+        const accountResult = await db.query(`
+          UPDATE Account
+          SET CashBalance = CashBalance - $1
+          WHERE AccountId = $2
+            AND CashBalance >= $1
+          RETURNING AccountId
+        `, [amount, accountId])
+
+        if (accountResult.rows.length === 0) {
+          throw new Error('Insufficient available balance')
+        }
+
+        const updatedGoal = await db.query(`
+          UPDATE "Saving Goal"
+          SET CurrentAmount = CurrentAmount + $1
+          WHERE SavingId = $2
+          RETURNING ${savingGoalColumns}
+        `, [amount, savingGoalId])
+
+        return updatedGoal.rows[0]
+      })
+
+      return res.status(200).json(result)
+    }
+
     const input = getValidSavingGoalInput(req.body)
     const accountId = getAccountId(req.body)
 
@@ -131,7 +200,16 @@ export async function updateSavingGoal(req, res) {
 
     res.status(200).json(result.rows[0])
   } catch (err) {
-    throw err
+    if (err.message === 'Saving goal not found') {
+      return res.status(404).json({ error: err.message })
+    }
+
+    if (err.message === 'Insufficient available balance') {
+      return res.status(400).json({ error: err.message })
+    }
+
+    console.error('Failed to update saving goal:', err)
+    res.status(500).json({ error: 'Failed to update saving goal' })
   }
 }
 
