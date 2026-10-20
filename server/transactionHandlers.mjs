@@ -1,5 +1,6 @@
 import db from './PGliteDB.mjs'
 
+// These are the transaction fields that are returned to the frontend.
 const transactionColumns = `
   TransactionId AS "id",
   Description AS "description",
@@ -10,6 +11,7 @@ const transactionColumns = `
   TO_CHAR(CreatedAt, 'YYYY-MM-DD') AS "date"
 `
 
+// Used when a request reaches the database but something related to the account or category is invalid.
 class RequestError extends Error {
   constructor(status, message) {
     super(message)
@@ -17,6 +19,7 @@ class RequestError extends Error {
   }
 }
 
+// Check the transaction data befor sending it to the database 
 function getValidTransactionInput(body) {
   const description =
     typeof body?.description === 'string' ? body.description.trim() : ''
@@ -53,6 +56,7 @@ function getValidTransactionInput(body) {
   return { description, amount, accountId, type, category, kind, date }
 }
 
+// Keep the transaction insert and the related account/budget updates together so they can all be rolled back if something goes wrong.
 async function inDatabaseTransaction(callback) {
   await db.exec('BEGIN')
   try {
@@ -105,6 +109,7 @@ export async function createTransaction(req, res) {
 
   try {
     const transaction = await inDatabaseTransaction(async () => {
+      // make sure the selected account exists before creating the transaction.
       const accountResult = await db.query(`
         SELECT AccountId
         FROM Account
@@ -115,6 +120,7 @@ export async function createTransaction(req, res) {
         throw new RequestError(404, 'Account not found')
       }
 
+      // Get the database ID for the category selected in the form.
       const categoryResult = await db.query(`
         SELECT CategoryId
         FROM Category
@@ -125,10 +131,10 @@ export async function createTransaction(req, res) {
         throw new RequestError(400, 'Invalid transaction category')
       }
 
-      const categoryId = categoryResult.rows[0].categoryid
+      const categoryId = categoryResult.rows[0].categoryid // Income adds to the balance, while expense subtracts from it.
       const amountChange = input.kind === 'income' ? input.amount : -input.amount
      
-
+      // save the transaction in the database 
       const transactionResult = await db.query(`
         INSERT INTO "Transaction" (
           Description,
@@ -151,6 +157,7 @@ export async function createTransaction(req, res) {
         input.date
       ])
 
+      // update the balance of the selected account 
       await db.query(`
         UPDATE Account
         SET
@@ -165,6 +172,7 @@ export async function createTransaction(req, res) {
         WHERE AccountId = $3
       `, [input.type, amountChange, input.accountId])
 
+      // This is only if the expenses affect the amount currently spent in the budget.
       if (input.kind === 'expense') {
         await db.query(`
           UPDATE Budget
