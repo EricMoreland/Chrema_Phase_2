@@ -9,7 +9,7 @@ function DeleteBudget({ onDelete, onExit}) {
                 This will remove the budget from the list
             </p>
             <div className = "mt-4 flex gap-2">
-                <DeleteButton onDelete={onDelete} />
+                <DeleteButton onDelete={onDelete} text="Budget" />
                 <ExitButton onExit={onExit} />
             </div>
         </div>
