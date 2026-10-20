@@ -17,6 +17,11 @@ function TransactionForm({
     onClose
 }){
 
+    const handleSaveTransaction = () => {
+        handleAddTransactionProp()
+        setNewDescription('')
+        setNewAmount('')
+    }
 
     return (
         <div className="min-h-[440px] text-left">
@@ -85,7 +90,7 @@ function TransactionForm({
                 <input
                     id="new-transaction-name"
                     type='text'
-                    placeholder='Transaction name'
+                    placeholder='Add transaction'
                     value={newDescription}
                     //event = info about what just happend in the input box (here: the new text typed)
                     onChange={(event) => setNewDescription(event.target.value)} //event.target = the input box, .value = its current text
@@ -99,7 +104,7 @@ function TransactionForm({
                 <input
                     id="new-transaction-amount"
                     type='number'
-                    placeholder='Transaction Amount'
+                    placeholder='Add amount'
                     value={newAmount}
                     onChange={(event) => setNewAmount(event.target.value)}
                     className="w-full rounded-[10px] border border-slate-600 bg-[#263747] px-3 py-2 text-[#eee9de] outline-none focus:border-sky-400"
@@ -119,7 +124,7 @@ function TransactionForm({
 
                 {/* Save the transaction or close the form*/}
             <div className="mt-8 flex gap-6">
-                <button onClick={handleAddTransactionProp}
+                <button onClick={handleSaveTransaction}
                 className="flex-1 rounded-[10px] bg-[#2e6f8e] px-4 py-3 font-serif text-lg text-[#eee9de] hover:bg-[#3b8cae]"
                 >
                 Save
