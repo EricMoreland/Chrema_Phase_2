@@ -23,9 +23,9 @@ const port = 3001
 server.use(express.json())
 
 //account routes
-server.get('/api/accounts', getAccounts)
-server.post('/api/accounts', createAccount)
-server.delete('/api/accounts/:accountId', deleteAccount)
+server.get('/api/accounts', getAccounts) //calls the getAccounts function from accountHandlers.mjs
+server.post('/api/accounts', createAccount) 
+server.delete('/api/accounts/:accountId', deleteAccount) //deletes the account with this id
 
 //saving goal routes
 server.get('/api/saving-goals', getSavingGoals)
@@ -55,5 +55,3 @@ server.use((err, req, res, next) => {
 server.listen(port, () => console.log("Server is listening..."))
 
 
-//await db.close()
-//console.log('Database closed')

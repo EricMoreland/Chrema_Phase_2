@@ -75,6 +75,7 @@ async function handleAddAccount(accountDetails) {
   const trimmedName = accountDetails.name.trim()
   const startingCashBalance = Number(accountDetails.cashBalance)
 
+  //prevents duplicate account names before sending the request
   const nameAlreadyExists = accounts.some(
     (account) => account.name.toLowerCase() === trimmedName.toLowerCase()
   )
@@ -93,7 +94,7 @@ async function handleAddAccount(accountDetails) {
 
   const newAccount = response.data
 
-  setAccounts((currentAccounts) => [...currentAccounts, newAccount])
+  setAccounts((currentAccounts) => [...currentAccounts, newAccount]) //add the new account to the list
   setSelectedAccountId(newAccount.id)
 
   return true
@@ -107,6 +108,7 @@ async function handleDeleteAccount(accountId) {
     await axios.delete(`/api/accounts/${accountId}`)
 
     setAccounts((currentAccounts) => {
+    //remove the deleted account from the current list
     const remainingAccounts = currentAccounts.filter(
         (account) => account.id !== accountId
       )
@@ -131,7 +133,7 @@ async function handleDeleteAccount(accountId) {
       .then((response) => {
         const accountData = response.data //therefore use data property to get the array of objects from response object
 
-        setAccounts(accountData)
+        setAccounts(accountData) //store the accounts received from the backend
 
         if (accountData.length > 0) { //if there are multiple accounts, default to first one.
           setSelectedAccountId(accountData[0]?.id ?? null) //returns null instead of error
