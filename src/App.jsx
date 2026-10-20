@@ -36,7 +36,7 @@ function App() {
   const [accounts, setAccounts] = useState([])
 
   const [showReportError, setShowReportError] = useState(false)
-  //const [showTransactionForm, setShowTransactionForm] = useState(false)
+
   const [activeWorkspaceView, setActiveWorkspaceView] = useState('dashboard')
 
   //finds and returns the first single item matching the condition

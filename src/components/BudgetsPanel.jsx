@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import {
-    Bus,
     Car,
-    Film,
     Home,
     MoreHorizontal,
     Plus,
@@ -15,8 +13,6 @@ const categoryIcons = {
     Groceries: ShoppingCart,
     Car,
     Food: Utensils,
-    Entertainment: Film,
-    Transport: Bus,
     Other: MoreHorizontal
 }
 
