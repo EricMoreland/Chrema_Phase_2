@@ -1,7 +1,7 @@
 import db from './PGliteDB.mjs'
 
+// Map database columns to the API's camelCase fields.
 const savingGoalColumns = `
-  -- Keep database names private while returning the frontend's camelCase shape.
   SavingId AS "id",
   GoalName AS "name",
   GoalAmount AS "targetAmount",
@@ -26,13 +26,13 @@ export async function getSavingGoals(req, res) {
 }
 
 function getValidSavingGoalInput(body) {
-  // Normalise user input before applying the shared create/edit validation rules.
+  // Validate and normalise goal details.
   const name = typeof body.name === 'string' ? body.name.trim() : ''
   const targetAmount = Number(body.targetAmount)
   const startDate = body.startDate
   const endDate = body.endDate
+  // Validate the date range using the API's ISO date format.
   const validDates =
-    // ISO dates can be compared as strings because their components are ordered.
     /^\d{4}-\d{2}-\d{2}$/.test(startDate) &&
     /^\d{4}-\d{2}-\d{2}$/.test(endDate)
 
@@ -44,13 +44,13 @@ function getValidSavingGoalInput(body) {
     endDate < startDate
   ) {
     return null
-  } //basic input validation for saving goal creation and editing
+  }
 
   return { name, targetAmount, startDate, endDate }
 }
 
 function getAccountId(body) {
-  // Account IDs must be whole numbers before they are used in parameterised SQL.
+  // Read the related account ID.
   const accountId = Number(body.accountId)
   return Number.isInteger(accountId) ? accountId : null
 }
@@ -70,8 +70,8 @@ export async function createSavingGoal(req, res) {
       return res.status(400).json({ error: 'An account is required' })
     }
 
+    // Create a goal with zero initial progress.
     const result = await db.query(`
-      -- New goals begin with no saved amount; progress is added separately.
       INSERT INTO "Saving Goal" (
         GoalName,
         GoalAmount,
@@ -97,14 +97,14 @@ export async function createSavingGoal(req, res) {
 }
 
 function getValidSavingGoalProgress(body) {
-  // Progress updates represent money moved into the goal, so zero and negatives are invalid.
+  // Validate positive progress deposits.
   const amount = Number(body.amount)
 
   return Number.isFinite(amount) && amount > 0 ? amount : null
 }
 
 async function inDatabaseTransaction(callback) {
-  // Ensures balance and goal updates succeed or fail together to avoid inconsistent totals.
+  // Keep related balance updates atomic.
   await db.exec('BEGIN')
   try {
     const result = await callback()
@@ -125,7 +125,7 @@ export async function updateSavingGoal(req, res) {
     }
 
     if (req.body.kind === 'savings') {
-      // A progress update transfers funds, unlike an edit which only changes goal details.
+      // Handle progress deposits separately from detail edits.
       const amount = getValidSavingGoalProgress(req.body)
 
       if (amount === null) {
@@ -135,7 +135,7 @@ export async function updateSavingGoal(req, res) {
       }
 
       const result = await inDatabaseTransaction(async () => {
-        // Read the goal first so the transfer uses the account attached to that goal.
+        // Find the account linked to the goal.
         const goalResult = await db.query(`
           SELECT AccountAccountId
           FROM "Saving Goal"
@@ -147,6 +147,7 @@ export async function updateSavingGoal(req, res) {
         }
 
         const accountId = goalResult.rows[0].accountaccountid
+        // Deduct funds before recording the deposit.
         const accountResult = await db.query(`
           UPDATE Account
           SET CashBalance = CashBalance - $1
@@ -159,6 +160,7 @@ export async function updateSavingGoal(req, res) {
           throw new Error('Insufficient available balance')
         } 
 
+        // Record the deposited amount.
         const updatedGoal = await db.query(`
           UPDATE "Saving Goal"
           SET CurrentAmount = CurrentAmount + $1
@@ -185,6 +187,7 @@ export async function updateSavingGoal(req, res) {
       return res.status(400).json({ error: 'An account is required' })
     }
 
+    // Update goal details without changing saved progress.
     const result = await db.query(`
       UPDATE "Saving Goal"
       SET GoalName = $1,
@@ -230,8 +233,8 @@ export async function deleteSavingGoal(req, res) {
       return res.status(400).json({ error: 'Invalid saving goal id' })
     }
 
+    // Confirm that the requested goal existed.
     const result = await db.query(`
-      -- RETURNING lets the API distinguish a deleted goal from a missing one.
       DELETE FROM "Saving Goal"
       WHERE SavingId = $1
       RETURNING SavingId

@@ -47,7 +47,7 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 | 2026-10-17 | Ben | ChatGPT (GPT-5.6 Luna) | Implemented and debugged the transcation persistence, transaction routes, PGlite database handling, account balance updates in accordance to transaction categories | Transactions successfully persisted after page reload and account/budget functionality was connected to the transaction system |
 | 2026-10-17 | Ben | ChatGPT (GPT-5.6 Luna) | Refined the Chrema transaction and budget UI, including the category icon clash, and the distinction between transaction categories and budget categories | Altered and refined the interface so the transactions use the required categories |
 | 2026-10-19 | Eric | Copilot Student | Add structure to README and ensure accuracy for setup. | Restructed main content to look better and add missing elements to ensure proper setup. |
-
+| 2026-10-21 | Eric | Copilot Student | Improve my comment explanations to be best practice | Restructed the wording of comments |
 
 
 

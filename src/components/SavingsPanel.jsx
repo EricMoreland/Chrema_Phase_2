@@ -28,7 +28,7 @@ function SavingsPanel({
                     savingGoals.map((goal) => {
                         const targetAmount = Number(goal.targetAmount)
                         const currentAmount = Number(goal.currentAmount)
-                        // Cap the visual width so progress cannot overflow its bar.
+                        // Keep the progress bar within its track.
                         const percentComplete = targetAmount > 0
                             ? Math.min((currentAmount / targetAmount) * 100, 100)
                             : 0
