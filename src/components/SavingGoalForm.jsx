@@ -22,6 +22,7 @@ function SavingGoalForm({
     async function handleSubmit(event) {
         event.preventDefault()
 
+        // "Progress update mode" sends only a deposit; add/edit mode sends the goal definition.
         const goalDetails = isUpdateProgress
             ? {
                 kind: 'savings',
@@ -36,6 +37,7 @@ function SavingGoalForm({
                 accountId
             }
 
+        // Existing goals use their ID for updates, while new goals use the create callback.
         const succeeded = isEditing
             ? await onUpdateSavingGoal(savingGoal.id, goalDetails)
             : await onAddSavingGoal(goalDetails)

@@ -27,7 +27,7 @@ server.get('/api/accounts', getAccounts) //calls the getAccounts function from a
 server.post('/api/accounts', createAccount) 
 server.delete('/api/accounts/:accountId', deleteAccount) //deletes the account with this id
 
-//saving goal routes
+//saving goal routes 
 server.get('/api/saving-goals', getSavingGoals)
 server.post('/api/saving-goals', createSavingGoal)
 server.post('/api/saving-goals/:savingGoalId', updateSavingGoal)

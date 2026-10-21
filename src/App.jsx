@@ -299,6 +299,7 @@ async function handleDeleteBudget(budgetId) {
   try {
     const response = await axios.post('/api/saving-goals', goalDetails)
 
+    // adds to the server response so the list uses the persisted ID and values.
     setSavingGoals((currentGoals) => [...currentGoals, response.data])
 
       return true
@@ -316,12 +317,14 @@ async function handleDeleteBudget(budgetId) {
       )
 
       setSavingGoals((currentGoals) =>
+        // Replace only the changed goal while preserving the list order.
         currentGoals.map((goal) =>
           goal.id === savingGoalId ? response.data : goal
         )
       )
 
       if (goalDetails.kind === 'savings') {
+        // Depositing changes the selected account balance, so refresh accounts too.
         const accountsResponse = await axios.get('/api/accounts')
         setAccounts(accountsResponse.data)
       }
@@ -336,6 +339,7 @@ async function handleDeleteBudget(budgetId) {
   async function handleDeleteSavingGoal(savingGoalId) {
     try {
       await axios.delete(`/api/saving-goals/${savingGoalId}`)
+      // Remove the deleted goal locally after the server confirms success.
       setSavingGoals((currentGoals) =>
         currentGoals.filter((goal) => goal.id !== savingGoalId)
       )
@@ -361,6 +365,7 @@ async function handleDeleteBudget(budgetId) {
   }
 
   function openUpdateProgress(savingGoal) {
+    // Reuse the form in "deposit mode" while retaining the goal ID for the update request.
     setEditingSavingGoal(savingGoal)
     setActiveWorkspaceView('update-progress')
   }
