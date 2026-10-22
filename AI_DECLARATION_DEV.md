@@ -49,5 +49,9 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 | 2026-10-19 | Eric | Copilot Student | Add structure to README and ensure accuracy for setup. | Restructed main content to look better and add missing elements to ensure proper setup. |
 | 2026-10-21 | Eric | Copilot Student | Improve my comment explanations to be best practice + move code to improve readability | Restructed the wording of comments + shift code blocks in App.jsx|
 
+### Add name to sign:
+- Eric
+- Benno
+- Aqeel
 
 
