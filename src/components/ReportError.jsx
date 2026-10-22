@@ -39,9 +39,9 @@ function ReportError({ onClose }) {
                 'service_4kb9dmr',
                 'template_ul5ef48',
                 form.current,
-                { publicKey: '3wlINfEu4-zVPWUyI' }
-            );
-
+                { publicKey: '3wlINfEu4-zVPWUyI' } 
+            ); //I (Eric) am aware this introduces security/spam risks, to improve I whould run the request through backend, but for now this is acceptable to show functionality.
+                //However the spam risk falls on my own email and does not affect the user, so I am willing to accept it for now.
             console.log('SUCCESS!');
             onClose();
         } catch (error) {
