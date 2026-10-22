@@ -1,19 +1,17 @@
-import { useEffect, useState } from 'react'
-import BalanceCard from './components/BalanceCard'
-import SavingsPanel from './components/SavingsPanel'
-import BudgetsPanel from './components/BudgetsPanel'
-import AccountBar from './components/AccountBar'
-import ReportError from './components/ReportError'
-import ReportErrorButton from './components/ReportErrorButton'
 import axios from 'axios'
+import { useEffect, useState } from 'react'
+import AccountBar from './components/AccountBar'
+import BalanceCard from './components/BalanceCard'
 import BudgetForm from './components/BudgetForm'
+import BudgetsPanel from './components/BudgetsPanel'
 import DeleteBudget from './components/DeleteBudget'
 import DeleteSavingGoal from './components/DeleteSavingGoal'
+import ReportError from './components/ReportError'
+import ReportErrorButton from './components/ReportErrorButton'
 import SavingGoalForm from './components/SavingGoalForm'
+import SavingsPanel from './components/SavingsPanel'
 
 function App() {
-
-  const [selectedType, setSelectedType] = useState('cash')
 
   const [transactions, setTransactions] = useState([])
   const [newAmount, setNewAmount] = useState('')
@@ -24,26 +22,17 @@ function App() {
     const day = String(today.getDate()).padStart(2, '0')
     return `${today.getFullYear()}-${month}-${day}`
   })
-  const [budgets, setBudgets] = useState([])
-  const [savingGoals, setSavingGoals] = useState([])
-  const [editingSavingGoal, setEditingSavingGoal] = useState(null)
-  const [savingGoalIdToDelete, setSavingGoalIdToDelete] = useState(null)
-
   const categories = ['Home', 'Groceries', 'Car', 'Food', 'Other']
   const [newCategory, setNewCategory] = useState(categories[0])
-
   const [transactionKind, setTransactionKind] = useState('expense') //expense or income
+
   const [accounts, setAccounts] = useState([])
+  const [selectedAccountId, setSelectedAccountId] = useState(null)
+  const [selectedType, setSelectedType] = useState('cash')
 
-  const [showReportError, setShowReportError] = useState(false)
-
-  const [activeWorkspaceView, setActiveWorkspaceView] = useState('dashboard')
-
-  //finds and returns the first single item matching the condition
-
+  const [budgets, setBudgets] = useState([])
   const [editingBudget, setEditingBudget] = useState(null)
   const [budgetIdToDelete, setBudgetIdToDelete] = useState(null)
-  
 
   const budgetCategories = [
     'Home',
@@ -52,10 +41,15 @@ function App() {
     'Food',
     'Other'
   ]
-  const [selectedAccountId, setSelectedAccountId] = useState(null)
+
+  const [savingGoals, setSavingGoals] = useState([])
+  const [editingSavingGoal, setEditingSavingGoal] = useState(null)
+  const [savingGoalIdToDelete, setSavingGoalIdToDelete] = useState(null)
+
+  const [activeWorkspaceView, setActiveWorkspaceView] = useState('dashboard')
+  const [showReportError, setShowReportError] = useState(false)
 
   
-  //finds and returns the first single item matching the condition
   const selectedAccount = accounts.find((account) => account.id === selectedAccountId)
   let displayBalance
 
@@ -69,6 +63,59 @@ function App() {
     displayBalance = 0
   }
 
+  // Load account- and workspace-specific data before defining event handlers.
+  useEffect(() => {
+    axios
+      .get('/api/accounts') //receives response object, axios automatically converts json to js array of objects
+      .then((response) => {
+        const accountData = response.data //therefore use data property to get the array of objects from response object
+
+        setAccounts(accountData) //store the accounts received from the backend
+
+        if (accountData.length > 0) { //if there are multiple accounts, default to first one.
+          setSelectedAccountId(accountData[0]?.id ?? null) //returns null instead of error
+        }
+      })
+      .catch((error) => {
+        console.error(error) //axios throws error when request fails.
+      })
+  }, [])
+
+  useEffect(() => {
+    if (selectedAccountId == null) {
+      return
+    }
+
+    let cancelled = false
+
+    axios
+      .get('/api/budgets', { params: { accountId: selectedAccountId } })
+      .then((response) => {
+        if (!cancelled) {
+          setBudgets(response.data)
+        }
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          console.error('Failed to load budgets:', error)
+        }
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [selectedAccountId])
+
+  useEffect(() => {
+    axios.get('/api/saving-goals')
+      .then((response) => {
+        const savingGoalData = response.data
+        setSavingGoals(savingGoalData)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [])
 
 
 async function handleAddAccount(accountDetails) {
@@ -125,62 +172,6 @@ async function handleDeleteAccount(accountId) {
     return false
   }
 }
-
-
-  // Load accounts and select the initial account.
-  useEffect(() => {
-    axios
-      .get('/api/accounts') //receives response object, axios automatically converts json to js array of objects
-      .then((response) => {
-        const accountData = response.data //therefore use data property to get the array of objects from response object
-
-        setAccounts(accountData) //store the accounts received from the backend
-
-        if (accountData.length > 0) { //if there are multiple accounts, default to first one.
-          setSelectedAccountId(accountData[0]?.id ?? null) //returns null instead of error
-        }
-      })
-      .catch((error) => {
-        console.error(error) //axios throws error when request fails.
-      })
-  }, [])
-
- useEffect(() => {
-  if (selectedAccountId == null) {
-    return
-  }
-
-  let cancelled = false
-
-  axios
-    .get('/api/budgets', { params: { accountId: selectedAccountId } })
-    .then((response) => {
-      if (!cancelled) {
-        setBudgets(response.data)
-      }
-    })
-    .catch((error) => {
-      if (!cancelled) {
-        console.error('Failed to load budgets:', error)
-      }
-    })
-
-  return () => {
-    cancelled = true
-  }
-}, [selectedAccountId])
-
-  useEffect(() => {
-    axios.get('/api/saving-goals')
-      .then((response) => {
-        const savingGoalData = response.data
-        setSavingGoals(savingGoalData)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [])
-
 
 
   async function handleAddTransaction() {

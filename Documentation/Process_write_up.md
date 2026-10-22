@@ -18,6 +18,8 @@ Process Write Up has been discussed in class meetings on monday's, written and c
 
  - 19 Oct: Implmenent last functionalities, Use app and try to find possible errors as team and discuss how to execute the presentation
 
+ - 21 Oct: Create presentation videos, Benno Compile's & edit presentaion to be proffesional. Final touches to code to be done.
+
 ## Key Decisions Take:
 
   - A strict branching strategy was enforced, where team members were required to pull from the main branch, push code to their individual branches, and submit pull requests.
