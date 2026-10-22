@@ -9,7 +9,7 @@ const AccountAdd = ({
 
     function handleSubmit(event) {
     event.preventDefault()
-    onSubmit(event)
+    onSubmit(event) //pass the submitted form to AccountBar
   }
 
     return(

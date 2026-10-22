@@ -19,7 +19,7 @@ Deviations has been kept up to date, manualy with pen and paper up to 04-10-2026
  - Leaving out the different coloured icons for category selection and highlighting the selected category in blue instead. This keeps the colour palette consistent and more efffectively shows which icon is selected. 
  - Changed the design of the delete page. The new design was simpler and cleaner, staying inline with the clear UI design language used throughout. 
  - No confirmation messages when adding a savings or budget goal, since the adittion of the goal or budget self is confirmation.
- - Removed bakground aesthetic of main card to remove visual clutter.
+ - Removed background aesthetic of main card to remove visual clutter.
 
 
  ## Additions

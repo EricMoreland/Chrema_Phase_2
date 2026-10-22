@@ -13,6 +13,7 @@ function AccountBar({ selectedType, setSelectedType, accounts, onDeleteAccount, 
     async function handleSubmit(event) {
         event.preventDefault()
 
+        //send the form values to App for account creation
         const accountWasAdded = await onAddAccount({
             name: accountName,
             cashBalance
@@ -28,6 +29,7 @@ function AccountBar({ selectedType, setSelectedType, accounts, onDeleteAccount, 
     }
 
      async function handleDeleteSelectedAccount() {
+        //find the account that the user selected before deleting it
         const selectedAccount = accounts.find(
             (account) => account.id === selectedAccountId
         )

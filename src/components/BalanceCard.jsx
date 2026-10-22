@@ -5,8 +5,6 @@ function BalanceCard({
     activeWorkspaceView,
     onOpenTransaction,
     onCloseView,
-    //showTransactionForm,
-    //setShowTransactionForm,
     newDescription,
     setNewDescription,
     newAmount,

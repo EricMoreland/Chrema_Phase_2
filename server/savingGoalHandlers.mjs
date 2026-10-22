@@ -1,5 +1,6 @@
 import db from './PGliteDB.mjs'
 
+// Map database columns to the API's camelCase fields.
 const savingGoalColumns = `
   SavingId AS "id",
   GoalName AS "name",
@@ -25,10 +26,12 @@ export async function getSavingGoals(req, res) {
 }
 
 function getValidSavingGoalInput(body) {
+  // Validate and normalise goal details.
   const name = typeof body.name === 'string' ? body.name.trim() : ''
   const targetAmount = Number(body.targetAmount)
   const startDate = body.startDate
   const endDate = body.endDate
+  // Validate the date range using the API's ISO date format.
   const validDates =
     /^\d{4}-\d{2}-\d{2}$/.test(startDate) &&
     /^\d{4}-\d{2}-\d{2}$/.test(endDate)
@@ -47,6 +50,7 @@ function getValidSavingGoalInput(body) {
 }
 
 function getAccountId(body) {
+  // Read the related account ID.
   const accountId = Number(body.accountId)
   return Number.isInteger(accountId) ? accountId : null
 }
@@ -66,6 +70,7 @@ export async function createSavingGoal(req, res) {
       return res.status(400).json({ error: 'An account is required' })
     }
 
+    // Create a goal with zero initial progress.
     const result = await db.query(`
       INSERT INTO "Saving Goal" (
         GoalName,
@@ -92,12 +97,14 @@ export async function createSavingGoal(req, res) {
 }
 
 function getValidSavingGoalProgress(body) {
+  // Validate positive progress deposits.
   const amount = Number(body.amount)
 
   return Number.isFinite(amount) && amount > 0 ? amount : null
 }
 
 async function inDatabaseTransaction(callback) {
+  // Keep related balance updates atomic.
   await db.exec('BEGIN')
   try {
     const result = await callback()
@@ -118,6 +125,7 @@ export async function updateSavingGoal(req, res) {
     }
 
     if (req.body.kind === 'savings') {
+      // Handle progress deposits separately from detail edits.
       const amount = getValidSavingGoalProgress(req.body)
 
       if (amount === null) {
@@ -127,6 +135,7 @@ export async function updateSavingGoal(req, res) {
       }
 
       const result = await inDatabaseTransaction(async () => {
+        // Find the account linked to the goal.
         const goalResult = await db.query(`
           SELECT AccountAccountId
           FROM "Saving Goal"
@@ -138,6 +147,7 @@ export async function updateSavingGoal(req, res) {
         }
 
         const accountId = goalResult.rows[0].accountaccountid
+        // Deduct funds before recording the deposit.
         const accountResult = await db.query(`
           UPDATE Account
           SET CashBalance = CashBalance - $1
@@ -148,8 +158,9 @@ export async function updateSavingGoal(req, res) {
 
         if (accountResult.rows.length === 0) {
           throw new Error('Insufficient available balance')
-        }
+        } 
 
+        // Record the deposited amount.
         const updatedGoal = await db.query(`
           UPDATE "Saving Goal"
           SET CurrentAmount = CurrentAmount + $1
@@ -158,7 +169,7 @@ export async function updateSavingGoal(req, res) {
         `, [amount, savingGoalId])
 
         return updatedGoal.rows[0]
-      })
+      }) 
 
       return res.status(200).json(result)
     }
@@ -176,6 +187,7 @@ export async function updateSavingGoal(req, res) {
       return res.status(400).json({ error: 'An account is required' })
     }
 
+    // Update goal details without changing saved progress.
     const result = await db.query(`
       UPDATE "Saving Goal"
       SET GoalName = $1,
@@ -221,6 +233,7 @@ export async function deleteSavingGoal(req, res) {
       return res.status(400).json({ error: 'Invalid saving goal id' })
     }
 
+    // Confirm that the requested goal existed.
     const result = await db.query(`
       DELETE FROM "Saving Goal"
       WHERE SavingId = $1

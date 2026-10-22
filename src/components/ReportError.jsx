@@ -26,20 +26,22 @@ function ErrorButton({ text, setErrorType, selectedError }) {
 
 function ReportError({ onClose }) {
     const form = useRef()
+    // Track the selected category and user-provided explanation.
     const [errorType, setErrorType] = useState('')
     const [description, setDescription] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        // Send the selected category and description through EmailJS.
         try {
             await emailjs.sendForm(
                 'service_4kb9dmr',
                 'template_ul5ef48',
                 form.current,
-                { publicKey: '3wlINfEu4-zVPWUyI' }
-            );
-
+                { publicKey: '3wlINfEu4-zVPWUyI' } 
+            ); //I (Eric) am aware this introduces security/spam risks, to improve I whould run the request through backend, but for now this is acceptable to show functionality.
+                //However the spam risk falls on my own email and does not affect the user, so I am willing to accept it for now.
             console.log('SUCCESS!');
             onClose();
         } catch (error) {
@@ -51,6 +53,7 @@ function ReportError({ onClose }) {
         <div 
             className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4"
             onMouseDown={(event) => {
+                // Close the modal only when the backdrop itself is clicked.
                 if (event.target === event.currentTarget) {
                     onClose()
                 }
@@ -75,15 +78,17 @@ function ReportError({ onClose }) {
                     >x</button>
                 </div>
 
+                {/* Let the user choose the type of problem. */}
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                     {errorTypes.map((type) => (
                         <ErrorButton key={type} text={type} setErrorType={setErrorType} selectedError={errorType === type} />
                     ))}
                 </div>
 
-                <input //allows emailjs to receive the error type
+                {/* Include the selected category in the submitted form. */}
+                <input
                     type="hidden"
-                    name="error_type" //matches the name used in emailjs template
+                    name="error_type"
                     value={errorType}
                 /> 
 
@@ -93,6 +98,7 @@ function ReportError({ onClose }) {
                     required
                     value={description}
                     name='description'
+                    // Keep the textarea controlled by the component state.
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder='Please describe your problem...' />
                 <div className="mt-6 flex justify-center">

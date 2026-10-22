@@ -5,7 +5,7 @@ function AccountDelete({
 }) {
   function handleSubmit(event) {
     event.preventDefault()
-    onConfirm()
+    onConfirm() //ask the parent to delete the selected account
   }
 
   return (
@@ -14,7 +14,7 @@ function AccountDelete({
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
           onClose()
-        }
+        } //Click outside form, closes the form
       }}
     >
       <form

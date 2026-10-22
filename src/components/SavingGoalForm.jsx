@@ -22,6 +22,7 @@ function SavingGoalForm({
     async function handleSubmit(event) {
         event.preventDefault()
 
+        // Build either a deposit or a goal-details request.
         const goalDetails = isUpdateProgress
             ? {
                 kind: 'savings',
@@ -36,6 +37,7 @@ function SavingGoalForm({
                 accountId
             }
 
+        // Use the update callback only for existing goals.
         const succeeded = isEditing
             ? await onUpdateSavingGoal(savingGoal.id, goalDetails)
             : await onAddSavingGoal(goalDetails)

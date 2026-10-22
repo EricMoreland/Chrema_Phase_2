@@ -18,9 +18,9 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 |---|---|---|---|---|
 
 | 2026-09-10 | Eric | Claude Sonnet 4.5 | Help understand React code implementation for panels | Guidance on where to implement specific jsx to create panels and what the panels require |
-| 2026-09-28 | Eric | Co-Pilot Student | Help understand how to implement express and setup SQLite with better-sqlite3 + insert dummy data from states | Guidance on where and how to implement express with side panels first and sqlite for data retrieval from database + insert dummy data to test if it works |
+| 2026-09-28 | Eric | Co-Pilot Student | Help understand how to implement express and setup SQLite with better-sqlite3 + insert dummy data from states | Guidance on where and how to implement express with side panels first and sqlite for data retrieval from database + insert dummy data to test if it works (NA anymore) |
 | 2026-09-29 | Ben | ChatGPT (GPT-5.6 Luna) | Explained Express.js backend routes and GET/POST server behavior for the Chrema application | Clarification on how the front end of react communicated to the Express backend |
-| 2026-10-1 | Eric | Gemeni Flash 3.6 | Verify schema.sql according to our vision for the app | Identified errors and helped understand current errors regarding my inserts to test. |
+| 2026-10-1 | Eric | Gemeni Flash 3.6 | Verify schema.sql according to our vision for the app | Identified errors and helped understand current errors regarding my inserts to test. (NA anymore) |
 | 2026-10-2 | Eric | Copilot student | Help fix onClose not working | Identified I need to add it to a button -I was tired at this point :( |
 | 2026-10-3 | Eric | Copilot student | Debug added css with tailwind to understand how to match it with wireframes | Identified and explained missing elements from classNames |
 | 2026-10-4 | Eric | Gemini Pro | Format wording of process writeup on whatsapp to a more clear structure | Formated our existing process write up to a bullet point type format |
@@ -47,7 +47,7 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 | 2026-10-17 | Ben | ChatGPT (GPT-5.6 Luna) | Implemented and debugged the transcation persistence, transaction routes, PGlite database handling, account balance updates in accordance to transaction categories | Transactions successfully persisted after page reload and account/budget functionality was connected to the transaction system |
 | 2026-10-17 | Ben | ChatGPT (GPT-5.6 Luna) | Refined the Chrema transaction and budget UI, including the category icon clash, and the distinction between transaction categories and budget categories | Altered and refined the interface so the transactions use the required categories |
 | 2026-10-19 | Eric | Copilot Student | Add structure to README and ensure accuracy for setup. | Restructed main content to look better and add missing elements to ensure proper setup. |
-
+| 2026-10-21 | Eric | Copilot Student | Improve my comment explanations to be best practice + move code to improve readability | Restructed the wording of comments + shift code blocks in App.jsx|
 
 
 
