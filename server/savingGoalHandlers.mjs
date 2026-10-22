@@ -127,10 +127,17 @@ export async function updateSavingGoal(req, res) {
     if (req.body.kind === 'savings') {
       // Handle progress deposits separately from detail edits.
       const amount = getValidSavingGoalProgress(req.body)
+      const accountId = getAccountId(req.body)
 
       if (amount === null) {
         return res.status(400).json({
           error: 'Provide a valid update amount'
+        })
+      }
+
+      if (accountId === null) {
+        return res.status(400).json({
+          error: 'An account is required'
         })
       }
 
@@ -146,7 +153,6 @@ export async function updateSavingGoal(req, res) {
           throw new Error('Saving goal not found')
         }
 
-        const accountId = goalResult.rows[0].accountaccountid
         // Deduct funds before recording the deposit.
         const accountResult = await db.query(`
           UPDATE Account
