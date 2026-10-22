@@ -14,9 +14,7 @@ Log every use of an AI tool in this project. Add a new row per use - do not edit
 ## Log
 
 | Date | Group Member | Tool (name & version) | Used For | Outcome |
-
 |---|---|---|---|---|
-
 | 2026-09-10 | Eric | Claude Sonnet 4.5 | Help understand React code implementation for panels | Guidance on where to implement specific jsx to create panels and what the panels require |
 | 2026-09-28 | Eric | Co-Pilot Student | Help understand how to implement express and setup SQLite with better-sqlite3 + insert dummy data from states | Guidance on where and how to implement express with side panels first and sqlite for data retrieval from database + insert dummy data to test if it works (NA anymore) |
 | 2026-09-29 | Ben | ChatGPT (GPT-5.6 Luna) | Explained Express.js backend routes and GET/POST server behavior for the Chrema application | Clarification on how the front end of react communicated to the Express backend |
